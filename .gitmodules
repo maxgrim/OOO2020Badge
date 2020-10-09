@@ -4,3 +4,6 @@
 [submodule "lib/Adafruit_NeoPixel"]
 	path = lib/Adafruit_NeoPixel
 	url = https://github.com/adafruit/Adafruit_NeoPixel.git
+[submodule "lib/TaskScheduler"]
+	path = lib/TaskScheduler
+	url = https://github.com/arkhipenko/TaskScheduler.git
