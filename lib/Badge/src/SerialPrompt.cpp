@@ -183,7 +183,7 @@ void cmdHidden(uint8_t argc, char **argv) {
 
     cryptoGetFlagXOR(cmdHiddenFlagEncrypted, size, cmdHiddenFlagKey, size);
 
-    Serial.println(F("You found the hidden menu! Well done young reverse engineer!"));
+    Serial.println(F("[...Engine goes...]\tBzzzz Bzzzzz\r\n[...AI voice says...]\tSuper Laser activated. Ready to fire.\r\n\r\n[...Badge says...]\tYou found the hidden menu! Well done young reverse engineer! Here is your reward.\r\n"));
     Serial.println(cmdHiddenFlagEncrypted);
 
     activatePrompt();
@@ -212,7 +212,7 @@ void serialPromptSetup()
     addCommand("sh", "Execute file", false, cmdSh);
 
     // The hidden flag command
-    addCommand("givetheflagtomah", "Hidden option", true, cmdHidden);
+    addCommand("BzzBzzD3pl0yL4z3rz", "Hidden option", true, cmdHidden);
 }
 
 void serialPromptLoop()
