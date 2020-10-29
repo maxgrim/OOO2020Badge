@@ -78,7 +78,7 @@ static Task tHandleOff(TASK_IMMEDIATE, TASK_ONCE, &handleOff);
 unsigned int encodedMorseIndex = 0;
 String encodedMorse;
 
-void (*doneCallbackF)();
+static void (*doneCallbackF)();
 
 String encodeMorse(const char *string)
 {
@@ -103,7 +103,6 @@ String encodeMorse(const char *string)
 
 void handleOff()
 {
-    // DEBUG_PRINTLN("Off");
     rgbSetAllLeds(0);
 }
 
@@ -111,8 +110,6 @@ void displayMorse()
 {
     if (encodedMorseIndex <= encodedMorse.length())
     {
-        DEBUG_PRINTF("displayMorse: %d, %s\r\n", encodedMorseIndex, encodedMorse[encodedMorseIndex]);
-
         switch (encodedMorse[encodedMorseIndex++])
         {
         case '.':
