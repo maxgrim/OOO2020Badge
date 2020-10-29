@@ -33,16 +33,6 @@ static void handleBlinkLed()
     }
 }
 
-void rgbSetup()
-{
-    pixels.begin();
-    pixels.clear();
-    pixels.setBrightness(10);
-    pixels.show();
-
-    badgeTaskScheduler.addTask(taskBlinkLed);
-}
-
 void rgbSetSingleLed(int led, uint32_t color)
 {
     pixels.clear();
@@ -69,4 +59,14 @@ void rgbSetAllLeds(uint32_t color)
     }
 
     pixels.show();
+}
+
+void rgbSetup()
+{
+    pixels.begin();
+    pixels.clear();
+    pixels.setBrightness(10);
+    pixels.show();
+
+    badgeTaskScheduler.addTask(taskBlinkLed);
 }
