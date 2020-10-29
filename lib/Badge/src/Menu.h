@@ -1,0 +1,7 @@
+#ifndef MENU_H_SEEN
+#define MENU_H_SEEN
+
+void menuSetup();
+void menuLoop();
+
+#endif
