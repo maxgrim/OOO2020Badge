@@ -8,6 +8,7 @@
 #include "Challenges/Morse.h"
 #include "Challenges/CombinationLock.h"
 #include "Challenges/FastCalculation.h"
+#include "Challenges/CatchTheLed.h"
 // ----------------------------
 
 #include <Arduino.h>
@@ -168,6 +169,9 @@ void cmdSh(uint8_t argc, char **argv)
         } else if (strcmp(argv[1], "./fastCalculations.sh") == 0)
         {
             fastCalculationSetup(activatePrompt);
+        } else if (strcmp(argv[1], "./catchTheLed.sh") == 0)
+        {
+            catchTheLedSetup(activatePrompt);
         } else {
             Serial.println(F("Invalid command"));
             activatePrompt();
