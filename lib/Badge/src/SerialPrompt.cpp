@@ -5,7 +5,6 @@
 
 // External programs to execute
 #include "Challenges/Morse.h"
-#include "Games/Test.h"
 
 #include <Arduino.h>
 
