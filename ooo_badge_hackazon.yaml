@@ -1,0 +1,69 @@
+title: Offensive Offsite Operation - badge edition
+description: We are welcoming you to a journey beyond bytes and keyboards. The OOO crew is awaiting you onboard. To prove your faithful commitment to the rebellion and test your interstellar skills the captains have created a challenge for you. To some, this could look like to an ornament which can be controlled remotely, to others, it could be much more. It will be up to you to unlock all the capabilities of this device and try to obtain one of the keys to get on board. The keys will be distributed to the three best galactical maze-runners, turbojets py-coders, Xtensa unpackers, light transcoders, and speed fighters. 
+flags:
+- tags: [crypto]
+  title: "Welcome on board"
+  unique_id: crypto-ooo2020-badge-1
+  description: "If you read this it means you decoded the message coming from Vigenère vessel. Welcome on board."
+  points: 30
+  value: CTF{}
+- tags: [misc]
+  title: "Serial Jedi"
+  unique_id: web-ooo2020-badge-4
+  description: "Those wires are finally comming in handy. Let's see if I can hot wire this board."
+  points: 50
+  value: CTF{af54a4b77436dc46d4aa2a1b31f40b5a}
+- tags: [misc]
+  title: "The return of the Serial Jedi"
+  unique_id: web-ooo2020-badge-5
+  description: "Now I got my hands dirty, I can get back to read the manual."
+  points: 50
+  value: CTF{}
+- tags: [misc]
+  title: "Satelite communication"
+  unique_id: misc-ooo2020-badge-3
+  description: "I am still arguing with Captain that the blinking light is not a satellite but a distress signal. Which one is it?"
+  points: 75
+  value: CTF{484f2397c4eed90426f3a6b115e3670a}
+- tags: [filesystem]
+  title: "Corrupted Manual"
+  unique_id: web-ooo2020-badge-6
+  description: "Argh! I was almost done reading the manual, but the rest of the pages got deleted. Captain told me that it should be stored somewhere."
+  points: 75
+  value: CTF{}
+- tags: [filesystem]
+  title: "Captain pictures"
+  unique_id: web-ooo2020-badge-6
+  description: "One of the crew member said that the captain hide his favorite pictures somewhere. A few crew member found them but no one could figure out how to find the least significant ones."
+  points: 100
+  value: CTF{}
+- tags: [filesystem]
+  title: "Missing files"
+  unique_id: web-ooo2020-badge-6
+  description: "Someone tempered with the filesystem and removed some files. Will you be able to place it back?"
+  points: 125
+  value: CTF{}
+ - tags: [reversing]
+  title: "Deploying the super laser"
+  unique_id: web-ooo2020-alpacone-2
+  description: "Captain told me to deploy the super laser however there is no button for that and I can't get to find the obfuscated command."
+  points: 100
+  value: CTF{5d2427c7bdf822244bb2e609c772ab5c}
+- tags: [misc]
+  title: "Unlocking the super laser"
+  unique_id: web-ooo2020-alpacone-2
+  description: "Captain is too busy to give me the code to unlock the laser. I gotta figure it out myself."
+  points: 100
+  value: CTF{}
+- tags: [reversing]
+  title: "Shooting stars"
+  unique_id: reversing-ooo2020-badge-2
+  description: "To test my precision Captain asked me to shoot a few stars. However it is not that easy when we are travelling at light speed. Maybe I can think of a way to automate this to be a bit more precise?"
+  points: 150
+  value: CTF{}
+- tags: [reversing]
+  title: "Flying back"
+  unique_id: reversing-ooo2020-badge-2
+  description: "Captain is giving me the control of the ship. He is now testing my memory and ask me to fly us back home. Will I find the way home?"
+  points: 100
+  value: CTF{}
