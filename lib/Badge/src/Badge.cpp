@@ -9,6 +9,7 @@
 #include "RGB.h"
 #include "SerialPrompt.h"
 #include "Settings.h"
+#include "Webserver.h"
 #include "WiFi.h"
 
 #include <TaskScheduler.h>
@@ -81,6 +82,9 @@ bool badgeSetup(size_t eepromSize, size_t eepromStartAddress)
 
     // Setup menu
     menuSetup();
+
+    // Webserver challenge
+    webserverSetup();
 
     // Print out the banner and the first flag over serial
     printWelcome();
