@@ -7,6 +7,7 @@
 // External programs to execute
 #include "Challenges/Morse.h"
 #include "Challenges/CombinationLock.h"
+#include "Challenges/FastCalculation.h"
 // ----------------------------
 
 #include <Arduino.h>
@@ -164,6 +165,9 @@ void cmdSh(uint8_t argc, char **argv)
         if (strcmp(argv[1], "./morse") == 0)
         {
             morseCodeSetup(activatePrompt);
+        } else if (strcmp(argv[1], "./fastCalculations.sh") == 0)
+        {
+            fastCalculationSetup(activatePrompt);
         } else {
             Serial.println(F("Invalid command"));
             activatePrompt();
