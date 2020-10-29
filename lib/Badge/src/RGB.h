@@ -5,7 +5,6 @@
 #include <TaskSchedulerDeclarations.h>
 
 void rgbSetup();
-void rgbLoop();
 
 void rgbSetSingleLed(int led, uint32_t color);
 void rgbBlinkSingleLed(int led, int times, uint32_t color, TaskOnDisable doneCallback);

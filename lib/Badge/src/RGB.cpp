@@ -43,10 +43,6 @@ void rgbSetup()
     badgeTaskScheduler.addTask(taskBlinkLed);
 }
 
-void rgbLoop()
-{
-}
-
 void rgbSetSingleLed(int led, uint32_t color)
 {
     pixels.clear();

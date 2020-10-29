@@ -94,8 +94,6 @@ bool badgeSetup(size_t eepromSize, size_t eepromStartAddress)
 
 void badgeLoop()
 {
-    rgbLoop();
     serialPromptLoop();
-    
     badgeTaskScheduler.execute();
 }
