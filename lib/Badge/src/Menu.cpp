@@ -4,81 +4,117 @@
 #include "Debug.h"
 #include "Badge.h"
 
+// External programs to execute
+#include "Challenges/CombinationLock.h"
+// ----------------------------
+
 #include <Arduino.h>
 
 #define MENU_POSITIONS 12
 
-int currentMenuPosition = 0;
-bool readingL, readingR, lastStateL, lastStateR;
-static void handleButtons();
+static int currentMenuPosition = 0;
+static bool readingL, readingR, lastStateL, lastStateR;
 
-static Task tHandleButtons(DEBOUNCE_BUTTON, TASK_ONCE, &handleButtons);
+static void detectButtonChange();
+static Task tDetectButtonChange(0, TASK_FOREVER, &detectButtonChange);
+
+static void verifyButtonChange();
+static Task tVerifyButtonChange(DEBOUNCE_BUTTON, TASK_ONCE, &verifyButtonChange);
+
+static void verifyButtonsLow();
+static Task tVerifyButtonsLow(0, TASK_FOREVER, &verifyButtonsLow);
 
 static int convertToLedNr(int led)
 {
     return (led + 9) % 12;
 }
 
-static void moveToMenuPosition(int position)
-{
-    rgbSetSingleLed(convertToLedNr(position), 0xFFFFFF);
-}
-
 static void activateMenu()
 {
-    moveToMenuPosition(currentMenuPosition);
-    badgeTaskScheduler.addTask(tHandleButtons);
+    rgbSetSingleLed(convertToLedNr(currentMenuPosition), 0xFFFFFF);
+    tDetectButtonChange.enable();
 }
 
 static void deactivateMenu()
 {
-    badgeTaskScheduler.deleteTask(tHandleButtons);
+    tDetectButtonChange.disable();
 }
 
-static void moveMenuLeft()
+static void startCombinationLock()
 {
-    currentMenuPosition--;
-    if (currentMenuPosition < 0)
-    {
-        currentMenuPosition = 11;
-    }
-
-    moveToMenuPosition(currentMenuPosition);
+    combinationLockSetup(&activateMenu);
 }
 
-static void moveMenuRight()
-{
-    currentMenuPosition++;
-    if (currentMenuPosition > 11)
-    {
-        currentMenuPosition = 0;
-    }
-
-    moveToMenuPosition(currentMenuPosition);
-}
-
-static void confirmCurrentMenuPosition()
+static void enterCurrentMenuPosition()
 {
     deactivateMenu();
-    rgbBlinkSingleLed(convertToLedNr(currentMenuPosition), 3, 0xFF0000, &activateMenu);
+
+    void (*doneCallback)() = &activateMenu;
+
+    switch (currentMenuPosition)
+    {
+    case 1:
+        doneCallback = &startCombinationLock;
+        break;
+    }
+
+    rgbBlinkSingleLed(convertToLedNr(currentMenuPosition), 3, 0xFF0000, doneCallback);
 }
 
-static void handleButtons()
+void detectButtonChange()
 {
+    readingL = digitalRead(PIN_BUTTON_L);
+    readingR = digitalRead(PIN_BUTTON_R);
+
+    if (readingL != lastStateL || readingR != lastStateR)
+    {
+        tVerifyButtonChange.restartDelayed();
+    }
+
+    lastStateL = readingL;
+    lastStateR = readingR;
+}
+
+static void verifyButtonChange()
+{
+    tDetectButtonChange.disable();
+
     if (readingL && readingR)
     {
-        confirmCurrentMenuPosition();
-        DEBUG_PRINTLN("Menu: confirm");
+        enterCurrentMenuPosition();
     }
     else if (readingL)
     {
-        moveMenuLeft();
-        DEBUG_PRINTF("Menu: left button pressed, moved to position %d\r\n", currentMenuPosition);
+        // Move menu left
+        currentMenuPosition--;
+        if (currentMenuPosition < 0)
+        {
+            currentMenuPosition = 11;
+        }
+
+        rgbSetSingleLed(convertToLedNr(currentMenuPosition), 0xFFFFFF);
     }
     else if (readingR)
     {
-        moveMenuRight();
-        DEBUG_PRINTF("Menu: right button pressed, moved to position %d\r\n", currentMenuPosition);
+        // Move menu right
+        currentMenuPosition++;
+        if (currentMenuPosition > 11)
+        {
+            currentMenuPosition = 0;
+        }
+
+        rgbSetSingleLed(convertToLedNr(currentMenuPosition), 0xFFFFFF);
+    }
+
+    tVerifyButtonsLow.enable();
+}
+
+static void verifyButtonsLow()
+{
+    if (!digitalRead(PIN_BUTTON_L) && !digitalRead(PIN_BUTTON_R))
+    {
+        tVerifyButtonsLow.disable();
+        tDetectButtonChange.enable();
     }
 }
 
@@ -87,20 +123,9 @@ void menuSetup()
     pinMode(PIN_BUTTON_L, INPUT);
     pinMode(PIN_BUTTON_R, INPUT);
 
+    badgeTaskScheduler.addTask(tDetectButtonChange);
+    badgeTaskScheduler.addTask(tVerifyButtonChange);
+    badgeTaskScheduler.addTask(tVerifyButtonsLow);
+
     activateMenu();
-}
-
-void menuLoop()
-{
-    // Button handling
-    readingL = digitalRead(PIN_BUTTON_L);
-    readingR = digitalRead(PIN_BUTTON_R);
-
-    if (readingL != lastStateL || readingR != lastStateR)
-    {
-        tHandleButtons.restartDelayed();
-    }
-
-    lastStateL = readingL;
-    lastStateR = readingR;
 }
