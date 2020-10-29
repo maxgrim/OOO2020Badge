@@ -2,9 +2,12 @@
 #include "Debug.h"
 #include "Badge.h"
 #include "Crypto.h"
+#include "Menu.h"
 
 // External programs to execute
 #include "Challenges/Morse.h"
+#include "Challenges/CombinationLock.h"
+// ----------------------------
 
 #include <Arduino.h>
 
@@ -116,8 +119,7 @@ bool read()
 
 void parseAndExecute()
 {
-    DEBUG_PRINTF("SerialPrompt parsing command: %s\r\n", buffer);
-
+    bool executed = false;
     uint8_t argc = 0;
     char *bufferPtr = strtok(buffer, " ");
 
@@ -127,18 +129,8 @@ void parseAndExecute()
         bufferPtr = strtok(NULL, " ");
     }
 
-    DEBUG_PRINTLN(F("SerialPrompt parsing command:"));
-    for (uint8_t i = 1; i < argc; i++)
-    {
-        DEBUG_PRINTF("  %d: %s\r\n", i, strings[i]);
-    }
-
-    bool executed = false;
-    DEBUG_PRINTLN(F("SerialPrompt function commandTable:"));
     for (uint8_t i = 0; i < commandTableIndex; i++)
     {
-        DEBUG_PRINTF("  %d: %s\r\n", i, commandTable[i].cmd);
-
         if (!strcmp(strings[0], commandTable[i].cmd))
         {
             executed = true;
@@ -147,7 +139,8 @@ void parseAndExecute()
         }
     }
 
-    if(!executed) {
+    if (!executed)
+    {
         Serial.println(F("Unknown command"));
         activatePrompt();
     }
@@ -166,10 +159,15 @@ void cmdReboot(uint8_t argc, char **argv)
 
 void cmdSh(uint8_t argc, char **argv)
 {
-    if (argc != 0 && (strcmp(argv[1], "morse") == 0 || strcmp(argv[1], "./morse") == 0))
+    if (argc != 0)
     {
-        Serial.println(F("Morse"));
-        morseCodeSetup(activatePrompt);
+        if (strcmp(argv[1], "./morse") == 0)
+        {
+            morseCodeSetup(activatePrompt);
+        } else {
+            Serial.println(F("Invalid command"));
+            activatePrompt();
+        }
     }
     else
     {
@@ -178,7 +176,8 @@ void cmdSh(uint8_t argc, char **argv)
     }
 }
 
-void cmdHidden(uint8_t argc, char **argv) {
+void cmdHidden(uint8_t argc, char **argv)
+{
     uint8_t size = 37;
 
     cryptoGetFlagXOR(cmdHiddenFlagEncrypted, size, cmdHiddenFlagKey, size);
@@ -195,7 +194,8 @@ void cmdHelp(uint8_t argc, char **argv)
 
     for (uint8_t i = 0; i < commandTableIndex; i++)
     {
-        if(!commandTable[i].hidden) {
+        if (!commandTable[i].hidden)
+        {
             Serial.printf(" %s: %s\r\n", commandTable[i].cmd, commandTable[i].description);
         }
     }
