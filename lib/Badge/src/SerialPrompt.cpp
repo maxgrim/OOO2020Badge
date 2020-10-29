@@ -4,6 +4,8 @@
 #include "Crypto.h"
 #include "Menu.h"
 
+#include "Settings.h"
+
 // External programs to execute
 #include "Challenges/Morse.h"
 #include "Challenges/CombinationLock.h"
@@ -166,13 +168,17 @@ void cmdSh(uint8_t argc, char **argv)
         if (strcmp(argv[1], "./morse") == 0)
         {
             morseCodeSetup(activatePrompt);
-        } else if (strcmp(argv[1], "./fastCalculations.sh") == 0)
+        }
+        else if (strcmp(argv[1], "./fastCalculation.sh") == 0)
         {
             fastCalculationSetup(activatePrompt);
-        } else if (strcmp(argv[1], "./catchTheLed.sh") == 0)
+        }
+        else if (strcmp(argv[1], "./catchTheLed.sh") == 0)
         {
             catchTheLedSetup(activatePrompt);
-        } else {
+        }
+        else
+        {
             Serial.println(F("Invalid command"));
             activatePrompt();
         }
@@ -182,6 +188,30 @@ void cmdSh(uint8_t argc, char **argv)
         Serial.println(F("Invalid command"));
         activatePrompt();
     }
+}
+
+void cmdCat(uint8_t argc, char **argv)
+{
+    if (argc != 0 && strcmp(argv[1], "flag.txt") == 0)
+    {
+        Settings settings = settingsGetSettings();
+
+        if (settings.isAdmin == 1)
+        {
+            // TODO: Replace placeholder with the vigenere cipher
+            Serial.printf("Here is your flag: %s\r\n", "PLACEHOLDER");
+        }
+        else
+        {
+            Serial.printf("cat: flag.txt: Permission denied\r\n");
+        }
+    }
+    else
+    {
+        Serial.println(F("File not found\r\n"));
+    }
+
+    activatePrompt();
 }
 
 void cmdHidden(uint8_t argc, char **argv)
@@ -218,6 +248,7 @@ void serialPromptSetup()
     addCommand("reboot", "Reboot the badge", false, cmdReboot);
     addCommand("ls", "List files", false, cmdLs);
     addCommand("sh", "Execute file", false, cmdSh);
+    addCommand("cat", "Print file", false, cmdCat);
 
     // The hidden flag command
     addCommand("BzzBzzD3pl0yL4z3rz", "Hidden option", true, cmdHidden);

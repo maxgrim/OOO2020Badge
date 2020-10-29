@@ -3,6 +3,7 @@
 
 struct Settings {
   uint8_t badgeMode;
+  uint8_t isAdmin;
 };
 
 void settingsSetup(size_t eepromSize, size_t eepromStartAddress);
