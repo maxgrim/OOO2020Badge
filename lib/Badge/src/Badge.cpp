@@ -15,8 +15,6 @@
 
 #include <TaskScheduler.h>
 
-void handleTest();
-
 Scheduler badgeTaskScheduler;
 
 static bool buttonsPressed()
