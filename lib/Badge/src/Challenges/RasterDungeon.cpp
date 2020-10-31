@@ -120,6 +120,10 @@ static void deactivateRasterDungeon()
 
 static void printDungeon()
 {
+#ifndef DEBUG
+    return;
+#endif
+
     for (char y = 0; y < 20; y++)
     {
         for (char x = 0; x < 20; x++)
