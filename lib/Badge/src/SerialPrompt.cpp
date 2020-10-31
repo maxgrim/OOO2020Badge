@@ -1,7 +1,7 @@
 #include "SerialPrompt.h"
 #include "Debug.h"
 #include "Badge.h"
-#include "Crypto.h"
+#include "FlagCrypto.h"
 #include "Menu.h"
 
 #include "Settings.h"

@@ -40,4 +40,3 @@ void cryptoGetFlagXOR(char *buffer, uint8_t buffer_size, char *key, uint8_t key_
         buffer[i] = buffer[i] ^ key[i % key_size];
     }
 }
-

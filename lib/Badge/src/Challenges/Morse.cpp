@@ -3,7 +3,7 @@
 #include "../Badge.h"
 #include "../RGB.h"
 #include "../Debug.h"
-#include "../Crypto.h"
+#include "../FlagCrypto.h"
 
 #include <Arduino.h>
 
