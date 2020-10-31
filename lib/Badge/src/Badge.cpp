@@ -73,7 +73,7 @@ bool badgeSetup(size_t eepromSize, size_t eepromStartAddress)
         DEBUG_PRINTLN(F("Buttons pressed, switching modes"));
     }
 
-    if (settings.badgeMode == 0)
+    if (settings.badgeMode == 255)
     {
         eyesOff();
         Serial.flush();
