@@ -111,6 +111,10 @@ static void playDeadAnimation()
     }
 }
 
+static void printCurrentPosition() {
+    Serial.printf("You are at (%d, %d)\r\n", posX, posY);
+}
+
 static void deactivateRasterDungeon()
 {
     badgeTaskScheduler.deleteTask(tDetectButtonChange);
@@ -200,7 +204,6 @@ int8_t getNextDirection(int8_t currentDirection, uint8_t posX, uint8_t posY, boo
         uint8_t nextPosX = getNextX(posX, currentDirection);
         uint8_t nextPosY = getNextY(posY, currentDirection);
 
-        Serial.printf("%c at x: %d, y: %d\r\n", characters[dungeon[nextPosY][nextPosX]], nextPosX, nextPosY);
         if (dungeon[nextPosY][nextPosX] != 1)
         {
             break;
@@ -232,8 +235,6 @@ static void updateRgbLeds()
     rgbSetSingleLed(((currentDirection * 3) + 6) % 12, colorDirection);
 
     rgbShow();
-
-    Serial.printf("My position x: %d, y: %d\r\n", posX, posY);
 }
 
 static void detectButtonChange()
@@ -260,6 +261,7 @@ static void verifyButtonChange()
         posY = getNextY(posY, currentDirection);
 
         printDungeon();
+        printCurrentPosition();
 
         // Handle dying
         switch (dungeon[posY][posX])
@@ -275,7 +277,7 @@ static void verifyButtonChange()
             char *encryptedFlag = "ElDz3zZlWVmLHJwwIY92a37WOZqP8/gneZYW+16C+8zR8hTAesWvV96GSmxGrwaH";
             char destination[strlen(encryptedFlag)];
             cryptoGetFlagAES(encryptedFlag, destination);
-            Serial.printf("You've escaped the dungeon! This is for you: %s\r\n", destination);
+            Serial.printf("You've successfully escaped the dungeon! This is for you: %s\r\n", destination);
 
             deactivateRasterDungeon();
             badgeTaskScheduler.addTask(tPlayWinAnimation);
@@ -320,6 +322,9 @@ void rasterDungeonSetup(void (*doneCallback)())
 
     printDungeon();
     updateRgbLeds();
+
+    Serial.printf("\r\nWelcome to the dungeon!\r\n");
+    printCurrentPosition();
 
     badgeTaskScheduler.addTask(tDetectButtonChange);
     badgeTaskScheduler.addTask(tVerifyButtonChange);
