@@ -6,6 +6,7 @@
 
 // External programs to execute
 #include "Challenges/CombinationLock.h"
+#include "Challenges/RasterDungeon.h"
 // ----------------------------
 
 #include <Arduino.h>
@@ -54,6 +55,10 @@ static void startCombinationLock()
     combinationLockSetup(&activateMenu);
 }
 
+static void startDungeonSetup() {
+    rasterDungeonSetup(&activateMenu);
+}
+
 static void enterCurrentMenuPosition()
 {
     deactivateMenu();
@@ -64,6 +69,9 @@ static void enterCurrentMenuPosition()
     {
     case 1:
         doneCallback = &startCombinationLock;
+        break;
+    case 2:
+        doneCallback = &startDungeonSetup;
         break;
     }
 
