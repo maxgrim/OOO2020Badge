@@ -7,18 +7,24 @@
 
 static void handleBlinkLed();
 
-int blinkLed, blinkTimes, blinkTimesExecuted;
+uint8_t blinkNr;
+uint16_t blinkTimes, blinkTimesExecuted;
 uint32_t blinkColor;
 Task taskBlinkLed(150, TASK_FOREVER, &handleBlinkLed);
 
 static Adafruit_NeoPixel pixels = Adafruit_NeoPixel(RGB_N_LEDS, PIN_LED_RGB, NEO_GRB + NEO_KHZ800);
+
+static uint8_t convertNrToLed(uint8_t nr)
+{
+    return (nr + 9) % 12;
+}
 
 static void handleBlinkLed()
 {
     if (taskBlinkLed.getRunCounter() % 2 == 0)
     {
         pixels.clear();
-        pixels.setPixelColor(blinkLed, blinkColor);
+        pixels.setPixelColor(convertNrToLed(blinkNr), blinkColor);
         pixels.show();
     }
     else
@@ -33,9 +39,9 @@ static void handleBlinkLed()
     }
 }
 
-void rgbSetSingleLed(int led, uint32_t color)
+void rgbSetSingleLed(uint8_t nr, uint32_t color)
 {
-    pixels.setPixelColor(led, color);
+    pixels.setPixelColor(convertNrToLed(nr), color);
 }
 
 void rgbShow()
@@ -43,9 +49,9 @@ void rgbShow()
     pixels.show();
 }
 
-void rgbBlinkSingleLed(int led, int times, uint32_t color, TaskOnDisable doneCallback)
+void rgbBlinkSingleLed(uint8_t nr, uint16_t times, uint32_t color, TaskOnDisable doneCallback)
 {
-    blinkLed = led;
+    blinkNr = nr;
     blinkTimes = times;
     blinkColor = color;
     blinkTimesExecuted = 0;
@@ -62,7 +68,8 @@ void rgbSetAllLeds(uint32_t color)
     }
 }
 
-void rgbSetBrightness(uint8_t brightness) {
+void rgbSetBrightness(uint8_t brightness)
+{
     pixels.setBrightness(brightness);
 }
 

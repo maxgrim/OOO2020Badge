@@ -36,11 +36,6 @@ int8_t brightnessModifier = 1;
 static const uint32_t colorActive = 0x0080FF;
 static const uint32_t colorEffect = 0x00FF00;
 
-static int convertToLedNr(int led)
-{
-    return (led + 9) % 12;
-}
-
 static void showMenuAnimation()
 {
     // Only modify brightness every 2nd execution
@@ -62,7 +57,7 @@ static void showMenuAnimation()
 
     for (int i = 0; i < RGB_N_LEDS; i++)
     {
-        rgbSetSingleLed(convertToLedNr(i), i == currentMenuPosition ? colorActive : colorEffect);
+        rgbSetSingleLed(i, i == currentMenuPosition ? colorActive : colorEffect);
     }
 
     rgbShow();
@@ -71,7 +66,7 @@ static void showMenuAnimation()
 static void activateMenu()
 {
     rgbClear();
-    rgbSetSingleLed(convertToLedNr(currentMenuPosition), 0xFFFFFF);
+    rgbSetSingleLed(currentMenuPosition, 0xFFFFFF);
     rgbShow();
 
     badgeTaskScheduler.addTask(tDetectButtonChange);
@@ -79,7 +74,9 @@ static void activateMenu()
     badgeTaskScheduler.addTask(tVerifyButtonsLow);
     badgeTaskScheduler.addTask(tShowMenuAnimation);
 
-    tDetectButtonChange.enable();
+    // Activate the menu when the buttons are low
+    tVerifyButtonsLow.enable();
+    
     tShowMenuAnimation.enable();
 }
 
@@ -117,7 +114,7 @@ static void enterCurrentMenuPosition()
         break;
     }
 
-    rgbBlinkSingleLed(convertToLedNr(currentMenuPosition), 3, colorActive, doneCallback);
+    rgbBlinkSingleLed(currentMenuPosition, 3, colorActive, doneCallback);
 }
 
 static void detectButtonChange()
