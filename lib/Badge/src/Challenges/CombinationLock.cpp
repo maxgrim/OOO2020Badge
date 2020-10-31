@@ -79,8 +79,9 @@ void combinationLockSetup(void (*doneCallback)())
     pinMode(PIN_BUTTON_R, INPUT);
 
     Serial.printf("Lock combination challenge\r\n");
-    rgbSetAllLeds(0);
-
+    rgbClear();
+    rgbShow();
+    
     badgeTaskScheduler.addTask(tDetectButtonChange);
     badgeTaskScheduler.addTask(tVerifyButtonChange);
     badgeTaskScheduler.addTask(tVerifyButtonsLow);
