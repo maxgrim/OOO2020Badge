@@ -5,6 +5,7 @@
 #include "Debug.h"
 #include "Crypto.h"
 #include "Definitions.h"
+#include "Eyes.h"
 #include "Menu.h"
 #include "RGB.h"
 #include "SerialPrompt.h"
@@ -46,7 +47,7 @@ void badgeFatalError(const char *message) {
 
 bool badgeSetup(size_t eepromSize, size_t eepromStartAddress)
 {
-    pinMode(PIN_LED_EYES, OUTPUT);
+    eyesSetup();
 
     // TODO: Remember badge mode, until set back in the menu.
     // TODO: Clear the LEDs if coming from WLED.
@@ -68,14 +69,12 @@ bool badgeSetup(size_t eepromSize, size_t eepromStartAddress)
 
     if (settings.badgeMode == 0)
     {
-        digitalWrite(PIN_LED_EYES, HIGH);
-    }
-    else
-    {
-        digitalWrite(PIN_LED_EYES, LOW);
+        eyesOff();
         Serial.flush();
         return false;
     }
+
+    eyesOn();
 
     // Setup RGB
     rgbSetup();
