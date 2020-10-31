@@ -6,5 +6,6 @@
 
 void cryptoGetFlag(char *destination, size_t destination_length, int input);
 void cryptoGetFlagXOR(char *buffer, uint8_t buffer_size, char *key, uint8_t key_size);
+void cryptoGetFlagAES(char *encryptedFlag, char *destination);
 
 #endif

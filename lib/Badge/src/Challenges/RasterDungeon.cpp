@@ -3,6 +3,7 @@
 #include "../Badge.h"
 #include "../Eyes.h"
 #include "../RGB.h"
+#include "../FlagCrypto.h"
 #include "../Definitions.h"
 
 #include <Arduino.h>
@@ -267,8 +268,11 @@ static void verifyButtonChange()
             tPlayDeadAnimation.enable();
             return;
         case 3:
-            // TODO: add flag
-            Serial.printf("You found the flag!: TODO\r\n");
+            char *encryptedFlag = "ElDz3zZlWVmLHJwwIY92a37WOZqP8/gneZYW+16C+8zR8hTAesWvV96GSmxGrwaH";
+            char destination[strlen(encryptedFlag)];
+            cryptoGetFlagAES(encryptedFlag, destination);
+            Serial.printf("You've escaped the dungeon! This is for you: %s\r\n", destination);
+
             deactivateRasterDungeon();
             badgeTaskScheduler.addTask(tPlayWinAnimation);
             tPlayWinAnimation.enable();
