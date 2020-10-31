@@ -31,7 +31,9 @@ static int convertToLedNr(int led)
 
 static void activateMenu()
 {
+    rgbClear();
     rgbSetSingleLed(convertToLedNr(currentMenuPosition), 0xFFFFFF);
+    rgbShow();
 
     badgeTaskScheduler.addTask(tDetectButtonChange);
     badgeTaskScheduler.addTask(tVerifyButtonChange);
@@ -99,7 +101,9 @@ static void verifyButtonChange()
             currentMenuPosition = 11;
         }
 
+        rgbClear();
         rgbSetSingleLed(convertToLedNr(currentMenuPosition), 0xFFFFFF);
+        rgbShow();
     }
     else if (readingR)
     {
@@ -110,7 +114,9 @@ static void verifyButtonChange()
             currentMenuPosition = 0;
         }
 
+        rgbClear();
         rgbSetSingleLed(convertToLedNr(currentMenuPosition), 0xFFFFFF);
+        rgbShow();
     }
 
     tVerifyButtonsLow.enable();

@@ -35,8 +35,11 @@ static void handleBlinkLed()
 
 void rgbSetSingleLed(int led, uint32_t color)
 {
-    pixels.clear();
     pixels.setPixelColor(led, color);
+}
+
+void rgbShow()
+{
     pixels.show();
 }
 
@@ -59,6 +62,11 @@ void rgbSetAllLeds(uint32_t color)
     }
 
     pixels.show();
+}
+
+void rgbClear()
+{
+    pixels.clear();
 }
 
 void rgbSetup()
