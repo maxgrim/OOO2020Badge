@@ -78,7 +78,7 @@ static void enterCurrentMenuPosition()
     rgbBlinkSingleLed(convertToLedNr(currentMenuPosition), 3, 0xFF0000, doneCallback);
 }
 
-void detectButtonChange()
+static void detectButtonChange()
 {
     readingL = digitalRead(PIN_BUTTON_L);
     readingR = digitalRead(PIN_BUTTON_R);
