@@ -63,6 +63,14 @@ static void verifyButtonsLow()
     }
 }
 
+static void deactivateCombinationLock() {
+    badgeTaskScheduler.deleteTask(tDetectButtonChange);
+    badgeTaskScheduler.deleteTask(tVerifyButtonChange);
+    badgeTaskScheduler.deleteTask(tVerifyButtonsLow);
+
+    doneCallbackF();
+}
+
 void combinationLockSetup(void (*doneCallback)())
 {
     doneCallbackF = doneCallback;

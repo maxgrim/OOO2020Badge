@@ -32,12 +32,19 @@ static int convertToLedNr(int led)
 static void activateMenu()
 {
     rgbSetSingleLed(convertToLedNr(currentMenuPosition), 0xFFFFFF);
+
+    badgeTaskScheduler.addTask(tDetectButtonChange);
+    badgeTaskScheduler.addTask(tVerifyButtonChange);
+    badgeTaskScheduler.addTask(tVerifyButtonsLow);
+
     tDetectButtonChange.enable();
 }
 
 static void deactivateMenu()
 {
-    tDetectButtonChange.disable();
+    badgeTaskScheduler.deleteTask(tDetectButtonChange);
+    badgeTaskScheduler.deleteTask(tVerifyButtonChange);
+    badgeTaskScheduler.deleteTask(tVerifyButtonsLow);
 }
 
 static void startCombinationLock()
@@ -122,10 +129,6 @@ void menuSetup()
 {
     pinMode(PIN_BUTTON_L, INPUT);
     pinMode(PIN_BUTTON_R, INPUT);
-
-    badgeTaskScheduler.addTask(tDetectButtonChange);
-    badgeTaskScheduler.addTask(tVerifyButtonChange);
-    badgeTaskScheduler.addTask(tVerifyButtonsLow);
 
     activateMenu();
 }
