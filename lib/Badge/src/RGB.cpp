@@ -60,8 +60,10 @@ void rgbSetAllLeds(uint32_t color)
     {
         pixels.setPixelColor(i, color);
     }
+}
 
-    pixels.show();
+void rgbSetBrightness(uint8_t brightness) {
+    pixels.setBrightness(brightness);
 }
 
 void rgbClear()
@@ -72,9 +74,9 @@ void rgbClear()
 void rgbSetup()
 {
     pixels.begin();
-    pixels.clear();
-    pixels.setBrightness(10);
-    pixels.show();
+
+    rgbClear();
+    rgbShow();
 
     badgeTaskScheduler.addTask(taskBlinkLed);
 }
