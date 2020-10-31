@@ -103,7 +103,8 @@ String encodeMorse(const char *string)
 
 void handleOff()
 {
-    rgbSetAllLeds(0);
+    rgbClear();
+    rgbShow();
 }
 
 void displayMorse()
@@ -114,12 +115,14 @@ void displayMorse()
         {
         case '.':
             rgbSetAllLeds(0xFFFF00);
+            rgbShow();
 
             tHandleOff.restartDelayed(UNIT_LENGTH);
             tDisplayMorse.delay(UNIT_LENGTH * 2);
             break;
         case '-':
             rgbSetAllLeds(0xFFFF00);
+            rgbShow();
 
             tHandleOff.restartDelayed(UNIT_LENGTH * 3);
             tDisplayMorse.delay(UNIT_LENGTH * 3 * 2);
@@ -133,11 +136,7 @@ void displayMorse()
     {
         encodedMorseIndex = 0;
         badgeTaskScheduler.deleteTask(tDisplayMorse);
-
-        if (doneCallbackF != NULL)
-        {
-            doneCallbackF();
-        }
+        doneCallbackF();
     }
 }
 
