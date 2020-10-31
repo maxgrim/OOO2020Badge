@@ -55,9 +55,6 @@ bool badgeSetup(size_t eepromSize, size_t eepromStartAddress)
 {
     eyesSetup();
 
-    // TODO: Remember badge mode, until set back in the menu.
-    // TODO: Clear the LEDs if coming from WLED.
-
     // Setup serial output
     Serial.begin(115200);
 
