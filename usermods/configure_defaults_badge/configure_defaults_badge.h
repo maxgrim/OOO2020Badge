@@ -28,7 +28,8 @@ public:
       effectCurrent = FX_MODE_MERRY_CHRISTMAS;
       bri = 20;
       effectIntensity = 32;
-      effectSpeed = 64;
+      effectSpeed = 48;
+
 
       saveSettingsToEEPROM();
       savePreset(1, true);
