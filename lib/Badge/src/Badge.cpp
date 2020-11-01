@@ -75,7 +75,6 @@ bool badgeSetup(size_t eepromSize, size_t eepromStartAddress, bool forceStart)
     Serial.begin(115200);
     eyesSetup();
     rgbSetup();
-    wifiSetup();
 
     // Setup settings
     settingsSetup(eepromSize, eepromStartAddress);
@@ -103,6 +102,7 @@ bool badgeSetup(size_t eepromSize, size_t eepromStartAddress, bool forceStart)
     }
 
     eyesOn();
+    wifiSetup();
 
     // Setup menu
     menuSetup();
