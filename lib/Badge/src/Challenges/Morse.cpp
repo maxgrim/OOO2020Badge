@@ -135,6 +135,7 @@ void displayMorse()
     else
     {
         encodedMorseIndex = 0;
+        tDisplayMorse.disable();
         badgeTaskScheduler.deleteTask(tDisplayMorse);
         doneCallbackF();
     }
