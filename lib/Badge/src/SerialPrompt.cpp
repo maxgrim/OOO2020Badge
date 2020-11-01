@@ -46,7 +46,7 @@ static bool active = true;
 
 void printPrompt()
 {
-    Serial.printf("$ ");
+    Serial.printf("\r\n$ ");
 }
 
 void addCommand(char *name, char *description, bool hidden, void (*func)(uint8_t argc, char **argv))
@@ -186,7 +186,7 @@ void cmdSh(uint8_t argc, char **argv)
 
 void cmdCat(uint8_t argc, char **argv)
 {
-    if (argc != 0 && strcmp(argv[1], "flag.txt") == 0)
+    if (argc != 0 && (strcmp(argv[1], "flag.txt") == 0 || strcmp(argv[1], "./flag.txt") == 0))
     {
         Settings settings = settingsGetSettings();
 
@@ -269,6 +269,8 @@ void serialPromptActivate()
 
     badgeTaskScheduler.addTask(tHandleSerialInput);
     tHandleSerialInput.enable();
+
+    printPrompt();
 }
 
 void serialPromptDeactivate()
@@ -291,5 +293,4 @@ void serialPromptSetup()
     addCommand("BzzBzzD3pl0yL4z3rz", "Hidden option", true, cmdHidden);
 
     serialPromptActivate();
-    printPrompt();
 }
