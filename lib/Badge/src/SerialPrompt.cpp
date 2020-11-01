@@ -40,7 +40,7 @@ static char *cmdHiddenFlagEncrypted = "\xde\xd4\x27\x30\xf5\x08\xa6\xf5\x84\x91\
 static char *cmdHiddenFlagKey = "\x9d\x80\x61\x4b\xc0\x6c\x94\xc1\xb6\xa6\x78\xc1\xaa\x02\xf2\x85\xd9\xce\x22\x06\xd8\x01\xe2\xf7\x01\xcc\xf9\xdb\x33\xb1\xe5\x27\xe3\xc4\x98\x1f\x6e";
 
 static void handleSerialInput();
-static Task tHandleSerialInput(0, TASK_FOREVER, &handleSerialInput);
+static Task tHandleSerialInput(TASK_IMMEDIATE, TASK_FOREVER, &handleSerialInput);
 
 static bool active = true;
 

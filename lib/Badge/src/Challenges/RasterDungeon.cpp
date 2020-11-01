@@ -50,13 +50,13 @@ static const uint8_t dungeon[20][20] = {
     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
 
 static void detectButtonChange();
-static Task tDetectButtonChange(0, TASK_FOREVER, &detectButtonChange);
+static Task tDetectButtonChange(TASK_IMMEDIATE, TASK_FOREVER, &detectButtonChange);
 
 static void verifyButtonChange();
 static Task tVerifyButtonChange(DEBOUNCE_BUTTON, TASK_ONCE, &verifyButtonChange);
 
 static void verifyButtonsLow();
-static Task tVerifyButtonsLow(0, TASK_FOREVER, &verifyButtonsLow);
+static Task tVerifyButtonsLow(TASK_IMMEDIATE, TASK_FOREVER, &verifyButtonsLow);
 
 static void playWinAnimation();
 static Task tPlayWinAnimation(200, 18, &playWinAnimation);

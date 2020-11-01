@@ -17,13 +17,13 @@ static int currentMenuPosition = 0;
 static bool readingL, readingR, lastStateL, lastStateR;
 
 static void detectButtonChange();
-static Task tDetectButtonChange(0, TASK_FOREVER, &detectButtonChange);
+static Task tDetectButtonChange(TASK_IMMEDIATE, TASK_FOREVER, &detectButtonChange);
 
 static void verifyButtonChange();
 static Task tVerifyButtonChange(DEBOUNCE_BUTTON, TASK_ONCE, &verifyButtonChange);
 
 static void verifyButtonsLow();
-static Task tVerifyButtonsLow(0, TASK_FOREVER, &verifyButtonsLow);
+static Task tVerifyButtonsLow(TASK_IMMEDIATE, TASK_FOREVER, &verifyButtonsLow);
 
 static void showMenuAnimation();
 static Task tShowMenuAnimation(50, TASK_FOREVER, &showMenuAnimation);
