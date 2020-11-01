@@ -49,7 +49,7 @@ void badgeFatalError(const char *message)
     };
 }
 
-bool badgeSetup(size_t eepromSize, size_t eepromStartAddress)
+bool badgeSetup(size_t eepromSize, size_t eepromStartAddress, bool forceStart)
 {
     eyesSetup();
 
@@ -61,14 +61,14 @@ bool badgeSetup(size_t eepromSize, size_t eepromStartAddress)
     Settings settings = settingsGetSettings();
 
     // Badge mode code
-    if (buttonsPressed())
+    if (!forceStart && buttonsPressed())
     {
         settings.badgeMode = settings.badgeMode == 0 ? 255 : 0;
         settingsSetSettings(settings);
         DEBUG_PRINTLN(F("Buttons pressed, switching modes"));
     }
 
-    if (settings.badgeMode == 255)
+    if (!forceStart && settings.badgeMode == 255)
     {
         eyesOff();
         Serial.flush();
