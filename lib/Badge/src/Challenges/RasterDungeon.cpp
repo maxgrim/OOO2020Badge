@@ -15,11 +15,17 @@ static int8_t currentDirection = 0;
 static bool readingL, readingR, lastStateL, lastStateR;
 static const char characters[4] = {' ', 'X', '+', 'V'};
 
-static const uint32_t colorOff = 0;
-static const uint32_t colorDisabled = 0xFF0000;
-static const uint32_t colorBase = 0xFFFF00;
-static const uint32_t colorDirection = 0x00FF00;
-static const uint32_t colorDead = 0xFF0000;
+static const uint32_t colorOpen = 0;
+static const uint32_t colorWall = 0xFF0000;
+static const uint32_t colorDirection = 0x0080FF;
+
+static const uint32_t colorEffectBase = 0xFFFF00;
+static const uint32_t colorEffectDead = 0xFF0000;
+
+uint8_t maxBrightness = 25;
+uint8_t minBrightness = 1;
+uint16_t currentBrightness = 0;
+int8_t brightnessModifier = 1;
 
 static const uint8_t dungeon[20][20] = {
     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -57,6 +63,59 @@ static Task tPlayWinAnimation(200, 18, &playWinAnimation);
 
 static void playDeadAnimation();
 static Task tPlayDeadAnimation(200, 7, &playDeadAnimation);
+
+static void showDungeonAnimation();
+static Task tShowDungeonAnimation(25, TASK_FOREVER, &showDungeonAnimation);
+
+static uint8_t effectMaxBrightness = 25;
+static uint8_t effectMinBrightness = 1;
+static uint16_t effectCurrentBrightness = 0;
+static int8_t effectBrightnessModifier = 1;
+
+static const uint32_t colorActive = 0x0080FF;
+static const uint32_t colorEffect = 0x00FF00;
+
+static void showDungeonAnimation()
+{
+    // Only modify brightness every 2nd execution
+    if (tShowDungeonAnimation.getRunCounter() % 2 == 1)
+    {
+        effectCurrentBrightness += effectBrightnessModifier;
+
+        if (effectCurrentBrightness >= effectMaxBrightness)
+        {
+            effectCurrentBrightness = effectMaxBrightness;
+            effectBrightnessModifier = -effectBrightnessModifier;
+        }
+
+        if (effectCurrentBrightness <= effectMinBrightness)
+        {
+            effectCurrentBrightness = effectMinBrightness;
+            effectBrightnessModifier = -effectBrightnessModifier;
+        }
+
+        rgbSetBrightness(effectCurrentBrightness);
+    }
+
+    rgbSetSingleLed(0, (dungeon[posY - 1][posX] == 1) ? colorWall : colorOpen);
+    rgbSetSingleLed(3, (dungeon[posY][posX + 1] == 1) ? colorWall : colorOpen);
+    rgbSetSingleLed(6, (dungeon[posY + 1][posX] == 1) ? colorWall : colorOpen);
+    rgbSetSingleLed(9, (dungeon[posY][posX - 1] == 1) ? colorWall : colorOpen);
+
+    // Overwrite 1 LED with currentDirection indicator
+    rgbSetSingleLed(((currentDirection * 3) + 6) % 12, colorDirection);
+
+    rgbSetSingleLed(1, colorEffectBase);
+    rgbSetSingleLed(2, colorEffectBase);
+    rgbSetSingleLed(4, colorEffectBase);
+    rgbSetSingleLed(5, colorEffectBase);
+    rgbSetSingleLed(7, colorEffectBase);
+    rgbSetSingleLed(8, colorEffectBase);
+    rgbSetSingleLed(10, colorEffectBase);
+    rgbSetSingleLed(11, colorEffectBase);
+
+    rgbShow();
+}
 
 static void playWinAnimation()
 {
@@ -106,12 +165,13 @@ static void playDeadAnimation()
     else
     {
         eyesOn();
-        rgbSetAllLeds(colorDead);
+        rgbSetAllLeds(colorEffectDead);
         rgbShow();
     }
 }
 
-static void printCurrentPosition() {
+static void printCurrentPosition()
+{
     Serial.printf("You are at (%d, %d)\r\n", posX, posY);
 }
 
@@ -120,6 +180,7 @@ static void deactivateRasterDungeon()
     badgeTaskScheduler.deleteTask(tDetectButtonChange);
     badgeTaskScheduler.deleteTask(tVerifyButtonChange);
     badgeTaskScheduler.deleteTask(tVerifyButtonsLow);
+    badgeTaskScheduler.deleteTask(tShowDungeonAnimation);
 }
 
 static void printDungeon()
@@ -215,26 +276,6 @@ int8_t getNextDirection(int8_t currentDirection, uint8_t posX, uint8_t posY, boo
 
 static void updateRgbLeds()
 {
-    rgbClear();
-    rgbSetBrightness(10);
-
-    rgbSetSingleLed(0, (dungeon[posY][posX + 1] == 1) ? colorDisabled : colorOff);
-    rgbSetSingleLed(1, colorBase);
-    rgbSetSingleLed(2, colorBase);
-    rgbSetSingleLed(3, (dungeon[posY + 1][posX] == 1) ? colorDisabled : colorOff);
-    rgbSetSingleLed(4, colorBase);
-    rgbSetSingleLed(5, colorBase);
-    rgbSetSingleLed(6, (dungeon[posY][posX - 1] == 1) ? colorDisabled : colorOff);
-    rgbSetSingleLed(7, colorBase);
-    rgbSetSingleLed(8, colorBase);
-    rgbSetSingleLed(9, (dungeon[posY - 1][posX] == 1) ? colorDisabled : colorOff);
-    rgbSetSingleLed(10, colorBase);
-    rgbSetSingleLed(11, colorBase);
-
-    // Overwrite 1 LED with currentDirection indicator
-    rgbSetSingleLed(((currentDirection * 3) + 6) % 12, colorDirection);
-
-    rgbShow();
 }
 
 static void detectButtonChange()
@@ -251,57 +292,69 @@ static void detectButtonChange()
     lastStateR = readingR;
 }
 
+static void handleMove()
+{
+    posX = getNextX(posX, currentDirection);
+    posY = getNextY(posY, currentDirection);
+
+    printDungeon();
+    printCurrentPosition();
+
+    // Handle dying
+    switch (dungeon[posY][posX])
+    {
+    case 2:
+        // Dead
+        Serial.printf("Oh no, you ran into a monster. Dead!\r\n");
+        deactivateRasterDungeon();
+        badgeTaskScheduler.addTask(tPlayDeadAnimation);
+        tPlayDeadAnimation.enable();
+        return;
+    case 3:
+        char *encryptedFlag = "ElDz3zZlWVmLHJwwIY92a37WOZqP8/gneZYW+16C+8zR8hTAesWvV96GSmxGrwaH";
+        char destination[strlen(encryptedFlag)];
+        cryptoGetFlagAES(encryptedFlag, destination);
+        Serial.printf("You've successfully escaped the dungeon! This is for you: %s\r\n", destination);
+
+        deactivateRasterDungeon();
+        badgeTaskScheduler.addTask(tPlayWinAnimation);
+        tPlayWinAnimation.enable();
+        return;
+    }
+
+    // Check if the direction is still valid
+    uint8_t nextPosX = getNextX(posX, currentDirection);
+    uint8_t nextPosY = getNextY(posY, currentDirection);
+
+    if (dungeon[nextPosY][nextPosX] == 1)
+    {
+        currentDirection = getNextDirection(currentDirection, posX, posY, true);
+    }
+
+    updateRgbLeds();
+    tVerifyButtonsLow.enable();
+    tShowDungeonAnimation.enable();
+}
+
 static void verifyButtonChange()
 {
     tDetectButtonChange.disable();
 
     if (readingL && readingR)
     {
-        posX = getNextX(posX, currentDirection);
-        posY = getNextY(posY, currentDirection);
-
-        printDungeon();
-        printCurrentPosition();
-
-        // Handle dying
-        switch (dungeon[posY][posX])
-        {
-        case 2:
-            // Dead
-            Serial.printf("Oh no, you ran into a monster. Dead!\r\n");
-            deactivateRasterDungeon();
-            badgeTaskScheduler.addTask(tPlayDeadAnimation);
-            tPlayDeadAnimation.enable();
-            return;
-        case 3:
-            char *encryptedFlag = "ElDz3zZlWVmLHJwwIY92a37WOZqP8/gneZYW+16C+8zR8hTAesWvV96GSmxGrwaH";
-            char destination[strlen(encryptedFlag)];
-            cryptoGetFlagAES(encryptedFlag, destination);
-            Serial.printf("You've successfully escaped the dungeon! This is for you: %s\r\n", destination);
-
-            deactivateRasterDungeon();
-            badgeTaskScheduler.addTask(tPlayWinAnimation);
-            tPlayWinAnimation.enable();
-        }
-
-        // Check if the direction is still valid
-        uint8_t nextPosX = getNextX(posX, currentDirection);
-        uint8_t nextPosY = getNextY(posY, currentDirection);
-
-        if (dungeon[nextPosY][nextPosX] == 1)
-        {
-            currentDirection = getNextDirection(currentDirection, posX, posY, true);
-        }
-
-        updateRgbLeds();
+        tShowDungeonAnimation.disable();
+        rgbBlinkSingleLed(((currentDirection * 3) + 6) % 12, 3, colorDirection, &handleMove);
     }
     else if (readingL || readingR)
     {
         currentDirection = getNextDirection(currentDirection, posX, posY, readingR);
         updateRgbLeds();
+        tVerifyButtonsLow.enable();
     }
-
-    tVerifyButtonsLow.enable();
+    else
+    {
+        tVerifyButtonsLow.enable();
+    }
 }
 
 static void verifyButtonsLow()
@@ -320,15 +373,37 @@ void rasterDungeonSetup(void (*doneCallback)())
     pinMode(PIN_BUTTON_L, INPUT);
     pinMode(PIN_BUTTON_R, INPUT);
 
+    Serial.printf(" ██▀███  ▄▄▄       ██████▄▄▄█████▓█████ ██▀███                 \r\n");
+    Serial.printf("▓██ ▒ ██▒████▄   ▒██    ▒▓  ██▒ ▓▓█   ▀▓██ ▒ ██▒               \r\n");
+    Serial.printf("▓██ ░▄█ ▒██  ▀█▄ ░ ▓██▄  ▒ ▓██░ ▒▒███  ▓██ ░▄█ ▒               \r\n");
+    Serial.printf("▒██▀▀█▄ ░██▄▄▄▄██  ▒   ██░ ▓██▓ ░▒▓█  ▄▒██▀▀█▄                 \r\n");
+    Serial.printf("░██▓ ▒██▒▓█   ▓██▒██████▒▒ ▒██▒ ░░▒████░██▓ ▒██▒               \r\n");
+    Serial.printf("░ ▒▓ ░▒▓░▒▒   ▓▒█▒ ▒▓▒ ▒ ░ ▒ ░░  ░░ ▒░ ░ ▒▓ ░▒▓░               \r\n");
+    Serial.printf("  ░▒ ░ ▒░ ▒   ▒▒ ░ ░▒  ░ ░   ░    ░ ░  ░ ░▒ ░ ▒░               \r\n");
+    Serial.printf("  ░░   ░  ░   ▒  ░  ░  ░   ░        ░    ░░   ░                \r\n");
+    Serial.printf("   ░          ░  ░     ░            ░  ░  ░                    \r\n");
+    Serial.printf("                                                               \r\n");
+    Serial.printf("      ▓█████▄ █    ██ ███▄    █  ▄████▓█████ ▒█████  ███▄    █ \r\n");
+    Serial.printf("      ▒██▀ ██▌██  ▓██▒██ ▀█   █ ██▒ ▀█▓█   ▀▒██▒  ██▒██ ▀█   █ \r\n");
+    Serial.printf("      ░██   █▓██  ▒██▓██  ▀█ ██▒██░▄▄▄▒███  ▒██░  ██▓██  ▀█ ██▒\r\n");
+    Serial.printf("      ░▓█▄   ▓▓█  ░██▓██▒  ▐▌██░▓█  ██▒▓█  ▄▒██   ██▓██▒  ▐▌██▒\r\n");
+    Serial.printf("      ░▒████▓▒▒█████▓▒██░   ▓██░▒▓███▀░▒████░ ████▓▒▒██░   ▓██░\r\n");
+    Serial.printf("       ▒▒▓  ▒░▒▓▒ ▒ ▒░ ▒░   ▒ ▒ ░▒   ▒░░ ▒░ ░ ▒░▒░▒░░ ▒░   ▒ ▒ \r\n");
+    Serial.printf("       ░ ▒  ▒░░▒░ ░ ░░ ░░   ░ ▒░ ░   ░ ░ ░  ░ ░ ▒ ▒░░ ░░   ░ ▒░\r\n");
+    Serial.printf("       ░ ░  ░ ░░░ ░ ░   ░   ░ ░░ ░   ░   ░  ░ ░ ░ ▒    ░   ░ ░ \r\n");
+    Serial.printf("         ░      ░             ░      ░   ░  ░   ░ ░          ░ \r\n");
+    Serial.printf("       ░                                                       \r\n");
+    Serial.printf("\r\n\r\nYou've entered to the dungeon!\r\n");
+
     printDungeon();
     updateRgbLeds();
-
-    Serial.printf("\r\nWelcome to the dungeon!\r\n");
     printCurrentPosition();
 
     badgeTaskScheduler.addTask(tDetectButtonChange);
     badgeTaskScheduler.addTask(tVerifyButtonChange);
     badgeTaskScheduler.addTask(tVerifyButtonsLow);
+    badgeTaskScheduler.addTask(tShowDungeonAnimation);
 
     tDetectButtonChange.enable();
+    tShowDungeonAnimation.enable();
 }
