@@ -7,6 +7,7 @@
 // External programs to execute
 #include "Challenges/CombinationLock.h"
 #include "Challenges/RasterDungeon.h"
+#include "Challenges/Webserver.h"
 // ----------------------------
 
 #include <Arduino.h>
@@ -70,9 +71,13 @@ static void startCombinationLock()
     combinationLockSetup(&menuActivate);
 }
 
-static void startDungeonSetup()
+static void startDungeon()
 {
     rasterDungeonSetup(&menuActivate);
+}
+
+static void startWebserver() {
+    webserverSetup(&menuActivate);
 }
 
 static void enterCurrentMenuPosition()
@@ -88,7 +93,10 @@ static void enterCurrentMenuPosition()
         blinkDoneCallback = &startCombinationLock;
         break;
     case 2:
-        blinkDoneCallback = &startDungeonSetup;
+        blinkDoneCallback = &startDungeon;
+        break;
+    case 3:
+        blinkDoneCallback = &startWebserver;
         break;
     default:
         blinkDoneCallback = &menuActivate;
