@@ -2,7 +2,7 @@
 #define SETTINGS_H_SEEN
 
 struct Settings {
-  uint8_t badgeMode;
+  uint8_t bootMode;
   uint8_t isAdmin;
 };
 

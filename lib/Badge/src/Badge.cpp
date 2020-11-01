@@ -17,6 +17,9 @@
 
 Scheduler badgeTaskScheduler;
 
+#define BOOTMODE_WLED 10
+#define BOOTMODE_BADGE 15
+
 static bool buttonsPressed()
 {
     pinMode(PIN_BUTTON_L, INPUT);
@@ -68,24 +71,31 @@ DoneCallback badgeRequestExecution(ExecutionMethod method)
 
 bool badgeSetup(size_t eepromSize, size_t eepromStartAddress, bool forceStart)
 {
-    eyesSetup();
-
-    // Setup serial output
+    // Basic setup
     Serial.begin(115200);
+    eyesSetup();
+    rgbSetup();
+    wifiSetup();
 
     // Setup settings
     settingsSetup(eepromSize, eepromStartAddress);
     Settings settings = settingsGetSettings();
 
+    if (settings.bootMode != BOOTMODE_WLED && settings.bootMode != BOOTMODE_BADGE)
+    {
+        settings.bootMode = BOOTMODE_WLED;
+        settingsSetSettings(settings);
+    }
+
     // Badge mode code
     if (!forceStart && buttonsPressed())
     {
-        settings.badgeMode = settings.badgeMode == 0 ? 255 : 0;
+        settings.bootMode = settings.bootMode == BOOTMODE_WLED ? BOOTMODE_BADGE : BOOTMODE_WLED;
         settingsSetSettings(settings);
         DEBUG_PRINTLN(F("Buttons pressed, switching modes"));
     }
 
-    if (!forceStart && settings.badgeMode == 255)
+    if (!forceStart && settings.bootMode == BOOTMODE_WLED)
     {
         eyesOff();
         Serial.flush();
@@ -94,14 +104,8 @@ bool badgeSetup(size_t eepromSize, size_t eepromStartAddress, bool forceStart)
 
     eyesOn();
 
-    // Setup RGB
-    rgbSetup();
-
     // Setup menu
     menuSetup();
-
-    // WiFi
-    wifiSetup();
 
     // Print out the banner and the first flag over serial
     printWelcome();
