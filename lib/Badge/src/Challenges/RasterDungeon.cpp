@@ -311,9 +311,12 @@ static void handleMove()
         tPlayDeadAnimation.enable();
         return;
     case 3:
-        char *encryptedFlag = "ElDz3zZlWVmLHJwwIY92a37WOZqP8/gneZYW+16C+8zR8hTAesWvV96GSmxGrwaH";
+        const char *encryptedFlag = "ElDz3zZlWVmLHJwwIY92a37WOZqP8/gneZYW+16C+8zR8hTAesWvV96GSmxGrwaH";
+        const uint8_t aesKey[AES_BLOCK_SIZE] = {0xa3, 0x18, 0xe9, 0x26, 0x9a, 0x14, 0xdd, 0x91, 0x63, 0xe8, 0x25, 0x51, 0x75, 0x1b, 0x8f, 0x0b};
+        const uint8_t aesIV[AES_BLOCK_SIZE] = {0x58, 0x12, 0xa9, 0x24, 0x46, 0xdc, 0x64, 0x76, 0x51, 0x42, 0x46, 0x1c, 0xf8, 0x1d, 0x54, 0x41};
         char destination[strlen(encryptedFlag)];
-        cryptoGetFlagAES(encryptedFlag, destination);
+
+        cryptoGetFlagAES(aesKey, aesIV, encryptedFlag, destination);
         Serial.printf("You've successfully escaped the dungeon! This is for you: %s\r\n", destination);
 
         deactivateRasterDungeon();

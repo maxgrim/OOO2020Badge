@@ -192,8 +192,13 @@ void cmdCat(uint8_t argc, char **argv)
 
         if (settings.isAdmin == 1)
         {
-            // TODO: Replace placeholder with the vigenere cipher
-            Serial.printf("Here is your flag: %s\r\n", "PLACEHOLDER");
+            const char *encryptedFlag = "PhyfKjW9yh/Meend+rdMihzLahFenHCfrqlmWL26e77ZN8Kehb6qbiEesGgj7nWp";
+            const uint8_t aesKey[AES_BLOCK_SIZE] = {0xb5, 0x43, 0x86, 0x98, 0xb7, 0xa0, 0xe4, 0x9f, 0xf8, 0xbc, 0x47, 0x76, 0xc4, 0xe0, 0xb6, 0xe0};
+            const uint8_t aesIV[AES_BLOCK_SIZE] = {0xe3, 0xf0, 0x29, 0xae, 0xb9, 0xbf, 0x9b, 0x4e, 0xb9, 0xad, 0x89, 0xab, 0x06, 0xde, 0x2a, 0x62};
+            char destination[strlen(encryptedFlag)];
+
+            cryptoGetFlagAES(aesKey, aesIV, encryptedFlag, destination);
+            Serial.printf("%s\r\n", destination);
         }
         else
         {
