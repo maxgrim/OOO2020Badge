@@ -49,6 +49,23 @@ void badgeFatalError(const char *message)
     };
 }
 
+DoneCallback badgeRequestExecution(ExecutionMethod method)
+{
+    switch (method)
+    {
+    case MENU:
+        serialPromptDeactivate();
+        return &serialPromptActivate;
+        break;
+    case SERIAL_PROMPT:
+        menuDeactivate();
+        return &menuActivate;
+        break;
+    }
+
+    return NULL;
+}
+
 bool badgeSetup(size_t eepromSize, size_t eepromStartAddress, bool forceStart)
 {
     eyesSetup();
@@ -98,8 +115,5 @@ bool badgeSetup(size_t eepromSize, size_t eepromStartAddress, bool forceStart)
 
 void badgeLoop()
 {
-    serialPromptLoop();
-
-    // TODO: when menu or serialPrompt is executed, it should disable the other..
     badgeTaskScheduler.execute();
 }

@@ -28,32 +28,34 @@ static Task tVerifyButtonsLow(0, TASK_FOREVER, &verifyButtonsLow);
 static void showMenuAnimation();
 static Task tShowMenuAnimation(50, TASK_FOREVER, &showMenuAnimation);
 
-uint8_t maxBrightness = 35;
-uint8_t minBrightness = 5;
-uint16_t currentBrightness = 0;
-int8_t brightnessModifier = 1;
+static uint8_t effectMaxBrightness = 25;
+static uint8_t effectMinBrightness = 1;
+static uint16_t effectCurrentBrightness = 0;
+static int8_t effectBrightnessModifier = 1;
 
 static const uint32_t colorActive = 0x0080FF;
 static const uint32_t colorEffect = 0x00FF00;
 
+static DoneCallback executionDone;
+
 static void showMenuAnimation()
 {
     // Only modify brightness every 2nd execution
-    currentBrightness += brightnessModifier;
+    effectCurrentBrightness += effectBrightnessModifier;
 
-    if (currentBrightness >= maxBrightness)
+    if (effectCurrentBrightness >= effectMaxBrightness)
     {
-        currentBrightness = maxBrightness;
-        brightnessModifier = -brightnessModifier;
+        effectCurrentBrightness = effectMaxBrightness;
+        effectBrightnessModifier = -effectBrightnessModifier;
     }
 
-    if (currentBrightness <= minBrightness)
+    if (effectCurrentBrightness <= effectMinBrightness)
     {
-        currentBrightness = minBrightness;
-        brightnessModifier = -brightnessModifier;
+        effectCurrentBrightness = effectMinBrightness;
+        effectBrightnessModifier = -effectBrightnessModifier;
     }
 
-    rgbSetBrightness(currentBrightness);
+    rgbSetBrightness(effectCurrentBrightness);
 
     for (int i = 0; i < RGB_N_LEDS; i++)
     {
@@ -63,58 +65,37 @@ static void showMenuAnimation()
     rgbShow();
 }
 
-static void activateMenu()
-{
-    rgbClear();
-    rgbSetSingleLed(currentMenuPosition, 0xFFFFFF);
-    rgbShow();
-
-    badgeTaskScheduler.addTask(tDetectButtonChange);
-    badgeTaskScheduler.addTask(tVerifyButtonChange);
-    badgeTaskScheduler.addTask(tVerifyButtonsLow);
-    badgeTaskScheduler.addTask(tShowMenuAnimation);
-
-    // Activate the menu when the buttons are low
-    tVerifyButtonsLow.enable();
-    
-    tShowMenuAnimation.enable();
-}
-
-static void deactivateMenu()
-{
-    badgeTaskScheduler.deleteTask(tDetectButtonChange);
-    badgeTaskScheduler.deleteTask(tVerifyButtonChange);
-    badgeTaskScheduler.deleteTask(tVerifyButtonsLow);
-    badgeTaskScheduler.deleteTask(tShowMenuAnimation);
-}
-
 static void startCombinationLock()
 {
-    combinationLockSetup(&activateMenu);
+    combinationLockSetup(&menuActivate);
 }
 
 static void startDungeonSetup()
 {
-    rasterDungeonSetup(&activateMenu);
+    rasterDungeonSetup(&menuActivate);
 }
 
 static void enterCurrentMenuPosition()
 {
-    deactivateMenu();
+    menuDeactivate();
+    executionDone = badgeRequestExecution(MENU);
 
-    void (*doneCallback)() = &activateMenu;
+    void (*blinkDoneCallback)();
 
     switch (currentMenuPosition)
     {
     case 1:
-        doneCallback = &startCombinationLock;
+        blinkDoneCallback = &startCombinationLock;
         break;
     case 2:
-        doneCallback = &startDungeonSetup;
+        blinkDoneCallback = &startDungeonSetup;
+        break;
+    default:
+        blinkDoneCallback = &menuActivate;
         break;
     }
 
-    rgbBlinkSingleLed(currentMenuPosition, 3, colorActive, doneCallback);
+    rgbBlinkSingleLed(currentMenuPosition, 3, colorActive, blinkDoneCallback);
 }
 
 static void detectButtonChange()
@@ -170,10 +151,41 @@ static void verifyButtonsLow()
     }
 }
 
+void menuActivate()
+{
+    if(executionDone != NULL) {
+        executionDone();
+        executionDone = NULL;
+    }
+
+    rgbClear();
+    rgbSetSingleLed(currentMenuPosition, 0xFFFFFF);
+    rgbShow();
+
+    badgeTaskScheduler.addTask(tDetectButtonChange);
+    badgeTaskScheduler.addTask(tVerifyButtonChange);
+    badgeTaskScheduler.addTask(tVerifyButtonsLow);
+    badgeTaskScheduler.addTask(tShowMenuAnimation);
+
+    tVerifyButtonsLow.enable();
+    tShowMenuAnimation.enable();
+}
+
+void menuDeactivate()
+{
+    badgeTaskScheduler.deleteTask(tDetectButtonChange);
+    badgeTaskScheduler.deleteTask(tVerifyButtonChange);
+    badgeTaskScheduler.deleteTask(tVerifyButtonsLow);
+    badgeTaskScheduler.deleteTask(tShowMenuAnimation);
+
+    tVerifyButtonsLow.disable();
+    tShowMenuAnimation.disable();
+}
+
 void menuSetup()
 {
     pinMode(PIN_BUTTON_L, INPUT);
     pinMode(PIN_BUTTON_R, INPUT);
 
-    activateMenu();
+    menuActivate();
 }

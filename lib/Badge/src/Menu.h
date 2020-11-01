@@ -2,6 +2,7 @@
 #define MENU_H_SEEN
 
 void menuSetup();
-void menuLoop();
+void menuActivate();
+void menuDeactivate();
 
 #endif

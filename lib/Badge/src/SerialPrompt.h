@@ -4,6 +4,8 @@
 #include <stdint.h>
 
 void serialPromptSetup();
+void serialPromptActivate();
+void serialPromptDeactivate();
 void serialPromptLoop();
 
 #endif

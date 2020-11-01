@@ -2,7 +2,6 @@
 #include "Debug.h"
 #include "Badge.h"
 #include "FlagCrypto.h"
-#include "Menu.h"
 
 #include "Settings.h"
 
@@ -27,33 +26,27 @@ typedef struct _cmd_t
     void (*func)(uint8_t argc, char **argv);
 } cmd_t;
 
-char buffer[BUFFER_LENGTH + 1];
+static DoneCallback executionDone;
 
-uint8_t commandTableIndex = 0;
+static char buffer[BUFFER_LENGTH + 1];
+
+static uint8_t commandTableIndex = 0;
 static cmd_t commandTable[TABLE_LENGTH];
-uint8_t commandCharsRead = 0;
+static uint8_t commandCharsRead = 0;
 
-char *strings[ARGUMENTS_LENGTH];
+static char *strings[ARGUMENTS_LENGTH];
 
-bool active = true;
+static char *cmdHiddenFlagEncrypted = "\xde\xd4\x27\x30\xf5\x08\xa6\xf5\x84\x91\x1b\xf6\xc8\x66\x94\xbd\xeb\xfc\x10\x32\xec\x63\x80\xc5\x64\xfa\xc9\xe2\x50\x86\xd2\x15\x82\xa6\xad\x7c\x13";
+static char *cmdHiddenFlagKey = "\x9d\x80\x61\x4b\xc0\x6c\x94\xc1\xb6\xa6\x78\xc1\xaa\x02\xf2\x85\xd9\xce\x22\x06\xd8\x01\xe2\xf7\x01\xcc\xf9\xdb\x33\xb1\xe5\x27\xe3\xc4\x98\x1f\x6e";
 
-char *cmdHiddenFlagEncrypted = "\xde\xd4\x27\x30\xf5\x08\xa6\xf5\x84\x91\x1b\xf6\xc8\x66\x94\xbd\xeb\xfc\x10\x32\xec\x63\x80\xc5\x64\xfa\xc9\xe2\x50\x86\xd2\x15\x82\xa6\xad\x7c\x13";
-char *cmdHiddenFlagKey = "\x9d\x80\x61\x4b\xc0\x6c\x94\xc1\xb6\xa6\x78\xc1\xaa\x02\xf2\x85\xd9\xce\x22\x06\xd8\x01\xe2\xf7\x01\xcc\xf9\xdb\x33\xb1\xe5\x27\xe3\xc4\x98\x1f\x6e";
+static void handleSerialInput();
+static Task tHandleSerialInput(0, TASK_FOREVER, &handleSerialInput);
+
+static bool active = true;
 
 void printPrompt()
 {
     Serial.printf("$ ");
-}
-
-void activatePrompt()
-{
-    active = true;
-    printPrompt();
-}
-
-void deactivatePrompt()
-{
-    active = false;
 }
 
 void addCommand(char *name, char *description, bool hidden, void (*func)(uint8_t argc, char **argv))
@@ -138,7 +131,8 @@ void parseAndExecute()
         if (!strcmp(strings[0], commandTable[i].cmd))
         {
             executed = true;
-            deactivatePrompt();
+            serialPromptDeactivate();
+            executionDone = badgeRequestExecution(SERIAL_PROMPT);
             commandTable[i].func(argc, strings);
         }
     }
@@ -146,14 +140,14 @@ void parseAndExecute()
     if (!executed)
     {
         Serial.println(F("Unknown command"));
-        activatePrompt();
+        serialPromptActivate();
     }
 }
 
 void cmdLs(uint8_t argc, char **argv)
 {
     Serial.println(F("flag.txt\tmorse\tcatchTheLed.sh\tfastCalculation.sh"));
-    activatePrompt();
+    serialPromptActivate();
 }
 
 void cmdReboot(uint8_t argc, char **argv)
@@ -167,26 +161,26 @@ void cmdSh(uint8_t argc, char **argv)
     {
         if (strcmp(argv[1], "./morse") == 0)
         {
-            morseCodeSetup(activatePrompt);
+            morseCodeSetup(serialPromptActivate);
         }
         else if (strcmp(argv[1], "./fastCalculation.sh") == 0)
         {
-            fastCalculationSetup(activatePrompt);
+            fastCalculationSetup(serialPromptActivate);
         }
         else if (strcmp(argv[1], "./catchTheLed.sh") == 0)
         {
-            catchTheLedSetup(activatePrompt);
+            catchTheLedSetup(serialPromptActivate);
         }
         else
         {
             Serial.println(F("Invalid command"));
-            activatePrompt();
+            serialPromptActivate();
         }
     }
     else
     {
         Serial.println(F("Invalid command"));
-        activatePrompt();
+        serialPromptActivate();
     }
 }
 
@@ -211,7 +205,7 @@ void cmdCat(uint8_t argc, char **argv)
         Serial.println(F("File not found\r\n"));
     }
 
-    activatePrompt();
+    serialPromptActivate();
 }
 
 void cmdHidden(uint8_t argc, char **argv)
@@ -220,10 +214,10 @@ void cmdHidden(uint8_t argc, char **argv)
 
     cryptoGetFlagXOR(cmdHiddenFlagEncrypted, size, cmdHiddenFlagKey, size);
 
-    Serial.println(F("[...Engine goes...]\tBzzzz Bzzzzz\r\n[...AI voice says...]\tSuper Laser activated. Ready to fire.\r\n\r\n[...Badge says...]\tYou found the hidden menu! Well done young reverse engineer! Here is your reward.\r\n"));
+    Serial.println(F("[...Engine goes...]\tBzzzz Bzzzzz\r\n[...AI voice says...]\tSuper Laser activated. Ready to fire.\r\n\r\n[...Badge says...]\tYou found the hidden command! Well done young reverse engineer! Here is your reward.\r\n"));
     Serial.println(cmdHiddenFlagEncrypted);
 
-    activatePrompt();
+    serialPromptActivate();
 }
 
 void cmdHelp(uint8_t argc, char **argv)
@@ -238,26 +232,15 @@ void cmdHelp(uint8_t argc, char **argv)
         }
     }
 
-    activatePrompt();
+    serialPromptActivate();
 }
 
-void serialPromptSetup()
-{
-    activatePrompt();
-    addCommand("help", "Print help", false, cmdHelp);
-    addCommand("reboot", "Reboot the badge", false, cmdReboot);
-    addCommand("ls", "List files", false, cmdLs);
-    addCommand("sh", "Execute file", false, cmdSh);
-    addCommand("cat", "Print file", false, cmdCat);
-
-    // The hidden flag command
-    addCommand("BzzBzzD3pl0yL4z3rz", "Hidden option", true, cmdHidden);
-}
-
-void serialPromptLoop()
+static void handleSerialInput()
 {
     while (Serial.available())
     {
+        yield();
+
         // TODO: Maybe integrate active into read, read the serial buffer but do not do anything with it
         if (read())
         {
@@ -267,4 +250,41 @@ void serialPromptLoop()
             }
         }
     }
+}
+
+void serialPromptActivate()
+{
+    if (executionDone != NULL)
+    {
+        executionDone();
+        executionDone = NULL;
+    }
+
+    active = true;
+
+    badgeTaskScheduler.addTask(tHandleSerialInput);
+    tHandleSerialInput.enable();
+}
+
+void serialPromptDeactivate()
+{
+    active = false;
+
+    badgeTaskScheduler.deleteTask(tHandleSerialInput);
+    tHandleSerialInput.disable();
+}
+
+void serialPromptSetup()
+{
+    addCommand("help", "Print help", false, cmdHelp);
+    addCommand("reboot", "Reboot the badge", false, cmdReboot);
+    addCommand("ls", "List files", false, cmdLs);
+    addCommand("sh", "Execute file", false, cmdSh);
+    addCommand("cat", "Print file", false, cmdCat);
+
+    // The hidden flag command
+    addCommand("BzzBzzD3pl0yL4z3rz", "Hidden option", true, cmdHidden);
+
+    serialPromptActivate();
+    printPrompt();
 }
