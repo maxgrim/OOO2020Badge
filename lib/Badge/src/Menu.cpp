@@ -6,7 +6,7 @@
 
 // External programs to execute
 #include "Challenges/CombinationLock.h"
-#include "Challenges/RasterDungeon.h"
+#include "Challenges/SpaceMaze.h"
 #include "Challenges/Webserver.h"
 // ----------------------------
 
@@ -71,9 +71,9 @@ static void startCombinationLock()
     combinationLockSetup(&menuActivate);
 }
 
-static void startDungeon()
+static void startSpaceMaze()
 {
-    rasterDungeonSetup(&menuActivate);
+    spaceMazeSetup(&menuActivate);
 }
 
 static void startWebserver() {
@@ -93,7 +93,7 @@ static void enterCurrentMenuPosition()
         blinkDoneCallback = &startCombinationLock;
         break;
     case 2:
-        blinkDoneCallback = &startDungeon;
+        blinkDoneCallback = &startSpaceMaze;
         break;
     case 3:
         blinkDoneCallback = &startWebserver;

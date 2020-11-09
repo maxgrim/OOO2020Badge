@@ -1,4 +1,4 @@
-#include "RasterDungeon.h"
+#include "SpaceMaze.h"
 
 #include "../Badge.h"
 #include "../Eyes.h"
@@ -369,34 +369,20 @@ static void verifyButtonsLow()
     }
 }
 
-void rasterDungeonSetup(void (*doneCallback)())
+void spaceMazeSetup(void (*doneCallback)())
 {
     doneCallbackF = doneCallback;
 
     pinMode(PIN_BUTTON_L, INPUT);
     pinMode(PIN_BUTTON_R, INPUT);
 
-    Serial.printf(" ██▀███  ▄▄▄       ██████▄▄▄█████▓█████ ██▀███                 \r\n");
-    Serial.printf("▓██ ▒ ██▒████▄   ▒██    ▒▓  ██▒ ▓▓█   ▀▓██ ▒ ██▒               \r\n");
-    Serial.printf("▓██ ░▄█ ▒██  ▀█▄ ░ ▓██▄  ▒ ▓██░ ▒▒███  ▓██ ░▄█ ▒               \r\n");
-    Serial.printf("▒██▀▀█▄ ░██▄▄▄▄██  ▒   ██░ ▓██▓ ░▒▓█  ▄▒██▀▀█▄                 \r\n");
-    Serial.printf("░██▓ ▒██▒▓█   ▓██▒██████▒▒ ▒██▒ ░░▒████░██▓ ▒██▒               \r\n");
-    Serial.printf("░ ▒▓ ░▒▓░▒▒   ▓▒█▒ ▒▓▒ ▒ ░ ▒ ░░  ░░ ▒░ ░ ▒▓ ░▒▓░               \r\n");
-    Serial.printf("  ░▒ ░ ▒░ ▒   ▒▒ ░ ░▒  ░ ░   ░    ░ ░  ░ ░▒ ░ ▒░               \r\n");
-    Serial.printf("  ░░   ░  ░   ▒  ░  ░  ░   ░        ░    ░░   ░                \r\n");
-    Serial.printf("   ░          ░  ░     ░            ░  ░  ░                    \r\n");
-    Serial.printf("                                                               \r\n");
-    Serial.printf("      ▓█████▄ █    ██ ███▄    █  ▄████▓█████ ▒█████  ███▄    █ \r\n");
-    Serial.printf("      ▒██▀ ██▌██  ▓██▒██ ▀█   █ ██▒ ▀█▓█   ▀▒██▒  ██▒██ ▀█   █ \r\n");
-    Serial.printf("      ░██   █▓██  ▒██▓██  ▀█ ██▒██░▄▄▄▒███  ▒██░  ██▓██  ▀█ ██▒\r\n");
-    Serial.printf("      ░▓█▄   ▓▓█  ░██▓██▒  ▐▌██░▓█  ██▒▓█  ▄▒██   ██▓██▒  ▐▌██▒\r\n");
-    Serial.printf("      ░▒████▓▒▒█████▓▒██░   ▓██░▒▓███▀░▒████░ ████▓▒▒██░   ▓██░\r\n");
-    Serial.printf("       ▒▒▓  ▒░▒▓▒ ▒ ▒░ ▒░   ▒ ▒ ░▒   ▒░░ ▒░ ░ ▒░▒░▒░░ ▒░   ▒ ▒ \r\n");
-    Serial.printf("       ░ ▒  ▒░░▒░ ░ ░░ ░░   ░ ▒░ ░   ░ ░ ░  ░ ░ ▒ ▒░░ ░░   ░ ▒░\r\n");
-    Serial.printf("       ░ ░  ░ ░░░ ░ ░   ░   ░ ░░ ░   ░   ░  ░ ░ ░ ▒    ░   ░ ░ \r\n");
-    Serial.printf("         ░      ░             ░      ░   ░  ░   ░ ░          ░ \r\n");
-    Serial.printf("       ░                                                       \r\n");
-    Serial.printf("\r\n\r\nYou've entered to the dungeon!\r\n");
+    Serial.printf("________                               ______  ___                  \r\n");
+    Serial.printf("__  ___/_____________ ___________      ___   |/  /_____ ___________ \r\n");
+    Serial.printf("_____ \\___  __ \\  __ `/  ___/  _ \\     __  /|_/ /_  __ `/__  /_  _ \\r\n");
+    Serial.printf("____/ /__  /_/ / /_/ // /__ /  __/     _  /  / / / /_/ /__  /_/  __/\r\n");
+    Serial.printf("/____/ _  .___/\\__,_/ \\___/ \\___/      /_/  /_/  \\__,_/ _____/\\___/ \r\n");
+    Serial.printf("       /_/                                                          \r\n");
+    Serial.printf("\r\n\r\nYou've entered to the maze!\r\n");
 
     printDungeon();
     updateRgbLeds();
