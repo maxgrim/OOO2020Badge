@@ -7,11 +7,13 @@
 #define PIN_BUTTON_L 12
 #define PIN_BUTTON_R 16
 #define MAX_PRESETS 16
+#define DEFAULT_BRIGHTNESS 20
 
-unsigned long lastDebounceTime = 0; // the last time the output pin was toggled
-unsigned long debounceDelay = 50;   // the debounce time; increase if the output flickers
-int buttonState;                    // the current reading from the input pin
-int lastButtonState = LOW;          // the previous reading from the input pin
+unsigned long lastDebounceTime = 0;                 // the last time the output pin was toggled
+unsigned long debounceDelay = 50;                   // the debounce time; increase if the output flickers
+int buttonStateL, buttonStateR;                     // the current reading from the input pin
+int lastButtonStateL = LOW, lastButtonStateR = LOW; // the previous reading from the input pin
+int buttonCurrentPreset = 1;
 
 struct Settings
 {
@@ -23,6 +25,9 @@ class OOO2020BadgeUsermod : public Usermod
 public:
   void setup()
   {
+    pinMode(PIN_BUTTON_L, INPUT);
+    pinMode(PIN_BUTTON_R, INPUT);
+
     Settings settings = {};
     EEPROM.get(2800, settings);
 
@@ -30,83 +35,260 @@ public:
     {
       settings.defaultsSet = EEPROM_DEFAULTS_SET;
       EEPROM.put(2800, settings);
-
-      // Christmas effect
       bootPreset = 1;
+      bri = DEFAULT_BRIGHTNESS;
+      saveSettingsToEEPROM();
+
+      WS2812FX::Segment &seg = strip.getSegment(0);
+
+      col[0] = 0;
+      col[1] = 0;
+      col[2] = 0;
+      colSec[0] = 0;
+      colSec[1] = 0;
+      colSec[2] = 0;
       effectCurrent = FX_MODE_MERRY_CHRISTMAS;
-      bri = 20;
       effectIntensity = 32;
       effectSpeed = 48;
-
-      saveSettingsToEEPROM();
+      bri = DEFAULT_BRIGHTNESS;
       savePreset(1, true);
+
+      col[0] = 0;
+      col[1] = 0;
+      col[2] = 0;
+      colSec[0] = 0;
+      colSec[1] = 0;
+      colSec[2] = 0;
+      effectCurrent = FX_MODE_MERRY_CHRISTMAS;
+      effectIntensity = 16;
+      effectSpeed = 48;
+      bri = DEFAULT_BRIGHTNESS;
+      savePreset(2, true);
+
+      col[0] = 0;
+      col[1] = 0;
+      col[2] = 0;
+      colSec[0] = 0;
+      colSec[1] = 0;
+      colSec[2] = 0;
+      effectCurrent = FX_MODE_MERRY_CHRISTMAS;
+      effectIntensity = 0;
+      effectSpeed = 0;
+      bri = DEFAULT_BRIGHTNESS;
+      savePreset(3, true);
+
+      col[0] = 255;
+      col[1] = 0;
+      col[2] = 0;
+      colSec[0] = 0;
+      colSec[1] = 0;
+      colSec[2] = 0;
+      effectCurrent = FX_MODE_RUNNING_LIGHTS;
+      effectIntensity = 150;
+      effectSpeed = 32;
+      bri = DEFAULT_BRIGHTNESS;
+      savePreset(4, true);
+
+      col[0] = 255;
+      col[1] = 0;
+      col[2] = 0;
+      colSec[0] = 0;
+      colSec[1] = 0;
+      colSec[2] = 0;
+      effectCurrent = FX_MODE_SINELON_DUAL;
+      effectIntensity = 128;
+      effectSpeed = 128;
+      bri = DEFAULT_BRIGHTNESS;
+      savePreset(5, true);
+
+      col[0] = 255;
+      col[1] = 0;
+      col[2] = 0;
+      colSec[0] = 0;
+      colSec[1] = 0;
+      colSec[2] = 0;
+      effectCurrent = FX_MODE_TWINKLECAT;
+      effectIntensity = 196;
+      effectSpeed = 128;
+      bri = DEFAULT_BRIGHTNESS;
+      savePreset(6, true);
+
+      col[0] = 255;
+      col[1] = 200;
+      col[2] = 0;
+      colSec[0] = 0;
+      colSec[1] = 0;
+      colSec[2] = 0;
+      effectCurrent = FX_MODE_CANDLE;
+      effectIntensity = 192;
+      effectSpeed = 8;
+      bri = DEFAULT_BRIGHTNESS * 3;
+      savePreset(7, true);
+
+      col[0] = 0;
+      col[1] = 0;
+      col[2] = 0;
+      colSec[0] = 0;
+      colSec[1] = 0;
+      colSec[2] = 0;
+      effectCurrent = FX_MODE_SOLID_GLITTER;
+      effectIntensity = 12;
+      effectSpeed = 0;
+      bri = DEFAULT_BRIGHTNESS;
+      savePreset(8, true);
+
+      col[0] = 0;
+      col[1] = 0;
+      col[2] = 0;
+      colSec[0] = 0;
+      colSec[1] = 0;
+      colSec[2] = 0;
+      effectCurrent = FX_MODE_PALETTE;
+      effectIntensity = 0;
+      effectSpeed = 32;
+      bri = DEFAULT_BRIGHTNESS;
+      savePreset(9, true);
+
+      col[0] = 0;
+      col[1] = 0;
+      col[2] = 0;
+      colSec[0] = 0;
+      colSec[1] = 0;
+      colSec[2] = 0;
+      effectCurrent = FX_MODE_COLORTWINKLE;
+      effectIntensity = 75;
+      effectSpeed = 0;
+      bri = DEFAULT_BRIGHTNESS;
+      savePreset(10, true);
+
+      col[0] = 0;
+      col[1] = 0;
+      col[2] = 0;
+      colSec[0] = 0;
+      colSec[1] = 0;
+      colSec[2] = 0;
+      effectCurrent = FX_MODE_DISSOLVE_RANDOM;
+      effectIntensity = 64;
+      effectSpeed = 192;
+      bri = DEFAULT_BRIGHTNESS;
+      savePreset(11, true);
+
+      col[0] = 0;
+      col[1] = 0;
+      col[2] = 0;
+      colSec[0] = 0;
+      colSec[1] = 0;
+      colSec[2] = 0;
+      effectCurrent = FX_MODE_SINELON_RAINBOW;
+      effectIntensity = 0;
+      effectSpeed = 64;
+      bri = DEFAULT_BRIGHTNESS;
+      savePreset(12, true);
+
+      col[0] = 0;
+      col[1] = 0;
+      col[2] = 0;
+      colSec[0] = 0;
+      colSec[1] = 0;
+      colSec[2] = 0;
+      effectCurrent = FX_MODE_RAINBOW_CYCLE;
+      effectIntensity = 8;
+      effectSpeed = 12;
+      bri = DEFAULT_BRIGHTNESS;
+      savePreset(13, true);
+
       ESP.restart();
     }
   }
+  
+  void connected() {}
 
-  void connected()
+  bool presetUp()
   {
-    pinMode(PIN_BUTTON_L, INPUT);
-    pinMode(PIN_BUTTON_R, INPUT);
+    int nextPreset = ++buttonCurrentPreset;
+
+    if (nextPreset > MAX_PRESETS)
+    {
+      buttonCurrentPreset = nextPreset = 1;
+    }
+
+    Serial.println(nextPreset);
+
+    if (applyPreset(nextPreset))
+    {
+      colorUpdated(NOTIFIER_CALL_MODE_FX_CHANGED);
+      return true;
+    }
+
+    return false;
+  }
+
+  bool presetDown()
+  {
+    int nextPreset = --buttonCurrentPreset;
+
+    if (nextPreset < 1)
+    {
+      buttonCurrentPreset = nextPreset = MAX_PRESETS;
+    }
+
+    Serial.println(nextPreset);
+
+    if (applyPreset(nextPreset))
+    {
+      colorUpdated(NOTIFIER_CALL_MODE_FX_CHANGED);
+      return true;
+    }
+
+    return false;
   }
 
   void loop()
   {
-    // read the state of the switch into a local variable:
-    int reading = digitalRead(PIN_BUTTON_R);
+    int readingL = digitalRead(PIN_BUTTON_L);
+    int readingR = digitalRead(PIN_BUTTON_R);
 
-    // check to see if you just pressed the button
-    // (i.e. the input went from LOW to HIGH), and you've waited long enough
-    // since the last press to ignore any noise:
-
-    // If the switch changed, due to noise or pressing:
-    if (reading != lastButtonState)
+    if (readingL != lastButtonStateL || readingR != lastButtonStateR)
     {
-      // reset the debouncing timer
       lastDebounceTime = millis();
     }
 
     if ((millis() - lastDebounceTime) > debounceDelay)
     {
-      // whatever the reading is at, it's been there for longer than the debounce
-      // delay, so take it as the actual current state:
-
-      // if the button state has changed:
-      if (reading != buttonState)
+      if (readingL != buttonStateL)
       {
-        buttonState = reading;
+        buttonStateL = readingL;
 
-        // only toggle the LED if the new button state is HIGH
-        if (buttonState == HIGH)
+        if (readingL)
         {
-          Serial.println("Button pressed!");
-
-          for (int i = 1; i <= MAX_PRESETS; i++)
+          for (int i = 0; i < MAX_PRESETS; i++)
           {
-            int nextPreset = currentPreset == -1 ? 1 : ((currentPreset + i) % MAX_PRESETS) + 1;
-
-            Serial.print("Current: ");
-            Serial.println(currentPreset);
-
-            Serial.print("Next: ");
-            Serial.println(nextPreset);
-
-            if (applyPreset(nextPreset))
+            if (presetDown())
             {
-              Serial.println("Preset exists!");
-              colorUpdated(NOTIFIER_CALL_MODE_FX_CHANGED);
               break;
             }
-            else
+          }
+        }
+      }
+
+      if (readingR != buttonStateR)
+      {
+        buttonStateR = readingR;
+
+        if (readingR)
+        {
+          for (int i = 0; i < MAX_PRESETS; i++)
+          {
+            if (presetUp())
             {
-              Serial.println("Preset does not exist!");
+              break;
             }
           }
         }
       }
     }
 
-    // save the reading. Next time through the loop, it'll be the lastButtonState:
-    lastButtonState = reading;
+    lastButtonStateL = readingL;
+    lastButtonStateR = readingR;
   }
 };
