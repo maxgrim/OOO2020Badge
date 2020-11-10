@@ -48,7 +48,7 @@ public:
       colSec[1] = 0;
       colSec[2] = 0;
       effectCurrent = FX_MODE_MERRY_CHRISTMAS;
-      effectIntensity = 32;
+      effectIntensity = 64;
       effectSpeed = 48;
       bri = DEFAULT_BRIGHTNESS;
       savePreset(1, true);
@@ -60,7 +60,7 @@ public:
       colSec[1] = 0;
       colSec[2] = 0;
       effectCurrent = FX_MODE_MERRY_CHRISTMAS;
-      effectIntensity = 16;
+      effectIntensity = 32;
       effectSpeed = 48;
       bri = DEFAULT_BRIGHTNESS;
       savePreset(2, true);
@@ -72,10 +72,22 @@ public:
       colSec[1] = 0;
       colSec[2] = 0;
       effectCurrent = FX_MODE_MERRY_CHRISTMAS;
+      effectIntensity = 16;
+      effectSpeed = 48;
+      bri = DEFAULT_BRIGHTNESS;
+      savePreset(3, true);
+
+      col[0] = 0;
+      col[1] = 0;
+      col[2] = 0;
+      colSec[0] = 0;
+      colSec[1] = 0;
+      colSec[2] = 0;
+      effectCurrent = FX_MODE_MERRY_CHRISTMAS;
       effectIntensity = 0;
       effectSpeed = 0;
       bri = DEFAULT_BRIGHTNESS;
-      savePreset(3, true);
+      savePreset(4, true);
 
       col[0] = 255;
       col[1] = 0;
@@ -83,11 +95,47 @@ public:
       colSec[0] = 0;
       colSec[1] = 0;
       colSec[2] = 0;
-      effectCurrent = FX_MODE_RUNNING_LIGHTS;
-      effectIntensity = 150;
-      effectSpeed = 32;
+      effectCurrent = FX_MODE_STATIC;
+      effectIntensity = 0;
+      effectSpeed = 0;
       bri = DEFAULT_BRIGHTNESS;
-      savePreset(4, true);
+      savePreset(5, true);
+
+      col[0] = 0;
+      col[1] = 255;
+      col[2] = 0;
+      colSec[0] = 0;
+      colSec[1] = 0;
+      colSec[2] = 0;
+      effectCurrent = FX_MODE_STATIC;
+      effectIntensity = 0;
+      effectSpeed = 0;
+      bri = DEFAULT_BRIGHTNESS;
+      savePreset(6, true);
+
+      col[0] = 0;
+      col[1] = 0;
+      col[2] = 255;
+      colSec[0] = 0;
+      colSec[1] = 0;
+      colSec[2] = 0;
+      effectCurrent = FX_MODE_STATIC;
+      effectIntensity = 0;
+      effectSpeed = 0;
+      bri = DEFAULT_BRIGHTNESS;
+      savePreset(7, true);
+
+      col[0] = 255;
+      col[1] = 255;
+      col[2] = 255;
+      colSec[0] = 0;
+      colSec[1] = 0;
+      colSec[2] = 0;
+      effectCurrent = FX_MODE_STATIC;
+      effectIntensity = 0;
+      effectSpeed = 0;
+      bri = DEFAULT_BRIGHTNESS;
+      savePreset(8, true);
 
       col[0] = 255;
       col[1] = 0;
@@ -99,19 +147,7 @@ public:
       effectIntensity = 128;
       effectSpeed = 128;
       bri = DEFAULT_BRIGHTNESS;
-      savePreset(5, true);
-
-      col[0] = 255;
-      col[1] = 0;
-      col[2] = 0;
-      colSec[0] = 0;
-      colSec[1] = 0;
-      colSec[2] = 0;
-      effectCurrent = FX_MODE_TWINKLECAT;
-      effectIntensity = 196;
-      effectSpeed = 128;
-      bri = DEFAULT_BRIGHTNESS;
-      savePreset(6, true);
+      savePreset(9, true);
 
       col[0] = 255;
       col[1] = 200;
@@ -123,7 +159,7 @@ public:
       effectIntensity = 192;
       effectSpeed = 8;
       bri = DEFAULT_BRIGHTNESS * 3;
-      savePreset(7, true);
+      savePreset(10, true);
 
       col[0] = 0;
       col[1] = 0;
@@ -135,31 +171,7 @@ public:
       effectIntensity = 12;
       effectSpeed = 0;
       bri = DEFAULT_BRIGHTNESS;
-      savePreset(8, true);
-
-      col[0] = 0;
-      col[1] = 0;
-      col[2] = 0;
-      colSec[0] = 0;
-      colSec[1] = 0;
-      colSec[2] = 0;
-      effectCurrent = FX_MODE_PALETTE;
-      effectIntensity = 0;
-      effectSpeed = 32;
-      bri = DEFAULT_BRIGHTNESS;
-      savePreset(9, true);
-
-      col[0] = 0;
-      col[1] = 0;
-      col[2] = 0;
-      colSec[0] = 0;
-      colSec[1] = 0;
-      colSec[2] = 0;
-      effectCurrent = FX_MODE_COLORTWINKLE;
-      effectIntensity = 75;
-      effectSpeed = 0;
-      bri = DEFAULT_BRIGHTNESS;
-      savePreset(10, true);
+      savePreset(11, true);
 
       col[0] = 0;
       col[1] = 0;
@@ -171,7 +183,7 @@ public:
       effectIntensity = 64;
       effectSpeed = 192;
       bri = DEFAULT_BRIGHTNESS;
-      savePreset(11, true);
+      savePreset(12, true);
 
       col[0] = 0;
       col[1] = 0;
@@ -179,11 +191,11 @@ public:
       colSec[0] = 0;
       colSec[1] = 0;
       colSec[2] = 0;
-      effectCurrent = FX_MODE_SINELON_RAINBOW;
+      effectCurrent = FX_MODE_PALETTE;
       effectIntensity = 0;
-      effectSpeed = 64;
+      effectSpeed = 32;
       bri = DEFAULT_BRIGHTNESS;
-      savePreset(12, true);
+      savePreset(13, true);
 
       col[0] = 0;
       col[1] = 0;
@@ -195,12 +207,24 @@ public:
       effectIntensity = 8;
       effectSpeed = 12;
       bri = DEFAULT_BRIGHTNESS;
-      savePreset(13, true);
+      savePreset(14, true);
+
+      col[0] = 0;
+      col[1] = 0;
+      col[2] = 0;
+      colSec[0] = 0;
+      colSec[1] = 0;
+      colSec[2] = 0;
+      effectCurrent = FX_MODE_RAINBOW_CYCLE;
+      effectIntensity = 0;
+      effectSpeed = 192;
+      bri = DEFAULT_BRIGHTNESS;
+      savePreset(15, true);
 
       ESP.restart();
     }
   }
-  
+
   void connected() {}
 
   bool presetUp()
