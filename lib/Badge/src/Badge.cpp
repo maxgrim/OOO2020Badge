@@ -101,7 +101,7 @@ bool badgeSetup(size_t eepromSize, size_t eepromStartAddress, bool forceStart)
     }
 
     eyesOn();
-    wifiSetup();
+    wifiOff();
 
     // Setup menu
     menuSetup();
