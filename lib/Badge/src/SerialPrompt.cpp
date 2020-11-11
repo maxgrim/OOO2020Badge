@@ -7,7 +7,7 @@
 
 // External programs to execute
 #include "Challenges/Morse.h"
-#include "Challenges/CombinationLock.h"
+#include "Challenges/LaserController.h"
 #include "Challenges/FastCalculation.h"
 #include "Challenges/CatchTheLed.h"
 // ----------------------------
@@ -173,7 +173,7 @@ void cmdSh(uint8_t argc, char **argv)
         }
         else if (strcmp(argv[1], "./shootLaser.sh") == 0)
         {
-            combinationLockSetup(serialPromptActivate);
+            laserControllerSetup(serialPromptActivate);
         }
         else
         {

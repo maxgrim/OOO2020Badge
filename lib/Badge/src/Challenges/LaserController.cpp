@@ -1,4 +1,4 @@
-#include "CombinationLock.h"
+#include "LaserController.h"
 
 #include "../Badge.h"
 #include "../Debug.h"
@@ -183,7 +183,7 @@ static void updateRGB()
     rgbShow();
 }
 
-void combinationLockSetup(void (*doneCallback)())
+void laserControllerSetup(void (*doneCallback)())
 {
     doneCallbackF = doneCallback;
 

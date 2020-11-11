@@ -6,7 +6,7 @@
 
 // External programs to execute
 #include "Challenges/CatchTheLed.h"
-#include "Challenges/CombinationLock.h"
+#include "Challenges/LaserController.h"
 #include "Challenges/Morse.h"
 #include "Challenges/SpaceMaze.h"
 #include "Challenges/Webserver.h"
@@ -68,9 +68,9 @@ static void showMenuAnimation()
     rgbShow();
 }
 
-static void startCombinationLock()
+static void startLaserController()
 {
-    combinationLockSetup(&menuActivate);
+    laserControllerSetup(&menuActivate);
 }
 
 static void startSpaceMaze()
@@ -103,7 +103,7 @@ static void enterCurrentMenuPosition()
     switch (currentMenuPosition)
     {
     case 0:
-        blinkDoneCallback = &startCombinationLock;
+        blinkDoneCallback = &startLaserController;
         break;
     case 1:
         blinkDoneCallback = &startSpaceMaze;
