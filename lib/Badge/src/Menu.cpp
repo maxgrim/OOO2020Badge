@@ -14,7 +14,7 @@
 
 #include <Arduino.h>
 
-#define MENU_POSITIONS 12
+#define MENU_POSITIONS 5
 
 static int currentMenuPosition = 0;
 static bool readingL, readingR, lastStateL, lastStateR;
@@ -60,7 +60,7 @@ static void showMenuAnimation()
 
     rgbSetBrightness(effectCurrentBrightness);
 
-    for (int i = 0; i < RGB_N_LEDS; i++)
+    for (int i = 0; i < MENU_POSITIONS; i++)
     {
         rgbSetSingleLed(i, i == currentMenuPosition ? colorActive : colorEffect);
     }
@@ -153,14 +153,14 @@ static void verifyButtonChange()
         currentMenuPosition--;
         if (currentMenuPosition < 0)
         {
-            currentMenuPosition = 11;
+            currentMenuPosition = MENU_POSITIONS - 1;
         }
     }
     else if (readingR)
     {
         // Move menu right
         currentMenuPosition++;
-        if (currentMenuPosition > 11)
+        if (currentMenuPosition > MENU_POSITIONS - 1)
         {
             currentMenuPosition = 0;
         }

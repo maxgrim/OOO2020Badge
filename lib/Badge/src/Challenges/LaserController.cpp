@@ -265,7 +265,7 @@ void laserControllerSetup(void (*doneCallback)())
     Serial.printf(" / /___/ /_/ (__  )  __/ /     / /___/ /_/ / / / / /_/ /  / /_/ / / /  __/ /    \r\n");
     Serial.printf("/_____/\\__,_/____/\\___/_/      \\____/\\____/_/ /_/\\__/_/   \\____/_/_/\\___/_/     \r\n");
     Serial.printf("                                                                                \r\n");
-    Serial.printf("\r\n\r\nShoot! The laser is locked. Can you crack the code?\r\n\r\n");
+    Serial.printf("\r\n\r\nShoot! The laser is locked. Can you crack the code? Use the buttons\r\n\r\n");
 
     Serial.printf("Code: ");
 
