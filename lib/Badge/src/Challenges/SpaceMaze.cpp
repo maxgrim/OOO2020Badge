@@ -22,7 +22,6 @@ static const uint32_t colorDirection = 0x0080FF;
 static const uint32_t colorEffectBase = 0xFFFF00;
 static const uint32_t colorEffectDead = 0xFF0000;
 
-
 static const uint8_t dungeon[20][20] = {
     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
     {1, 0, 0, 0, 1, 2, 1, 1, 2, 0, 1, 2, 1, 1, 1, 1, 1, 1, 0, 1},
@@ -98,7 +97,6 @@ static void showDungeonAnimation()
     rgbSetSingleLed(6, (dungeon[posY + 1][posX] == 1) ? colorWall : colorOpen);
     rgbSetSingleLed(9, (dungeon[posY][posX - 1] == 1) ? colorWall : colorOpen);
 
-    // Overwrite 1 LED with currentDirection indicator
     rgbSetSingleLed(((currentDirection * 3) + 6) % 12, colorDirection);
 
     rgbSetSingleLed(1, colorEffectBase);
@@ -166,11 +164,6 @@ static void playDeadAnimation()
     }
 }
 
-static void printCurrentPosition()
-{
-    Serial.printf("You are at (%d, %d)\r\n", posX, posY);
-}
-
 static void deactivateRasterDungeon()
 {
     badgeTaskScheduler.deleteTask(tDetectButtonChange);
@@ -181,10 +174,7 @@ static void deactivateRasterDungeon()
 
 static void printDungeon()
 {
-#ifndef DEBUG
-    return;
-#endif
-
+#ifdef BADGE_DEBUG
     for (char y = 0; y < 20; y++)
     {
         for (char x = 0; x < 20; x++)
@@ -202,6 +192,7 @@ static void printDungeon()
 
         Serial.printf("\r\n");
     }
+#endif
 }
 
 uint8_t getNextY(uint8_t posY, int8_t direction)
@@ -210,11 +201,9 @@ uint8_t getNextY(uint8_t posY, int8_t direction)
     switch (direction)
     {
     case 0:
-        // south
         nextPosY++;
         break;
     case 2:
-        // north
         nextPosY--;
         break;
     }
@@ -228,11 +217,9 @@ uint8_t getNextX(uint8_t posX, int8_t direction)
     switch (direction)
     {
     case 1:
-        // west
         nextPosX--;
         break;
     case 3:
-        // east
         nextPosX++;
         break;
     }
@@ -294,14 +281,11 @@ static void handleMove()
     posY = getNextY(posY, currentDirection);
 
     printDungeon();
-    printCurrentPosition();
 
-    // Handle dying
     switch (dungeon[posY][posX])
     {
     case 2:
-        // Dead
-        Serial.printf("Oh no, you ran into a monster. Dead!\r\n");
+        Serial.printf("Oh no, you hit an asteroid!\r\n");
         deactivateRasterDungeon();
         badgeTaskScheduler.addTask(tPlayDeadAnimation);
         tPlayDeadAnimation.enable();
@@ -313,7 +297,7 @@ static void handleMove()
         char destination[strlen(encryptedFlag)];
 
         cryptoGetFlagAES(aesKey, aesIV, encryptedFlag, destination);
-        Serial.printf("You've successfully escaped the dungeon! This is for you: %s\r\n", destination);
+        Serial.printf("You've gone beyond the stars! %s\r\n", destination);
 
         deactivateRasterDungeon();
         badgeTaskScheduler.addTask(tPlayWinAnimation);
@@ -321,7 +305,6 @@ static void handleMove()
         return;
     }
 
-    // Check if the direction is still valid
     uint8_t nextPosX = getNextX(posX, currentDirection);
     uint8_t nextPosY = getNextY(posY, currentDirection);
 
@@ -378,11 +361,12 @@ void spaceMazeSetup(void (*doneCallback)())
     Serial.printf("____/ /__  /_/ / /_/ // /__ /  __/     _  /  / / / /_/ /__  /_/  __/\r\n");
     Serial.printf("/____/ _  .___/\\__,_/ \\___/ \\___/      /_/  /_/  \\__,_/ _____/\\___/ \r\n");
     Serial.printf("       /_/                                                          \r\n");
-    Serial.printf("\r\n\r\nYou've entered to the maze!\r\n");
+    Serial.printf("\r\n\r\n");
 
     printDungeon();
     updateRgbLeds();
-    printCurrentPosition();
+
+    Serial.printf("You are at x: %d, y: %d)\r\n", posX, posY);
 
     badgeTaskScheduler.addTask(tDetectButtonChange);
     badgeTaskScheduler.addTask(tVerifyButtonChange);
