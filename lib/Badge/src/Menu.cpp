@@ -5,7 +5,9 @@
 #include "Badge.h"
 
 // External programs to execute
+#include "Challenges/CatchTheLed.h"
 #include "Challenges/CombinationLock.h"
+#include "Challenges/Morse.h"
 #include "Challenges/SpaceMaze.h"
 #include "Challenges/Webserver.h"
 // ----------------------------
@@ -80,6 +82,14 @@ static void startWebserver() {
     webserverSetup(&menuActivate);
 }
 
+static void startMorseCode() {
+    morseCodeSetup(&menuActivate);
+}
+
+static void startCatchTheLed() {
+    catchTheLedSetup(&menuActivate);
+}
+
 static void enterCurrentMenuPosition()
 {
     menuDeactivate();
@@ -97,6 +107,12 @@ static void enterCurrentMenuPosition()
         break;
     case 3:
         blinkDoneCallback = &startWebserver;
+        break;
+    case 4:
+        blinkDoneCallback = &startMorseCode;
+        break;
+    case 5:
+        blinkDoneCallback = &startCatchTheLed;
         break;
     default:
         blinkDoneCallback = &menuActivate;
