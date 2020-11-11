@@ -22,10 +22,6 @@ static const uint32_t colorDirection = 0x0080FF;
 static const uint32_t colorEffectBase = 0xFFFF00;
 static const uint32_t colorEffectDead = 0xFF0000;
 
-uint8_t maxBrightness = 25;
-uint8_t minBrightness = 1;
-uint16_t currentBrightness = 0;
-int8_t brightnessModifier = 1;
 
 static const uint8_t dungeon[20][20] = {
     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
