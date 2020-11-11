@@ -78,15 +78,18 @@ static void startSpaceMaze()
     spaceMazeSetup(&menuActivate);
 }
 
-static void startWebserver() {
+static void startWebserver()
+{
     webserverSetup(&menuActivate);
 }
 
-static void startMorseCode() {
+static void startMorseCode()
+{
     morseCodeSetup(&menuActivate);
 }
 
-static void startCatchTheLed() {
+static void startCatchTheLed()
+{
     catchTheLedSetup(&menuActivate);
 }
 
@@ -99,19 +102,19 @@ static void enterCurrentMenuPosition()
 
     switch (currentMenuPosition)
     {
-    case 1:
+    case 0:
         blinkDoneCallback = &startCombinationLock;
         break;
-    case 2:
+    case 1:
         blinkDoneCallback = &startSpaceMaze;
+        break;
+    case 2:
+        blinkDoneCallback = &startMorseCode;
         break;
     case 3:
         blinkDoneCallback = &startWebserver;
         break;
     case 4:
-        blinkDoneCallback = &startMorseCode;
-        break;
-    case 5:
         blinkDoneCallback = &startCatchTheLed;
         break;
     default:
@@ -177,7 +180,8 @@ static void verifyButtonsLow()
 
 void menuActivate()
 {
-    if(executionDone != NULL) {
+    if (executionDone != NULL)
+    {
         executionDone();
         executionDone = NULL;
     }
