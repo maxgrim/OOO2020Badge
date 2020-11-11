@@ -2,6 +2,7 @@
 
 #include "../Badge.h"
 #include "../Debug.h"
+#include "../Eyes.h"
 #include "../Definitions.h"
 #include "../FlagCrypto.h"
 #include "../RGB.h"
@@ -20,6 +21,12 @@ static Task tVerifyButtonsLow(TASK_IMMEDIATE, TASK_FOREVER, &verifyButtonsLow);
 static void updateRGB();
 static Task tUpdateRGB(25, TASK_FOREVER, &updateRGB);
 
+static void playWinAnimation();
+static Task tPlayWinAnimation(200, 18, &playWinAnimation);
+
+static void playFailAnimation();
+static Task tPlayFailAnimation(200, 7, &playFailAnimation);
+
 static bool readingL, readingR, lastStateL, lastStateR;
 
 static uint8_t codeLength = 4, currentCodePosition = 0;
@@ -33,14 +40,12 @@ static uint16_t rgbCurrentBrightness = 0;
 
 static void (*doneCallbackF)();
 
-static void deactivateCombinationLock()
+static void deactivateLaserController()
 {
     badgeTaskScheduler.deleteTask(tDetectButtonChange);
     badgeTaskScheduler.deleteTask(tVerifyButtonChange);
     badgeTaskScheduler.deleteTask(tVerifyButtonsLow);
     badgeTaskScheduler.deleteTask(tUpdateRGB);
-
-    doneCallbackF();
 }
 
 static void detectButtonChange()
@@ -75,14 +80,6 @@ static void verifyButtonChange()
 
         if (currentCodePosition >= codeLength)
         {
-            Serial.print("\r\n\r\nVerifying code ");
-            for (uint8_t i = 0; i < codeLength; i++)
-            {
-                Serial.print(currentAnswers[i]);
-            }
-
-            Serial.printf("\r\n");
-
             bool correct = false;
             for (uint8_t i = 0; i < codeLength; i++)
             {
@@ -97,20 +94,23 @@ static void verifyButtonChange()
 
             if (correct)
             {
-                Serial.printf("Laser does pew pew pew!\r\n");
+                Serial.printf("\r\n\r\n  >> ACCESS GRANTED <<\r\n\r\nLaser does pew pew pew! ");
 
                 char flag[38];
                 cryptoGetFlag(&flag[0], sizeof(flag), 16);
                 Serial.printf("%s\r\n", flag);
 
-                deactivateCombinationLock();
+                deactivateLaserController();
+                badgeTaskScheduler.addTask(tPlayWinAnimation);
+                tPlayWinAnimation.restart();
             }
             else
             {
-                Serial.printf("ACCESS DENIED\r\n");
+                Serial.printf("\r\n\r\n  >> ACCESS DENIED <<\r\n\r\n");
                 Serial.printf("Code: ");
 
-                tVerifyButtonsLow.enable();
+                badgeTaskScheduler.addTask(tPlayFailAnimation);
+                tPlayFailAnimation.restart();
             }
 
             currentCodePosition = 0;
@@ -156,6 +156,66 @@ static void verifyButtonsLow()
     }
 }
 
+static void playWinAnimation()
+{
+    if (tPlayWinAnimation.isFirstIteration())
+    {
+        eyesOff();
+        rgbSetBrightness(10);
+    }
+
+    if (tPlayWinAnimation.isLastIteration())
+    {
+        eyesOn();
+        badgeTaskScheduler.deleteTask(tPlayWinAnimation);
+        doneCallbackF();
+        return;
+    }
+
+    if (tPlayWinAnimation.getRunCounter() <= RGB_N_LEDS)
+    {
+        for (int i = 0; i < tPlayWinAnimation.getRunCounter(); i++)
+        {
+            rgbSetSingleLed(i, 0x00FF00);
+        }
+
+        rgbShow();
+    }
+}
+
+static void playFailAnimation()
+{
+    
+    if (tPlayFailAnimation.isFirstIteration())
+    {
+        tUpdateRGB.disable();
+        rgbSetBrightness(10);
+    }
+
+    if (tPlayFailAnimation.isLastIteration())
+    {
+        eyesOn();
+        tUpdateRGB.enable();
+        badgeTaskScheduler.deleteTask(tPlayFailAnimation);
+        tVerifyButtonsLow.enable();
+        return;
+    }
+
+    unsigned long counter = tPlayFailAnimation.getRunCounter();
+    if (counter % 2 == 1)
+    {
+        eyesOff();
+        rgbClear();
+        rgbShow();
+    }
+    else
+    {
+        eyesOn();
+        rgbSetAllLeds(0xFF0000);
+        rgbShow();
+    }
+}
+
 static void updateRGB()
 {
     // Only modify brightness every 2nd execution
@@ -198,13 +258,14 @@ void laserControllerSetup(void (*doneCallback)())
     badgeTaskScheduler.addTask(tVerifyButtonsLow);
     badgeTaskScheduler.addTask(tUpdateRGB);
 
-    Serial.printf("  __                            ______            __             ____         \r\n");
+    Serial.printf("\r\n\r\n");
+    Serial.printf("    __                            ______            __             ____         \r\n");
     Serial.printf("   / /   ____ _________  _____   / ____/___  ____  / /__________  / / /__  _____\r\n");
     Serial.printf("  / /   / __ `/ ___/ _ \\/ ___/  / /   / __ \\/ __ \\/ __/ ___/ __ \\/ / / _ \\/ ___/\r\n");
     Serial.printf(" / /___/ /_/ (__  )  __/ /     / /___/ /_/ / / / / /_/ /  / /_/ / / /  __/ /    \r\n");
     Serial.printf("/_____/\\__,_/____/\\___/_/      \\____/\\____/_/ /_/\\__/_/   \\____/_/_/\\___/_/     \r\n");
     Serial.printf("                                                                                \r\n");
-    Serial.printf("\r\n\r\nShoot! The laser is locked. Can you crack the code?\r\n");
+    Serial.printf("\r\n\r\nShoot! The laser is locked. Can you crack the code?\r\n\r\n");
 
     Serial.printf("Code: ");
 

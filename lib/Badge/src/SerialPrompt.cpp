@@ -146,7 +146,7 @@ void parseAndExecute()
 
 void cmdLs(uint8_t argc, char **argv)
 {
-    Serial.println(F("flag.txt\tmorse\tcatchTheLed.sh\tfastCalculation.sh\tshootLaser.sh"));
+    Serial.println(F("flag.txt\tmorse\tcatchTheLed\tfastCalculation.sh\tlaserController.exe"));
     serialPromptActivate();
 }
 
@@ -167,11 +167,11 @@ void cmdSh(uint8_t argc, char **argv)
         {
             fastCalculationSetup(serialPromptActivate);
         }
-        else if (strcmp(argv[1], "./catchTheLed.sh") == 0)
+        else if (strcmp(argv[1], "./catchTheLed") == 0)
         {
             catchTheLedSetup(serialPromptActivate);
         }
-        else if (strcmp(argv[1], "./shootLaser.sh") == 0)
+        else if (strcmp(argv[1], "./laserController.exe") == 0)
         {
             laserControllerSetup(serialPromptActivate);
         }
