@@ -10,7 +10,7 @@ static void handleBlinkLed();
 uint8_t blinkNr;
 uint16_t blinkTimes, blinkTimesExecuted;
 uint32_t blinkColor;
-Task taskBlinkLed(150, TASK_FOREVER, &handleBlinkLed);
+Task taskBlinkLed(125, TASK_FOREVER, &handleBlinkLed);
 
 static Adafruit_NeoPixel pixels = Adafruit_NeoPixel(RGB_N_LEDS, PIN_LED_RGB, NEO_GRB + NEO_KHZ800);
 
