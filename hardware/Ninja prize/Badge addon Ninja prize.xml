@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="D">
+  <design>
+    <source>C:\Users\mgrim\OneDrive - Deloitte (O365D)\Projects\Ardennes 2020\Badge addon Ninja prize\Badge addon Ninja prize.sch</source>
+    <date>11-08-2020 16:56:29</date>
+    <tool>Eeschema (5.1.5)-3</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title>Ardennes 2020 Ninja Addon</title>
+        <company>Deloitte Risk Advisory B.V.</company>
+        <rev>1</rev>
+        <date>2020-08-11</date>
+        <source>Badge addon Ninja prize.sch</source>
+        <comment number="1" value="Max Grim"/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="X1">
+      <value>Badgelife_shitty_connector</value>
+      <footprint>badgelife_shitty_connector:Badgelife-Shitty-2x2</footprint>
+      <fields>
+        <field name="JLCPCB BOM">0</field>
+      </fields>
+      <libsource lib="badgelife_shitty_connector" part="Badgelife_shitty_connector" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5F277BDF</tstamp>
+    </comp>
+    <comp ref="R4">
+      <value>4.7k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="LCSC Part">C23162</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5F2912B5</tstamp>
+    </comp>
+    <comp ref="R3">
+      <value>4.7k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="LCSC Part">C23162</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5F291EAA</tstamp>
+    </comp>
+    <comp ref="U1">
+      <value>ATtiny84A-SSU</value>
+      <footprint>Package_SO:SOIC-14_3.9x8.7mm_P1.27mm</footprint>
+      <datasheet>http://ww1.microchip.com/downloads/en/DeviceDoc/doc8183.pdf</datasheet>
+      <fields>
+        <field name="LCSC Part">C144333</field>
+      </fields>
+      <libsource lib="MCU_Microchip_ATtiny" part="ATtiny84A-SSU" description="20MHz, 8kB Flash, 512B SRAM, 512B EEPROM, debugWIRE, SOIC-14"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5F360310</tstamp>
+    </comp>
+    <comp ref="R5">
+      <value>10K</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="LCSC Part">C25804</field>
+      </fields>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5F2C0310</tstamp>
+    </comp>
+    <comp ref="C1">
+      <value>1uF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="LCSC Part">C15849</field>
+      </fields>
+      <libsource lib="Device" part="C_Small" description="Unpolarized capacitor, small symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5F2BEE91</tstamp>
+    </comp>
+    <comp ref="D1">
+      <value>LED_GREEN</value>
+      <footprint>LED_SMD:LED_1206_3216Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="LCSC Part">C375461</field>
+      </fields>
+      <libsource lib="Device" part="LED" description="Light emitting diode"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5F2D3427</tstamp>
+    </comp>
+    <comp ref="R1">
+      <value>15</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="LCSC Part">C23204</field>
+      </fields>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5F2D302D</tstamp>
+    </comp>
+    <comp ref="R2">
+      <value>15</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="LCSC Part"> C23204</field>
+      </fields>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5F3704D8</tstamp>
+    </comp>
+    <comp ref="D2">
+      <value>LED_GREEN</value>
+      <footprint>LED_SMD:LED_1206_3216Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="LCSC Part">C375461</field>
+      </fields>
+      <libsource lib="Device" part="LED" description="Light emitting diode"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5F36E548</tstamp>
+    </comp>
+    <comp ref="P1">
+      <value>ISP</value>
+      <footprint>POGO_ISP:POGO_ISP</footprint>
+      <fields>
+        <field name="JLCPCB BOM">0</field>
+      </fields>
+      <libsource lib="POGO_ISP" part="ISP" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5F3DBAB1</tstamp>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="Device" part="C_Small">
+      <description>Unpolarized capacitor, small symbol</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>C_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C_Small</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="LED">
+      <description>Light emitting diode</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>LED*</fp>
+        <fp>LED_SMD:*</fp>
+        <fp>LED_THT:*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">LED</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="R">
+      <description>Resistor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>R_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="R_Small">
+      <description>Resistor, small symbol</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>R_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R_Small</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="MCU_Microchip_ATtiny" part="ATtiny24V-10SSU">
+      <aliases>
+        <alias>ATtiny24-20SSU</alias>
+        <alias>ATtiny24A-SSU</alias>
+        <alias>ATtiny44V-10SSU</alias>
+        <alias>ATtiny44-20SSU</alias>
+        <alias>ATtiny44A-SSU</alias>
+        <alias>ATtiny84V-10SSU</alias>
+        <alias>ATtiny84-20SSU</alias>
+        <alias>ATtiny84A-SSU</alias>
+      </aliases>
+      <description>10MHz, 2kB Flash, 128B SRAM, 128B EEPROM, debugWIRE, SOIC-14</description>
+      <docs>http://ww1.microchip.com/downloads/en/DeviceDoc/doc8006.pdf</docs>
+      <footprints>
+        <fp>SOIC*3.9x8.7mm*P1.27mm*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">ATtiny24V-10SSU</field>
+        <field name="Footprint">Package_SO:SOIC-14_3.9x8.7mm_P1.27mm</field>
+      </fields>
+      <pins>
+        <pin num="1" name="VCC" type="power_in"/>
+        <pin num="2" name="XTAL1/PB0" type="BiDi"/>
+        <pin num="3" name="XTAL2/PB1" type="BiDi"/>
+        <pin num="4" name="~RESET~/PB3" type="BiDi"/>
+        <pin num="5" name="PB2" type="BiDi"/>
+        <pin num="6" name="PA7" type="BiDi"/>
+        <pin num="7" name="PA6" type="BiDi"/>
+        <pin num="8" name="PA5" type="BiDi"/>
+        <pin num="9" name="PA4" type="BiDi"/>
+        <pin num="10" name="PA3" type="BiDi"/>
+        <pin num="11" name="PA2" type="BiDi"/>
+        <pin num="12" name="PA1" type="BiDi"/>
+        <pin num="13" name="AREF/PA0" type="BiDi"/>
+        <pin num="14" name="GND" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="POGO_ISP" part="ISP">
+      <footprints>
+        <fp>POGO_ISP</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">P</field>
+        <field name="Value">ISP</field>
+      </fields>
+      <pins>
+        <pin num="1" name="P1" type="passive"/>
+        <pin num="2" name="P2" type="passive"/>
+        <pin num="3" name="P3" type="passive"/>
+        <pin num="4" name="P4" type="passive"/>
+        <pin num="5" name="P5" type="passive"/>
+        <pin num="6" name="P6" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="badgelife_shitty_connector" part="Badgelife_shitty_connector">
+      <fields>
+        <field name="Reference">X</field>
+        <field name="Value">Badgelife_shitty_connector</field>
+      </fields>
+      <pins>
+        <pin num="1" name="VDD" type="input"/>
+        <pin num="2" name="GND" type="input"/>
+        <pin num="3" name="SCL" type="input"/>
+        <pin num="4" name="SDA" type="input"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="Device">
+      <uri>C:\Program Files\KiCad\share\kicad\library/Device.lib</uri>
+    </library>
+    <library logical="MCU_Microchip_ATtiny">
+      <uri>C:\Program Files\KiCad\share\kicad\library/MCU_Microchip_ATtiny.lib</uri>
+    </library>
+    <library logical="POGO_ISP">
+      <uri>C:\Users\mgrim\OneDrive - Deloitte (O365D)\Projects\Ardennes 2020\Badge addon Ninja prize/lib/POGO_ISP.lib</uri>
+    </library>
+    <library logical="badgelife_shitty_connector">
+      <uri>C:\Users\mgrim\OneDrive - Deloitte (O365D)\Projects\Ardennes 2020\Badge addon Ninja prize/lib/badgelife_shitty_connector.lib</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="Net-(U1-Pad10)">
+      <node ref="U1" pin="10"/>
+    </net>
+    <net code="2" name="GND">
+      <node ref="U1" pin="14"/>
+      <node ref="D2" pin="1"/>
+      <node ref="P1" pin="6"/>
+      <node ref="X1" pin="2"/>
+      <node ref="D1" pin="1"/>
+    </net>
+    <net code="3" name="Net-(D1-Pad2)">
+      <node ref="D1" pin="2"/>
+      <node ref="R1" pin="2"/>
+    </net>
+    <net code="4" name="/PWM2">
+      <node ref="U1" pin="6"/>
+      <node ref="R1" pin="1"/>
+    </net>
+    <net code="5" name="/PWM1">
+      <node ref="U1" pin="5"/>
+      <node ref="R2" pin="1"/>
+    </net>
+    <net code="6" name="Net-(U1-Pad11)">
+      <node ref="U1" pin="11"/>
+    </net>
+    <net code="7" name="Net-(U1-Pad12)">
+      <node ref="U1" pin="12"/>
+    </net>
+    <net code="8" name="Net-(U1-Pad13)">
+      <node ref="U1" pin="13"/>
+    </net>
+    <net code="9" name="/RST">
+      <node ref="P1" pin="5"/>
+      <node ref="C1" pin="2"/>
+    </net>
+    <net code="10" name="Net-(C1-Pad1)">
+      <node ref="U1" pin="4"/>
+      <node ref="C1" pin="1"/>
+      <node ref="R5" pin="1"/>
+    </net>
+    <net code="11" name="/SDA_MOSI">
+      <node ref="X1" pin="4"/>
+      <node ref="P1" pin="4"/>
+      <node ref="R3" pin="1"/>
+      <node ref="U1" pin="7"/>
+    </net>
+    <net code="12" name="+3V3">
+      <node ref="R3" pin="2"/>
+      <node ref="R4" pin="2"/>
+      <node ref="R5" pin="2"/>
+      <node ref="X1" pin="1"/>
+      <node ref="P1" pin="2"/>
+      <node ref="U1" pin="1"/>
+    </net>
+    <net code="13" name="Net-(D2-Pad2)">
+      <node ref="R2" pin="2"/>
+      <node ref="D2" pin="2"/>
+    </net>
+    <net code="14" name="/SCL_SCK">
+      <node ref="R4" pin="1"/>
+      <node ref="X1" pin="3"/>
+      <node ref="P1" pin="3"/>
+      <node ref="U1" pin="9"/>
+    </net>
+    <net code="15" name="Net-(U1-Pad3)">
+      <node ref="U1" pin="3"/>
+    </net>
+    <net code="16" name="Net-(U1-Pad2)">
+      <node ref="U1" pin="2"/>
+    </net>
+    <net code="17" name="/MISO">
+      <node ref="P1" pin="1"/>
+      <node ref="U1" pin="8"/>
+    </net>
+  </nets>
+</export>

@@ -1,0 +1,5 @@
+(sym_lib_table
+  (lib (name badgelife_shitty_connector)(type Legacy)(uri ${KIPRJMOD}/Libraries/badgelife_shitty_connector.lib)(options "")(descr ""))
+  (lib (name Ardennes)(type Legacy)(uri ${KIPRJMOD}/Libraries/Ardennes.lib)(options "")(descr ""))
+  (lib (name Badge-rescue)(type Legacy)(uri ${KIPRJMOD}/Badge-rescue.lib)(options "")(descr ""))
+)

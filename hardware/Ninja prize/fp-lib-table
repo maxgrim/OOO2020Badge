@@ -1,0 +1,5 @@
+(fp_lib_table
+  (lib (name ninja-art)(type KiCad)(uri ${KIPRJMOD}/lib/ninja-art)(options "")(descr ""))
+  (lib (name badgelife_shitty_connector)(type KiCad)(uri ${KIPRJMOD}/lib/badgelife_shitty_connector.pretty)(options "")(descr ""))
+  (lib (name POGO_ISP)(type KiCad)(uri ${KIPRJMOD}/lib/POGO_ISP)(options "")(descr ""))
+)

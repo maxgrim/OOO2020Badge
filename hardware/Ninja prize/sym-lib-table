@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name badgelife_shitty_connector)(type Legacy)(uri ${KIPRJMOD}/lib/badgelife_shitty_connector.lib)(options "")(descr ""))
+  (lib (name POGO_ISP)(type Legacy)(uri ${KIPRJMOD}/lib/POGO_ISP.lib)(options "")(descr ""))
+)

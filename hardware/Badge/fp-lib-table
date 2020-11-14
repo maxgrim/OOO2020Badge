@@ -1,0 +1,6 @@
+(fp_lib_table
+  (lib (name ninja)(type KiCad)(uri ${KIPRJMOD}/ninja.pretty)(options "")(descr ""))
+  (lib (name Ardennes2020)(type KiCad)(uri ${KIPRJMOD}/Libraries/Ardennes2020.pretty)(options "")(descr ""))
+  (lib (name badgelife_shitty_connector)(type KiCad)(uri ${KIPRJMOD}/Libraries/badgelife_shitty_connector.pretty)(options "")(descr ""))
+  (lib (name Panelization)(type KiCad)(uri ${KIPRJMOD}/Libraries/Panelization.pretty)(options "")(descr ""))
+)

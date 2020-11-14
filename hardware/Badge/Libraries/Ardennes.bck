@@ -1,0 +1,8 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP XC9236A33CMR
+D DC-DC CONVERTERS STEP-DOWN FIXED 1 2V 6V 3.3V 600MA SOT-25 ROHS
+F https://datasheet.lcsc.com/szlcsc/Torex-Semicon-XC9236A33CMR_C122892.pdf
+$ENDCMP
+#
+#End Doc Library
