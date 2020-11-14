@@ -204,6 +204,27 @@ void cmdSh(uint8_t argc, char **argv)
 {
     if (argc != 0)
     {
+        if (strcmp(argv[1], "./spaceMaze.py") == 0 || strcmp(argv[1], "spaceMaze.py") == 0)
+        {
+            spaceMazeSetup(serialPromptActivate);
+        }
+        else
+        {
+            Serial.println(F("Invalid command"));
+            serialPromptActivate();
+        }
+    }
+    else
+    {
+        Serial.println(F("Invalid command"));
+        serialPromptActivate();
+    }
+}
+
+void cmdPy(uint8_t argc, char **argv)
+{
+    if (argc != 0)
+    {
         if (strcmp(argv[1], "./RainMan.sh") == 0 || strcmp(argv[1], "RainMan.sh") == 0)
         {
             rainManSetup(serialPromptActivate);
@@ -340,6 +361,7 @@ void serialPromptSetup()
     addCommand("ls", "List files", false, cmdLs);
     addCommand("reboot", "Reboot", false, cmdReboot);
     addCommand("sh", "Execute .sh file", false, cmdSh);
+    addCommand("python", "Execute .py file", false, cmdPy);
     addCommand("writeCoordinates", "Write coordinates", false, cmdWriteFlagToFS);
 
     serialPromptActivate();
