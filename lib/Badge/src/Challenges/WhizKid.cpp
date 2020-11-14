@@ -121,7 +121,7 @@ void handleAnswer()
     {
         char flag[38];
         cryptoGetFlag(&flag[0], sizeof(flag), 128);
-        Serial.printf("You won, here's the flag :%s\r\n", flag);
+        Serial.printf("You won, here's the flag: %s\r\n", flag);
 
         deactivateWhizKid();
         if (doneCallbackF != NULL)
