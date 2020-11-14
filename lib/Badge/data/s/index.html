@@ -1,1 +1,40 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8" /><title>HTML5 Space Invaders </title><script type="text/javascript" src="js/jquery.min.js"></script><script type="text/javascript" src="js/game.min.js"></script></head><body style="background-color: #000; text-align: center;"></body></html>
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>HTML5 Space Invaders </title>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/game.min.js"></script>
+</head>
+
+<body style="background-color: #000; text-align: center;">
+    <pre style="color: #fff;">
+        ███████╗████████╗ █████╗ ██████╗ ███████╗██╗  ██╗██╗██████╗ ███████╗                            
+        ██╔════╝╚══██╔══╝██╔══██╗██╔══██╗██╔════╝██║  ██║██║██╔══██╗██╔════╝                            
+        ███████╗   ██║   ███████║██████╔╝███████╗███████║██║██████╔╝███████╗                            
+        ╚════██║   ██║   ██╔══██║██╔══██╗╚════██║██╔══██║██║██╔═══╝ ╚════██║                            
+        ███████║   ██║   ██║  ██║██║  ██║███████║██║  ██║██║██║     ███████║                            
+        ╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝╚═╝     ╚══════╝                            
+                                                                                                        
+         █████╗ ██████╗ ███████╗    ███╗   ███╗███████╗ █████╗ ███╗   ██╗████████╗    ████████╗ ██████╗ 
+        ██╔══██╗██╔══██╗██╔════╝    ████╗ ████║██╔════╝██╔══██╗████╗  ██║╚══██╔══╝    ╚══██╔══╝██╔═══██╗
+        ███████║██████╔╝█████╗      ██╔████╔██║█████╗  ███████║██╔██╗ ██║   ██║          ██║   ██║   ██║
+        ██╔══██║██╔══██╗██╔══╝      ██║╚██╔╝██║██╔══╝  ██╔══██║██║╚██╗██║   ██║          ██║   ██║   ██║
+        ██║  ██║██║  ██║███████╗    ██║ ╚═╝ ██║███████╗██║  ██║██║ ╚████║   ██║          ██║   ╚██████╔╝
+        ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝    ╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝   ╚═╝          ╚═╝    ╚═════╝ 
+                                                                                                
+    </pre>
+    <script>
+        function play() {
+            var audio = document.getElementById("audio");
+            audio.play();
+        }
+    </script>
+
+    <input type="button" value="FLY" id="startButton" onclick="play()"
+        style="width: 300px; height: 100px; font-size: 36px;">
+    <audio id="audio" src="starships.mp3" loop></audio>
+</body>
+
+</html>
