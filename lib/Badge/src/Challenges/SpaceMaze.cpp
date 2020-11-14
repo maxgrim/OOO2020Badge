@@ -178,7 +178,7 @@ static void deactivateRasterDungeon()
     badgeTaskScheduler.deleteTask(tShowDungeonAnimation);
 }
 
-static void printDungeon()
+static void printMaze()
 {
 #ifdef BADGE_DEBUG
     for (char y = 0; y < 20; y++)
@@ -286,7 +286,7 @@ static void handleMove()
     posX = getNextX(posX, currentDirection);
     posY = getNextY(posY, currentDirection);
 
-    printDungeon();
+    printMaze();
 
     switch (dungeon[posY][posX])
     {
@@ -370,7 +370,7 @@ void spaceMazeSetup(void (*doneCallback)())
     Serial.printf("       /_/                                                          \r\n");
     Serial.printf("\r\n\r\n");
 
-    printDungeon();
+    printMaze();
     updateRgbLeds();
 
     Serial.printf("You are at x: %d, y: %d\r\n", posX, posY);
