@@ -340,7 +340,7 @@ void serialPromptSetup()
     addCommand("help", "Print help", false, cmdHelp);
     addCommand("ls", "List files", false, cmdLs);
     addCommand("reboot", "Reboot the badge", false, cmdReboot);
-    addCommand("sh", "Execute file", false, cmdSh);
+    addCommand("sh", "Execute .sh file", false, cmdSh);
     addCommand("writeFlagToFS", "Write flag to FS", false, cmdWriteFlagToFS);
 
     serialPromptActivate();
