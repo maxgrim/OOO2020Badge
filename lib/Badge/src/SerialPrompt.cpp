@@ -152,7 +152,7 @@ void parseAndExecute()
             executionDone = badgeRequestExecution(SERIAL_PROMPT);
             morseCodeSetup(serialPromptActivate);
         }
-        else if (strcmp(strings[0], "./RainMan.sh") == 0)
+        else if (strcmp(strings[0], "./rainMan.sh") == 0)
         {
             executed = true;
             serialPromptDeactivate();
@@ -191,7 +191,7 @@ void parseAndExecute()
 
 void cmdLs(uint8_t argc, char **argv)
 {
-    Serial.println(F("flag.txt\tmorse\tspaceXTerminator\tRainMan.sh\tlaserController.exe\tspaceMaze.py"));
+    Serial.println(F("flag.txt\tmorse\tspaceXTerminator\trainMan.sh\tlaserController.exe\tspaceMaze.py"));
     serialPromptActivate();
 }
 
@@ -225,7 +225,7 @@ void cmdPy(uint8_t argc, char **argv)
 {
     if (argc != 0)
     {
-        if (strcmp(argv[1], "./RainMan.sh") == 0 || strcmp(argv[1], "RainMan.sh") == 0)
+        if (strcmp(argv[1], "./rainMan.sh") == 0 || strcmp(argv[1], "rainMan.sh") == 0)
         {
             rainManSetup(serialPromptActivate);
         }
