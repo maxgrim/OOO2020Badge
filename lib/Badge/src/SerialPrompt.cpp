@@ -277,7 +277,7 @@ void cmdGiveFlag(uint8_t argc, char **argv)
     }
     else
     {
-        Serial.printf("cat: flag.txt: Permission denied, EEPROM says you're not the captain\r\n");
+        Serial.printf("Permission denied, EEPROM says you're not the captain\r\n");
     }
 
     serialPromptActivate();
@@ -332,16 +332,15 @@ void serialPromptDeactivate()
 
 void serialPromptSetup()
 {
-    // The hidden flag command
     addCommand("BzzBzzD3pl0yL4z3rz", "Hidden option", true, cmdHidden);
 
     addCommand("cat", "Print file", false, cmdCat);
-    addCommand("giveFlag", "Give flag (if you are the captain)", false, cmdGiveFlag);
+    addCommand("captainCommand", "Command only allowed by the captain", false, cmdGiveFlag);
     addCommand("help", "Print help", false, cmdHelp);
     addCommand("ls", "List files", false, cmdLs);
-    addCommand("reboot", "Reboot the badge", false, cmdReboot);
+    addCommand("reboot", "Reboot", false, cmdReboot);
     addCommand("sh", "Execute .sh file", false, cmdSh);
-    addCommand("writeFlagToFS", "Write flag to FS", false, cmdWriteFlagToFS);
+    addCommand("writeCoordinates", "Write coordinates", false, cmdWriteFlagToFS);
 
     serialPromptActivate();
 }
