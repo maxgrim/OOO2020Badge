@@ -168,7 +168,12 @@ static void playWinAnimation()
     {
         eyesOn();
         badgeTaskScheduler.deleteTask(tPlayWinAnimation);
-        doneCallbackF();
+
+        if (doneCallbackF != NULL)
+        {
+            doneCallbackF();
+        }
+        
         return;
     }
 
@@ -185,7 +190,7 @@ static void playWinAnimation()
 
 static void playFailAnimation()
 {
-    
+
     if (tPlayFailAnimation.isFirstIteration())
     {
         tUpdateRGB.disable();

@@ -137,14 +137,18 @@ void displayMorse()
         encodedMorseIndex = 0;
         tDisplayMorse.disable();
         badgeTaskScheduler.deleteTask(tDisplayMorse);
-        doneCallbackF();
+        
+        if (doneCallbackF != NULL)
+        {
+            doneCallbackF();
+        }
     }
 }
 
 void morseCodeSetup(void (*doneCallback)())
 {
     doneCallbackF = doneCallback;
-    
+
     encodedMorse = encodeMorse("HELP i am not a satellite PGS(484s2397p4rrq90426s3n6o115r3670n)");
     badgeTaskScheduler.addTask(tDisplayMorse);
     badgeTaskScheduler.addTask(tHandleOff);
