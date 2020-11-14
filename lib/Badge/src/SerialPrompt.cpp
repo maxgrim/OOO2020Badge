@@ -204,7 +204,7 @@ void cmdSh(uint8_t argc, char **argv)
 {
     if (argc != 0)
     {
-        if (strcmp(argv[1], "./spaceMaze.py") == 0 || strcmp(argv[1], "spaceMaze.py") == 0)
+        if (strcmp(argv[1], "./rainMan.sh") == 0 || strcmp(argv[1], "rainMan.sh") == 0)
         {
             spaceMazeSetup(serialPromptActivate);
         }
@@ -225,7 +225,7 @@ void cmdPy(uint8_t argc, char **argv)
 {
     if (argc != 0)
     {
-        if (strcmp(argv[1], "./rainMan.sh") == 0 || strcmp(argv[1], "rainMan.sh") == 0)
+        if (strcmp(argv[1], "./spaceMaze.py") == 0 || strcmp(argv[1], "spaceMaze.py") == 0)
         {
             rainManSetup(serialPromptActivate);
         }
