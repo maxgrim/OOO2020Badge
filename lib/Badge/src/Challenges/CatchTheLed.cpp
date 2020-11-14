@@ -26,6 +26,12 @@ static Task tVerifyButtonChange(10, TASK_ONCE, &verifyButtonChange);
 static void verifyButtonsLow();
 static Task tVerifyButtonsLow(TASK_IMMEDIATE, TASK_FOREVER, &verifyButtonsLow);
 
+static void playDeadAnimation();
+static Task tPlayDeadAnimation(200, 7, &playDeadAnimation);
+
+static void playHitAnimation();
+static Task tPlayHitAnimation(400, 3, &playHitAnimation);
+
 static bool readingL, readingR, lastStateL, lastStateR;
 
 static void deactivateCatchTheLed()
@@ -34,6 +40,69 @@ static void deactivateCatchTheLed()
     badgeTaskScheduler.deleteTask(tVerifyButtonChange);
     badgeTaskScheduler.deleteTask(tVerifyButtonsLow);
     badgeTaskScheduler.deleteTask(tUpdateCatchTheLed);
+}
+
+static void playDeadAnimation()
+{
+    if (tPlayDeadAnimation.isFirstIteration())
+    {
+        eyesOff();
+        tUpdateCatchTheLed.disable();
+        rgbSetBrightness(RGB_DEFAULT_BRIGHTNESS);
+    }
+
+    if (tPlayDeadAnimation.isLastIteration())
+    {
+        eyesOn();
+        tUpdateCatchTheLed.enable();
+        badgeTaskScheduler.deleteTask(tPlayDeadAnimation);
+        tVerifyButtonsLow.enable();
+        return;
+    }
+
+    unsigned long counter = tPlayDeadAnimation.getRunCounter();
+    if (counter % 2 == 1)
+    {
+        rgbClear();
+        rgbShow();
+    }
+    else
+    {
+        rgbSetAllLeds(0xFF0000);
+        rgbShow();
+    }
+}
+
+static void playHitAnimation()
+{
+    if (tPlayHitAnimation.isFirstIteration())
+    {
+        tUpdateCatchTheLed.disable();
+        rgbSetBrightness(RGB_DEFAULT_BRIGHTNESS);
+    }
+
+    if (tPlayHitAnimation.isLastIteration())
+    {
+        eyesOn();
+        tUpdateCatchTheLed.enable();
+        badgeTaskScheduler.deleteTask(tPlayDeadAnimation);
+        tVerifyButtonsLow.enable();
+        return;
+    }
+
+    unsigned long counter = tPlayHitAnimation.getRunCounter();
+    if (counter % 2 == 1)
+    {
+        eyesOff();
+        rgbClear();
+        rgbShow();
+    }
+    else
+    {
+        eyesOn();
+        rgbSetAllLeds(0x00FF00);
+        rgbShow();
+    }
 }
 
 static void updateCatchTheLed()
@@ -127,14 +196,16 @@ static void verifyButtonChange()
                     doneCallbackF();
                 }
             }
+
+            badgeTaskScheduler.addTask(tPlayHitAnimation);
+            tPlayHitAnimation.restart();
         }
         else
         {
             Serial.printf("Miss\r\n");
-            tUpdateCatchTheLed.setInterval(startInterval);
+            badgeTaskScheduler.addTask(tPlayDeadAnimation);
+            tPlayDeadAnimation.restart();
         }
-
-        tVerifyButtonsLow.enable();
     }
     else
     {
@@ -159,7 +230,7 @@ void catchTheLedSetup(void (*doneCallback)())
     pinMode(PIN_BUTTON_R, INPUT);
 
     eyesOff();
-    
+
     rgbClear();
     rgbSetBrightness(RGB_DEFAULT_BRIGHTNESS);
     rgbShow();
@@ -185,6 +256,7 @@ void catchTheLedSetup(void (*doneCallback)())
     badgeTaskScheduler.addTask(tVerifyButtonChange);
     badgeTaskScheduler.addTask(tVerifyButtonsLow);
     badgeTaskScheduler.addTask(tUpdateCatchTheLed);
+
     tUpdateCatchTheLed.enable();
     tDetectButtonChange.enable();
 }
