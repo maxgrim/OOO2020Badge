@@ -16,7 +16,6 @@
 static void aesEncrypt(const uint8_t *aesKey, const uint8_t *aesIV, const char *plain_text, char *output, int length)
 {
     byte enciphered[length];
-    // RNG::fill(iv, AES_BLOCK_SIZE);
     AES aesEncryptor(aesKey, aesIV, AES::AES_MODE_128, AES::CIPHER_ENCRYPT);
     aesEncryptor.process((uint8_t *)plain_text, enciphered, length);
     int encrypted_size = sizeof(enciphered);
@@ -27,7 +26,7 @@ static void aesEncrypt(const uint8_t *aesKey, const uint8_t *aesIV, const char *
 
 static void aesDecrypt(const uint8_t *aesKey, const uint8_t *aesIV, const char *enciphered, char *output, int length)
 {
-    length = length + 1; //re-adjust
+    length = length + 1;
     char decoded[length];
     decode_base64((unsigned char *)enciphered, (unsigned char *)decoded);
     cryptoAESBufferSize(enciphered, length);
