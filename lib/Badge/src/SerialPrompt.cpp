@@ -34,7 +34,7 @@ static char buffer[BUFFER_LENGTH + 1];
 
 static uint8_t commandTableIndex = 0;
 static cmd_t commandTable[TABLE_LENGTH];
-static uint8_t commandCharsRead = 0;
+static uint16_t commandCharsRead = 0;
 
 static char *strings[ARGUMENTS_LENGTH];
 
