@@ -157,9 +157,9 @@ void parseAndExecute()
             executed = true;
             serialPromptDeactivate();
             executionDone = badgeRequestExecution(SERIAL_PROMPT);
-            RainManSetup(serialPromptActivate);
+            rainManSetup(serialPromptActivate);
         }
-        else if (strcmp(strings[0], "./SpaceXTerminator") == 0)
+        else if (strcmp(strings[0], "./spaceXTerminator") == 0)
         {
             executed = true;
             serialPromptDeactivate();
@@ -191,7 +191,7 @@ void parseAndExecute()
 
 void cmdLs(uint8_t argc, char **argv)
 {
-    Serial.println(F("flag.txt\tmorse\tSpaceXTerminator\tRainMan.sh\tlaserController.exe\tspaceMaze.py"));
+    Serial.println(F("flag.txt\tmorse\tspaceXTerminator\tRainMan.sh\tlaserController.exe\tspaceMaze.py"));
     serialPromptActivate();
 }
 
@@ -206,7 +206,7 @@ void cmdSh(uint8_t argc, char **argv)
     {
         if (strcmp(argv[1], "./RainMan.sh") == 0 || strcmp(argv[1], "RainMan.sh") == 0)
         {
-            RainManSetup(serialPromptActivate);
+            rainManSetup(serialPromptActivate);
         }
         else
         {

@@ -135,7 +135,7 @@ void handleAnswer()
     }
 }
 
-void RainManSetup(void (*doneCallback)())
+void rainManSetup(void (*doneCallback)())
 {
     doneCallbackF = doneCallback;
 

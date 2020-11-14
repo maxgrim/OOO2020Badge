@@ -96,7 +96,7 @@ static void startSpaceXTerminator()
 
 static void startRainMan()
 {
-    RainManSetup(&menuActivate);
+    rainManSetup(&menuActivate);
 }
 
 static void enterCurrentMenuPosition()
