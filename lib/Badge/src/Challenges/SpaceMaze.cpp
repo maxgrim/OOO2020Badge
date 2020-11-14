@@ -10,6 +10,7 @@
 
 static void (*doneCallbackF)();
 
+static uint8_t originalPosX = 5, originalPosy = 15;
 static uint8_t posX = 5, posY = 15;
 static int8_t currentDirection = 0;
 static bool readingL, readingR, lastStateL, lastStateR;
@@ -172,6 +173,9 @@ static void playDeadAnimation()
 
 static void deactivateRasterDungeon()
 {
+    posX = originalPosX;
+    posY = originalPosy;
+
     badgeTaskScheduler.deleteTask(tDetectButtonChange);
     badgeTaskScheduler.deleteTask(tVerifyButtonChange);
     badgeTaskScheduler.deleteTask(tVerifyButtonsLow);
@@ -294,7 +298,7 @@ static void handleMove()
         Serial.printf("Oh no, you hit an asteroid!\r\n");
         deactivateRasterDungeon();
         badgeTaskScheduler.addTask(tPlayDeadAnimation);
-        tPlayDeadAnimation.enable();
+        tPlayDeadAnimation.restart();
         return;
     case 3:
         const char *encryptedFlag = "ElDz3zZlWVmLHJwwIY92a37WOZqP8/gneZYW+16C+8zR8hTAesWvV96GSmxGrwaH";
@@ -307,7 +311,7 @@ static void handleMove()
 
         deactivateRasterDungeon();
         badgeTaskScheduler.addTask(tPlayWinAnimation);
-        tPlayWinAnimation.enable();
+        tPlayWinAnimation.restart();
         return;
     }
 
