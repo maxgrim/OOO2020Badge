@@ -73,7 +73,7 @@ void handleOff();
 static Task tDisplayMorse(TASK_IMMEDIATE, TASK_FOREVER, &displayMorse);
 static Task tHandleOff(TASK_IMMEDIATE, TASK_ONCE, &handleOff);
 
-#define UNIT_LENGTH 200
+#define UNIT_LENGTH 300
 
 unsigned int encodedMorseIndex = 0;
 String encodedMorse;
@@ -149,7 +149,7 @@ void morseCodeSetup(void (*doneCallback)())
 {
     doneCallbackF = doneCallback;
 
-    encodedMorse = encodeMorse("HELP i am not a satellite PGS(484s2397p4rrq90426s3n6o115r3670n)");
+    encodedMorse = encodeMorse("H E L P  F L A G  I S   P G S ( a b g n f n g g r y v g r )");
     badgeTaskScheduler.addTask(tDisplayMorse);
     badgeTaskScheduler.addTask(tHandleOff);
     tDisplayMorse.restart();
