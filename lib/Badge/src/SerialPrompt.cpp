@@ -1,6 +1,7 @@
 #include "SerialPrompt.h"
 #include "Debug.h"
 #include "Badge.h"
+#include "Filesystem.h"
 #include "FlagCrypto.h"
 
 #include "Settings.h"
@@ -8,8 +9,9 @@
 // External programs to execute
 #include "Challenges/Morse.h"
 #include "Challenges/LaserController.h"
-#include "Challenges/FastCalculation.h"
+#include "Challenges/WhizKid.h"
 #include "Challenges/CatchTheLed.h"
+#include "Challenges/SpaceMaze.h"
 // ----------------------------
 
 #include <Arduino.h>
@@ -38,6 +40,9 @@ static char *strings[ARGUMENTS_LENGTH];
 
 static char *cmdHiddenFlagEncrypted = "\xde\xd4\x27\x30\xf5\x08\xa6\xf5\x84\x91\x1b\xf6\xc8\x66\x94\xbd\xeb\xfc\x10\x32\xec\x63\x80\xc5\x64\xfa\xc9\xe2\x50\x86\xd2\x15\x82\xa6\xad\x7c\x13";
 static char *cmdHiddenFlagKey = "\x9d\x80\x61\x4b\xc0\x6c\x94\xc1\xb6\xa6\x78\xc1\xaa\x02\xf2\x85\xd9\xce\x22\x06\xd8\x01\xe2\xf7\x01\xcc\xf9\xdb\x33\xb1\xe5\x27\xe3\xc4\x98\x1f\x6e";
+
+static char *cmdCatFlagEncrypted = "\xB\x67\x2\x6D\x1\x4F\x5D\x9E\x95\x1E\x42\x58\xC1\x55\xF5\x5B\xE0\xCA\x3B\xB3\x55\x98\x41\xC1\x33\xE2\x53\x9C\xA2\xDA\xF2\x2\x2D\x53\x79\x3A\x79\x0";
+static char *cmdCatFlagKey = "\x48\x33\x44\x16\x35\x2e\x39\xfa\xa7\x2b\x72\x3b\xa5\x6d\xc2\x62\xd5\xab\x5d\xd2\x31\xfc\x70\xf1\x52\xda\x35\xab\x90\xe8\x91\x33\x18\x30\x1d\x5c\x04";
 
 static void handleSerialInput();
 static Task tHandleSerialInput(TASK_IMMEDIATE, TASK_FOREVER, &handleSerialInput);
@@ -139,6 +144,46 @@ void parseAndExecute()
 
     if (!executed)
     {
+        // Ugly code, but OK..
+        if (strcmp(strings[0], "./morse") == 0)
+        {
+            executed = true;
+            serialPromptDeactivate();
+            executionDone = badgeRequestExecution(SERIAL_PROMPT);
+            morseCodeSetup(serialPromptActivate);
+        }
+        else if (strcmp(strings[0], "./whizKid.sh") == 0)
+        {
+            executed = true;
+            serialPromptDeactivate();
+            executionDone = badgeRequestExecution(SERIAL_PROMPT);
+            whizKidSetup(serialPromptActivate);
+        }
+        else if (strcmp(strings[0], "./catchTheLed") == 0)
+        {
+            executed = true;
+            serialPromptDeactivate();
+            executionDone = badgeRequestExecution(SERIAL_PROMPT);
+            catchTheLedSetup(serialPromptActivate);
+        }
+        else if (strcmp(strings[0], "./laserController.exe") == 0)
+        {
+            executed = true;
+            serialPromptDeactivate();
+            executionDone = badgeRequestExecution(SERIAL_PROMPT);
+            laserControllerSetup(serialPromptActivate);
+        }
+        else if (strcmp(strings[0], "./spaceMaze.py") == 0)
+        {
+            executed = true;
+            serialPromptDeactivate();
+            executionDone = badgeRequestExecution(SERIAL_PROMPT);
+            spaceMazeSetup(serialPromptActivate);
+        }
+    }
+
+    if (!executed)
+    {
         Serial.println(F("Unknown command"));
         serialPromptActivate();
     }
@@ -146,7 +191,7 @@ void parseAndExecute()
 
 void cmdLs(uint8_t argc, char **argv)
 {
-    Serial.println(F("flag.txt\tmorse\tcatchTheLed\tfastCalculation.sh\tlaserController.exe"));
+    Serial.println(F("flag.txt\tmorse\tcatchTheLed\twhizKid.sh\tlaserController.exe\tspaceMaze.py"));
     serialPromptActivate();
 }
 
@@ -159,21 +204,9 @@ void cmdSh(uint8_t argc, char **argv)
 {
     if (argc != 0)
     {
-        if (strcmp(argv[1], "./morse") == 0)
+        if (strcmp(argv[1], "./whizKid.sh") == 0 || strcmp(argv[1], "whizKid.sh") == 0)
         {
-            morseCodeSetup(serialPromptActivate);
-        }
-        else if (strcmp(argv[1], "./fastCalculation.sh") == 0)
-        {
-            fastCalculationSetup(serialPromptActivate);
-        }
-        else if (strcmp(argv[1], "./catchTheLed") == 0)
-        {
-            catchTheLedSetup(serialPromptActivate);
-        }
-        else if (strcmp(argv[1], "./laserController.exe") == 0)
-        {
-            laserControllerSetup(serialPromptActivate);
+            whizKidSetup(serialPromptActivate);
         }
         else
         {
@@ -192,22 +225,8 @@ void cmdCat(uint8_t argc, char **argv)
 {
     if (argc != 0 && (strcmp(argv[1], "flag.txt") == 0 || strcmp(argv[1], "./flag.txt") == 0))
     {
-        Settings settings = settingsGetSettings();
-
-        if (settings.isAdmin == 1)
-        {
-            const char *encryptedFlag = "PhyfKjW9yh/Meend+rdMihzLahFenHCfrqlmWL26e77ZN8Kehb6qbiEesGgj7nWp";
-            const uint8_t aesKey[AES_BLOCK_SIZE] = {0xb5, 0x43, 0x86, 0x98, 0xb7, 0xa0, 0xe4, 0x9f, 0xf8, 0xbc, 0x47, 0x76, 0xc4, 0xe0, 0xb6, 0xe0};
-            const uint8_t aesIV[AES_BLOCK_SIZE] = {0xe3, 0xf0, 0x29, 0xae, 0xb9, 0xbf, 0x9b, 0x4e, 0xb9, 0xad, 0x89, 0xab, 0x06, 0xde, 0x2a, 0x62};
-            char destination[strlen(encryptedFlag)];
-
-            cryptoGetFlagAES(aesKey, aesIV, encryptedFlag, destination);
-            Serial.printf("%s\r\n", destination);
-        }
-        else
-        {
-            Serial.printf("cat: flag.txt: Permission denied\r\n");
-        }
+        cryptoGetFlagXOR(cmdCatFlagEncrypted, 37, cmdCatFlagKey, 37);
+        Serial.println(cmdCatFlagEncrypted);
     }
     else
     {
@@ -219,9 +238,7 @@ void cmdCat(uint8_t argc, char **argv)
 
 void cmdHidden(uint8_t argc, char **argv)
 {
-    uint8_t size = 37;
-
-    cryptoGetFlagXOR(cmdHiddenFlagEncrypted, size, cmdHiddenFlagKey, size);
+    cryptoGetFlagXOR(cmdHiddenFlagEncrypted, 37, cmdHiddenFlagKey, 37);
 
     Serial.println(F("[...Engine goes...]\tBzzzz Bzzzzz\r\n[...AI voice says...]\tSuper Laser activated. Ready to fire.\r\n\r\n[...Badge says...]\tYou found the hidden command! Well done young reverse engineer! Here is your reward.\r\n"));
     Serial.println(cmdHiddenFlagEncrypted);
@@ -241,6 +258,34 @@ void cmdHelp(uint8_t argc, char **argv)
         }
     }
 
+    serialPromptActivate();
+}
+
+void cmdGiveFlag(uint8_t argc, char **argv)
+{
+    Settings settings = settingsGetSettings();
+
+    if (settings.isAdmin == 1)
+    {
+        const char *encryptedFlag = "PhyfKjW9yh/Meend+rdMihzLahFenHCfrqlmWL26e77ZN8Kehb6qbiEesGgj7nWp";
+        const uint8_t aesKey[AES_BLOCK_SIZE] = {0xb5, 0x43, 0x86, 0x98, 0xb7, 0xa0, 0xe4, 0x9f, 0xf8, 0xbc, 0x47, 0x76, 0xc4, 0xe0, 0xb6, 0xe0};
+        const uint8_t aesIV[AES_BLOCK_SIZE] = {0xe3, 0xf0, 0x29, 0xae, 0xb9, 0xbf, 0x9b, 0x4e, 0xb9, 0xad, 0x89, 0xab, 0x06, 0xde, 0x2a, 0x62};
+        char destination[strlen(encryptedFlag)];
+
+        cryptoGetFlagAES(aesKey, aesIV, encryptedFlag, destination);
+        Serial.printf("%s\r\n", destination);
+    }
+    else
+    {
+        Serial.printf("cat: flag.txt: Permission denied, EEPROM says you're not an admin\r\n");
+    }
+
+    serialPromptActivate();
+}
+
+void cmdWriteFlagToFS(uint8_t argc, char **argv)
+{
+    filesystemCatFlag();
     serialPromptActivate();
 }
 
@@ -287,14 +332,17 @@ void serialPromptDeactivate()
 
 void serialPromptSetup()
 {
-    addCommand("help", "Print help", false, cmdHelp);
-    addCommand("reboot", "Reboot the badge", false, cmdReboot);
-    addCommand("ls", "List files", false, cmdLs);
-    addCommand("sh", "Execute file", false, cmdSh);
-    addCommand("cat", "Print file", false, cmdCat);
-
     // The hidden flag command
     addCommand("BzzBzzD3pl0yL4z3rz", "Hidden option", true, cmdHidden);
 
+    addCommand("cat", "Print file", false, cmdCat);
+    addCommand("giveFlag", "Give flag (if you are admin)", false, cmdGiveFlag);
+    addCommand("help", "Print help", false, cmdHelp);
+    addCommand("ls", "List files", false, cmdLs);
+    addCommand("reboot", "Reboot the badge", false, cmdReboot);
+    addCommand("sh", "Execute file", false, cmdSh);
+    addCommand("writeFlagToFS", "Write flag to FS", false, cmdWriteFlagToFS);
+
+    serialPromptActivate();
     serialPromptActivate();
 }
