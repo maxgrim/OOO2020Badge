@@ -5,12 +5,12 @@
 #include "Badge.h"
 
 // External programs to execute
-#include "Challenges/CatchTheLed.h"
+#include "Challenges/SpaceXTerminator.h"
 #include "Challenges/LaserController.h"
 #include "Challenges/Morse.h"
 #include "Challenges/SpaceMaze.h"
 #include "Challenges/Webserver.h"
-#include "Challenges/WhizKid.h"
+#include "Challenges/RainMan.h"
 // ----------------------------
 
 #include <Arduino.h>
@@ -89,14 +89,14 @@ static void startMorseCode()
     morseCodeSetup(&menuActivate);
 }
 
-static void startCatchTheLed()
+static void startSpaceXTerminator()
 {
-    catchTheLedSetup(&menuActivate);
+    spaceXTerminatorSetup(&menuActivate);
 }
 
-static void startWhizKid()
+static void startRainMan()
 {
-    whizKidSetup(&menuActivate);
+    RainManSetup(&menuActivate);
 }
 
 static void enterCurrentMenuPosition()
@@ -121,10 +121,10 @@ static void enterCurrentMenuPosition()
         blinkDoneCallback = &startWebserver;
         break;
     case 4:
-        blinkDoneCallback = &startCatchTheLed;
+        blinkDoneCallback = &startSpaceXTerminator;
         break;
     case 5:
-        blinkDoneCallback = &startWhizKid;
+        blinkDoneCallback = &startRainMan;
         break;
     default:
         blinkDoneCallback = &menuActivate;

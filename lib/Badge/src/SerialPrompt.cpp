@@ -9,8 +9,8 @@
 // External programs to execute
 #include "Challenges/Morse.h"
 #include "Challenges/LaserController.h"
-#include "Challenges/WhizKid.h"
-#include "Challenges/CatchTheLed.h"
+#include "Challenges/RainMan.h"
+#include "Challenges/SpaceXTerminator.h"
 #include "Challenges/SpaceMaze.h"
 // ----------------------------
 
@@ -152,19 +152,19 @@ void parseAndExecute()
             executionDone = badgeRequestExecution(SERIAL_PROMPT);
             morseCodeSetup(serialPromptActivate);
         }
-        else if (strcmp(strings[0], "./whizKid.sh") == 0)
+        else if (strcmp(strings[0], "./RainMan.sh") == 0)
         {
             executed = true;
             serialPromptDeactivate();
             executionDone = badgeRequestExecution(SERIAL_PROMPT);
-            whizKidSetup(serialPromptActivate);
+            RainManSetup(serialPromptActivate);
         }
-        else if (strcmp(strings[0], "./catchTheLed") == 0)
+        else if (strcmp(strings[0], "./SpaceXTerminator") == 0)
         {
             executed = true;
             serialPromptDeactivate();
             executionDone = badgeRequestExecution(SERIAL_PROMPT);
-            catchTheLedSetup(serialPromptActivate);
+            spaceXTerminatorSetup(serialPromptActivate);
         }
         else if (strcmp(strings[0], "./laserController.exe") == 0)
         {
@@ -191,7 +191,7 @@ void parseAndExecute()
 
 void cmdLs(uint8_t argc, char **argv)
 {
-    Serial.println(F("flag.txt\tmorse\tcatchTheLed\twhizKid.sh\tlaserController.exe\tspaceMaze.py"));
+    Serial.println(F("flag.txt\tmorse\tSpaceXTerminator\tRainMan.sh\tlaserController.exe\tspaceMaze.py"));
     serialPromptActivate();
 }
 
@@ -204,9 +204,9 @@ void cmdSh(uint8_t argc, char **argv)
 {
     if (argc != 0)
     {
-        if (strcmp(argv[1], "./whizKid.sh") == 0 || strcmp(argv[1], "whizKid.sh") == 0)
+        if (strcmp(argv[1], "./RainMan.sh") == 0 || strcmp(argv[1], "RainMan.sh") == 0)
         {
-            whizKidSetup(serialPromptActivate);
+            RainManSetup(serialPromptActivate);
         }
         else
         {

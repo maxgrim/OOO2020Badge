@@ -1,4 +1,4 @@
-#include "WhizKid.h"
+#include "RainMan.h"
 
 #include "../Badge.h"
 #include "../FlagCrypto.h"
@@ -21,7 +21,7 @@ static int currentCorrectAnswer;
 static uint8_t correctAnswersRequired = 5;
 static uint8_t correctAnswersCounter = 0;
 
-static void deactivateWhizKid()
+static void deactivateRainMan()
 {
     badgeTaskScheduler.deleteTask(tCountdown);
     badgeTaskScheduler.deleteTask(tGenerateCalculation);
@@ -123,7 +123,7 @@ void handleAnswer()
         cryptoGetFlag(&flag[0], sizeof(flag), 128);
         Serial.printf("You won, here's the flag: %s\r\n", flag);
 
-        deactivateWhizKid();
+        deactivateRainMan();
         if (doneCallbackF != NULL)
         {
             doneCallbackF();
@@ -135,17 +135,39 @@ void handleAnswer()
     }
 }
 
-void whizKidSetup(void (*doneCallback)())
+void RainManSetup(void (*doneCallback)())
 {
     doneCallbackF = doneCallback;
 
     Serial.printf("\r\n");
-    Serial.printf("  ██╗    ██╗██╗  ██╗██╗███████╗██╗  ██╗██╗██████╗ \r\n");
-    Serial.printf("  ██║    ██║██║  ██║██║╚══███╔╝██║ ██╔╝██║██╔══██╗\r\n");
-    Serial.printf("  ██║ █╗ ██║███████║██║  ███╔╝ █████╔╝ ██║██║  ██║\r\n");
-    Serial.printf("  ██║███╗██║██╔══██║██║ ███╔╝  ██╔═██╗ ██║██║  ██║\r\n");
-    Serial.printf("  ╚███╔███╔╝██║  ██║██║███████╗██║  ██╗██║██████╔╝\r\n");
-    Serial.printf("   ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝╚══════╝╚═╝  ╚═╝╚═╝╚═════╝ \r\n");
+    Serial.printf("\r\n███╗   ███╗ █████╗ ██╗  ██╗███████╗                  ");
+    Serial.printf("\r\n████╗ ████║██╔══██╗██║ ██╔╝██╔════╝                  ");
+    Serial.printf("\r\n██╔████╔██║███████║█████╔╝ █████╗                    ");
+    Serial.printf("\r\n██║╚██╔╝██║██╔══██║██╔═██╗ ██╔══╝                    ");
+    Serial.printf("\r\n██║ ╚═╝ ██║██║  ██║██║  ██╗███████╗                  ");
+    Serial.printf("\r\n╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝                  ");
+    Serial.printf("\r\n                                                     ");
+    Serial.printf("\r\n        ██╗████████╗                                 ");
+    Serial.printf("\r\n        ██║╚══██╔══╝                                 ");
+    Serial.printf("\r\n        ██║   ██║                                    ");
+    Serial.printf("\r\n        ██║   ██║                                    ");
+    Serial.printf("\r\n        ██║   ██║                                    ");
+    Serial.printf("\r\n        ╚═╝   ╚═╝                                    ");
+    Serial.printf("\r\n                                                     ");
+    Serial.printf("\r\n                ██████╗  █████╗ ██╗███╗   ██╗        ");
+    Serial.printf("\r\n                ██╔══██╗██╔══██╗██║████╗  ██║        ");
+    Serial.printf("\r\n                ██████╔╝███████║██║██╔██╗ ██║        ");
+    Serial.printf("\r\n                ██╔══██╗██╔══██║██║██║╚██╗██║        ");
+    Serial.printf("\r\n                ██║  ██║██║  ██║██║██║ ╚████║        ");
+    Serial.printf("\r\n                ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝        ");
+    Serial.printf("\r\n                                                     ");
+    Serial.printf("\r\n                        ███╗   ███╗ █████╗ ███╗   ██╗");
+    Serial.printf("\r\n                        ████╗ ████║██╔══██╗████╗  ██║");
+    Serial.printf("\r\n                        ██╔████╔██║███████║██╔██╗ ██║");
+    Serial.printf("\r\n                        ██║╚██╔╝██║██╔══██║██║╚██╗██║");
+    Serial.printf("\r\n                        ██║ ╚═╝ ██║██║  ██║██║ ╚████║");
+    Serial.printf("\r\n                        ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝");
+    Serial.printf("\r\n                                                     ");
     Serial.printf("\r\n\r\n");
 
     randomSeed(analogRead(0));

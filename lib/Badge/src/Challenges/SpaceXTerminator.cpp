@@ -1,4 +1,4 @@
-#include "CatchTheLed.h"
+#include "SpaceXTerminator.h"
 
 #include "../Badge.h"
 #include "../Eyes.h"
@@ -14,8 +14,8 @@ static uint8_t score = 0, currentPixel = 0, hitPixel = 6;
 static uint16_t startInterval = 600;
 static bool currentDirection;
 
-static void updateCatchTheLed();
-static Task tUpdateCatchTheLed(startInterval, TASK_FOREVER, &updateCatchTheLed);
+static void updateSpaceXTerminator();
+static Task tUpdateSpaceXTerminator(startInterval, TASK_FOREVER, &updateSpaceXTerminator);
 
 static void detectButtonChange();
 static Task tDetectButtonChange(TASK_IMMEDIATE, TASK_FOREVER, &detectButtonChange);
@@ -34,12 +34,12 @@ static Task tPlayHitAnimation(400, 3, &playHitAnimation);
 
 static bool readingL, readingR, lastStateL, lastStateR;
 
-static void deactivateCatchTheLed()
+static void deactivateSpaceXTerminator()
 {
     badgeTaskScheduler.deleteTask(tDetectButtonChange);
     badgeTaskScheduler.deleteTask(tVerifyButtonChange);
     badgeTaskScheduler.deleteTask(tVerifyButtonsLow);
-    badgeTaskScheduler.deleteTask(tUpdateCatchTheLed);
+    badgeTaskScheduler.deleteTask(tUpdateSpaceXTerminator);
 }
 
 static void playDeadAnimation()
@@ -47,14 +47,14 @@ static void playDeadAnimation()
     if (tPlayDeadAnimation.isFirstIteration())
     {
         eyesOff();
-        tUpdateCatchTheLed.disable();
+        tUpdateSpaceXTerminator.disable();
         rgbSetBrightness(RGB_DEFAULT_BRIGHTNESS);
     }
 
     if (tPlayDeadAnimation.isLastIteration())
     {
         eyesOn();
-        tUpdateCatchTheLed.enable();
+        tUpdateSpaceXTerminator.enable();
         badgeTaskScheduler.deleteTask(tPlayDeadAnimation);
         tVerifyButtonsLow.enable();
         return;
@@ -77,14 +77,14 @@ static void playHitAnimation()
 {
     if (tPlayHitAnimation.isFirstIteration())
     {
-        tUpdateCatchTheLed.disable();
+        tUpdateSpaceXTerminator.disable();
         rgbSetBrightness(RGB_DEFAULT_BRIGHTNESS);
     }
 
     if (tPlayHitAnimation.isLastIteration())
     {
         eyesOn();
-        tUpdateCatchTheLed.enable();
+        tUpdateSpaceXTerminator.enable();
         badgeTaskScheduler.deleteTask(tPlayDeadAnimation);
         tVerifyButtonsLow.enable();
         return;
@@ -105,7 +105,7 @@ static void playHitAnimation()
     }
 }
 
-static void updateCatchTheLed()
+static void updateSpaceXTerminator()
 {
     rgbClear();
 
@@ -160,15 +160,15 @@ static void verifyButtonChange()
 
             long modifier;
 
-            if (tUpdateCatchTheLed.getInterval() <= 100)
+            if (tUpdateSpaceXTerminator.getInterval() <= 100)
             {
                 modifier = 20;
             }
-            else if (tUpdateCatchTheLed.getInterval() <= 200)
+            else if (tUpdateSpaceXTerminator.getInterval() <= 200)
             {
                 modifier = 25;
             }
-            else if (tUpdateCatchTheLed.getInterval() <= 400)
+            else if (tUpdateSpaceXTerminator.getInterval() <= 400)
             {
                 modifier = 50;
             }
@@ -177,9 +177,9 @@ static void verifyButtonChange()
                 modifier = 100;
             }
 
-            tUpdateCatchTheLed.setInterval(tUpdateCatchTheLed.getInterval() - modifier);
+            tUpdateSpaceXTerminator.setInterval(tUpdateSpaceXTerminator.getInterval() - modifier);
 
-            if (tUpdateCatchTheLed.getInterval() <= 0)
+            if (tUpdateSpaceXTerminator.getInterval() <= 0)
             {
                 Serial.printf("You won, here is your flag: ");
                 const char *encryptedFlag = "qiF+XICLazJqo48fojtb6GALju7VHdF6muaMw6OUSi4sp9LjE1GWEhXQvSTsPhmghZncJkwnsOrq789P9JP9ad4Y3yDQmCnkKoM=";
@@ -191,7 +191,7 @@ static void verifyButtonChange()
                 cryptoGetFlagAES(aesKey, aesIV, encryptedFlag, destination);
                 Serial.printf("%s\r\n", destination);
                 
-                deactivateCatchTheLed();
+                deactivateSpaceXTerminator();
                 if (doneCallbackF != NULL)
                 {
                     doneCallbackF();
@@ -227,7 +227,7 @@ static void verifyButtonsLow()
     }
 }
 
-void catchTheLedSetup(void (*doneCallback)())
+void spaceXTerminatorSetup(void (*doneCallback)())
 {
     doneCallbackF = doneCallback;
 
@@ -260,8 +260,8 @@ void catchTheLedSetup(void (*doneCallback)())
     badgeTaskScheduler.addTask(tDetectButtonChange);
     badgeTaskScheduler.addTask(tVerifyButtonChange);
     badgeTaskScheduler.addTask(tVerifyButtonsLow);
-    badgeTaskScheduler.addTask(tUpdateCatchTheLed);
+    badgeTaskScheduler.addTask(tUpdateSpaceXTerminator);
 
-    tUpdateCatchTheLed.enable();
+    tUpdateSpaceXTerminator.enable();
     tDetectButtonChange.enable();
 }

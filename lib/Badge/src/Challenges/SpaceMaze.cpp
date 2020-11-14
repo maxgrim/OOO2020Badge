@@ -303,7 +303,7 @@ static void handleMove()
         char destination[strlen(encryptedFlag)];
 
         cryptoGetFlagAES(aesKey, aesIV, encryptedFlag, destination);
-        Serial.printf("You've gone beyond the stars! %s\r\n", destination);
+        Serial.printf("Welcome home, son! This is for you %s\r\n", destination);
 
         deactivateRasterDungeon();
         badgeTaskScheduler.addTask(tPlayWinAnimation);
