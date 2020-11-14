@@ -10,11 +10,12 @@
 #include "Challenges/Morse.h"
 #include "Challenges/SpaceMaze.h"
 #include "Challenges/Webserver.h"
+#include "Challenges/WhizKid.h"
 // ----------------------------
 
 #include <Arduino.h>
 
-#define MENU_POSITIONS 5
+#define MENU_POSITIONS 6
 
 static int currentMenuPosition = 0;
 static bool readingL, readingR, lastStateL, lastStateR;
@@ -93,6 +94,11 @@ static void startCatchTheLed()
     catchTheLedSetup(&menuActivate);
 }
 
+static void startWhizKid()
+{
+    whizKidSetup(&menuActivate);
+}
+
 static void enterCurrentMenuPosition()
 {
     menuDeactivate();
@@ -116,6 +122,9 @@ static void enterCurrentMenuPosition()
         break;
     case 4:
         blinkDoneCallback = &startCatchTheLed;
+        break;
+    case 5:
+        blinkDoneCallback = &startWhizKid;
         break;
     default:
         blinkDoneCallback = &menuActivate;
