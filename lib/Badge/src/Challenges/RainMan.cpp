@@ -121,7 +121,7 @@ void handleAnswer()
     {
         char flag[38];
         cryptoGetFlag(&flag[0], sizeof(flag), 128);
-        Serial.printf("You won, here's the flag: %s\r\n", flag);
+        Serial.printf("It's raining flags, hallelujah, it's raining flags: %s\r\n", flag);
 
         deactivateRainMan();
         if (doneCallbackF != NULL)
