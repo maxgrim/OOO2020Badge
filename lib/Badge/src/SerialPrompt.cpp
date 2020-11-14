@@ -344,5 +344,4 @@ void serialPromptSetup()
     addCommand("writeFlagToFS", "Write flag to FS", false, cmdWriteFlagToFS);
 
     serialPromptActivate();
-    serialPromptActivate();
 }
