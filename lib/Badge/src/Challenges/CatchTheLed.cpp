@@ -179,7 +179,7 @@ static void verifyButtonChange()
 
             tUpdateCatchTheLed.setInterval(tUpdateCatchTheLed.getInterval() - modifier);
 
-            if (tUpdateCatchTheLed.getInterval() == 0)
+            if (tUpdateCatchTheLed.getInterval() <= 0)
             {
                 Serial.printf("You won, here is your flag: ");
                 const char *encryptedFlag = "qiF+XICLazJqo48fojtb6GALju7VHdF6muaMw6OUSi4sp9LjE1GWEhXQvSTsPhmghZncJkwnsOrq789P9JP9ad4Y3yDQmCnkKoM=";
@@ -189,12 +189,17 @@ static void verifyButtonChange()
                 char destination[strlen(encryptedFlag)];
 
                 cryptoGetFlagAES(aesKey, aesIV, encryptedFlag, destination);
-
+                Serial.printf("%s\r\n", destination);
+                
                 deactivateCatchTheLed();
                 if (doneCallbackF != NULL)
                 {
                     doneCallbackF();
                 }
+
+                // TODO: add playWinAnimation
+
+                return;
             }
 
             badgeTaskScheduler.addTask(tPlayHitAnimation);
