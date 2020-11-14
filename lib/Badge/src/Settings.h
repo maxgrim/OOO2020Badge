@@ -3,7 +3,7 @@
 
 struct Settings {
   uint8_t bootMode;
-  uint8_t isAdmin;
+  uint8_t isCaptain;
 };
 
 void settingsSetup(size_t eepromSize, size_t eepromStartAddress);

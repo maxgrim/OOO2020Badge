@@ -265,7 +265,7 @@ void cmdGiveFlag(uint8_t argc, char **argv)
 {
     Settings settings = settingsGetSettings();
 
-    if (settings.isAdmin == 1)
+    if (settings.isCaptain == 1)
     {
         const char *encryptedFlag = "PhyfKjW9yh/Meend+rdMihzLahFenHCfrqlmWL26e77ZN8Kehb6qbiEesGgj7nWp";
         const uint8_t aesKey[AES_BLOCK_SIZE] = {0xb5, 0x43, 0x86, 0x98, 0xb7, 0xa0, 0xe4, 0x9f, 0xf8, 0xbc, 0x47, 0x76, 0xc4, 0xe0, 0xb6, 0xe0};
@@ -277,7 +277,7 @@ void cmdGiveFlag(uint8_t argc, char **argv)
     }
     else
     {
-        Serial.printf("cat: flag.txt: Permission denied, EEPROM says you're not an admin\r\n");
+        Serial.printf("cat: flag.txt: Permission denied, EEPROM says you're not the captain\r\n");
     }
 
     serialPromptActivate();
@@ -336,7 +336,7 @@ void serialPromptSetup()
     addCommand("BzzBzzD3pl0yL4z3rz", "Hidden option", true, cmdHidden);
 
     addCommand("cat", "Print file", false, cmdCat);
-    addCommand("giveFlag", "Give flag (if you are admin)", false, cmdGiveFlag);
+    addCommand("giveFlag", "Give flag (if you are the captain)", false, cmdGiveFlag);
     addCommand("help", "Print help", false, cmdHelp);
     addCommand("ls", "List files", false, cmdLs);
     addCommand("reboot", "Reboot the badge", false, cmdReboot);
