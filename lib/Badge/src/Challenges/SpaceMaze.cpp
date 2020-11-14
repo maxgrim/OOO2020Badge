@@ -116,7 +116,7 @@ static void playWinAnimation()
     if (tPlayWinAnimation.isFirstIteration())
     {
         eyesOff();
-        rgbSetBrightness(10);
+        rgbSetBrightness(RGB_DEFAULT_BRIGHTNESS);
     }
 
     if (tPlayWinAnimation.isLastIteration())
@@ -143,7 +143,7 @@ static void playDeadAnimation()
 {
     if (tPlayDeadAnimation.isFirstIteration())
     {
-        rgbSetBrightness(10);
+        rgbSetBrightness(RGB_DEFAULT_BRIGHTNESS);
     }
 
     if (tPlayDeadAnimation.isLastIteration())

@@ -161,7 +161,7 @@ void catchTheLedSetup(void (*doneCallback)())
     eyesOff();
     
     rgbClear();
-    rgbSetBrightness(RGB_DEFAULT_BRIGHNESS);
+    rgbSetBrightness(RGB_DEFAULT_BRIGHTNESS);
     rgbShow();
 
     Serial.printf("\r\n");

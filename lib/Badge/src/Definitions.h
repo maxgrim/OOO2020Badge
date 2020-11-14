@@ -9,5 +9,5 @@
 #define PIN_LED_RGB  13
 
 #define RGB_N_LEDS 12
-
+#define RGB_DEFAULT_BRIGHTNESS 20
 #endif
