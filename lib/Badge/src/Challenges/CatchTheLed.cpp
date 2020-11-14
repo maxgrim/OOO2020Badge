@@ -11,7 +11,7 @@
 static void (*doneCallbackF)();
 
 static uint8_t score = 0, currentPixel = 0, hitPixel = 6;
-static ushort startInterval = 600;
+static uint16_t startInterval = 600;
 static bool currentDirection;
 
 static void updateCatchTheLed();
