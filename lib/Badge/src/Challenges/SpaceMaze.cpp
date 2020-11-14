@@ -121,7 +121,10 @@ static void playWinAnimation()
 
     if (tPlayWinAnimation.isLastIteration())
     {
-        doneCallbackF();
+        if (doneCallbackF != NULL)
+        {
+            doneCallbackF();
+        }
         return;
     }
 
@@ -145,7 +148,10 @@ static void playDeadAnimation()
 
     if (tPlayDeadAnimation.isLastIteration())
     {
-        doneCallbackF();
+        if (doneCallbackF != NULL)
+        {
+            doneCallbackF();
+        }
         return;
     }
 
@@ -355,9 +361,10 @@ void spaceMazeSetup(void (*doneCallback)())
     pinMode(PIN_BUTTON_L, INPUT);
     pinMode(PIN_BUTTON_R, INPUT);
 
+    Serial.printf("\r\n");
     Serial.printf("________                               ______  ___                  \r\n");
     Serial.printf("__  ___/_____________ ___________      ___   |/  /_____ ___________ \r\n");
-    Serial.printf("_____ \\___  __ \\  __ `/  ___/  _ \\     __  /|_/ /_  __ `/__  /_  _ \\r\n");
+    Serial.printf("_____ \\___  __ \\  __ `/  ___/  _ \\     __  /|_/ /_  __ `/__  /_  _ \r\n");
     Serial.printf("____/ /__  /_/ / /_/ // /__ /  __/     _  /  / / / /_/ /__  /_/  __/\r\n");
     Serial.printf("/____/ _  .___/\\__,_/ \\___/ \\___/      /_/  /_/  \\__,_/ _____/\\___/ \r\n");
     Serial.printf("       /_/                                                          \r\n");
@@ -366,7 +373,7 @@ void spaceMazeSetup(void (*doneCallback)())
     printDungeon();
     updateRgbLeds();
 
-    Serial.printf("You are at x: %d, y: %d)\r\n", posX, posY);
+    Serial.printf("You are at x: %d, y: %d\r\n", posX, posY);
 
     badgeTaskScheduler.addTask(tDetectButtonChange);
     badgeTaskScheduler.addTask(tVerifyButtonChange);
