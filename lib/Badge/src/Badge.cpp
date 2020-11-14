@@ -3,6 +3,7 @@
 
 #include "Badge.h"
 #include "Debug.h"
+#include "Filesystem.h"
 #include "FlagCrypto.h"
 #include "Definitions.h"
 #include "Eyes.h"
@@ -110,6 +111,9 @@ bool badgeSetup(size_t eepromSize, size_t eepromStartAddress, bool forceStart)
     printWelcome();
     printEasyFlag();
 
+    // Filesystem setup
+    filesystemSetup();
+    
     // Serial prompt
     serialPromptSetup();
 
