@@ -335,7 +335,7 @@ static void verifyButtonChange()
     if (readingL && readingR)
     {
         tShowDungeonAnimation.disable();
-        rgbBlinkSingleLed(((currentDirection * 3) + 6) % 12, 3, colorDirection, &handleMove);
+        rgbBlinkSingleLed(((currentDirection * 3) + 6) % 12, 2, colorDirection, &handleMove);
     }
     else if (readingL || readingR)
     {
