@@ -49,32 +49,44 @@ static void generateCalculation()
     {
     case 0:
         Serial.printf("%ld + %ld\r\n", a, b);
+#ifdef DEBUG
         Serial.printf("  = %ld\r\n", a + b);
+#endif
         currentCorrectAnswer = a + b;
         break;
     case 1:
         Serial.printf("%ld - %ld\r\n", a, b);
+#ifdef DEBUG
         Serial.printf("  = %ld\r\n", a - b);
+#endif
         currentCorrectAnswer = a - b;
         break;
     case 2:
         Serial.printf("%ld * %ld\r\n", a, b);
+#ifdef DEBUG
         Serial.printf("  = %ld\r\n", a * b);
+#endif
         currentCorrectAnswer = a * b;
         break;
     case 3:
         Serial.printf("%ld %% %ld\r\n", a, b);
+#ifdef DEBUG
         Serial.printf("  = %ld\r\n", a % b);
+#endif
         currentCorrectAnswer = a % b;
         break;
     case 4:
         Serial.printf("%ld XOR %ld\r\n", a, b);
+#ifdef DEBUG
         Serial.printf("  = %ld\r\n", a ^ b);
+#endif
         currentCorrectAnswer = a ^ b;
         break;
     case 5:
         Serial.printf("%ld AND %ld\r\n", a, b);
+#ifdef DEBUG
         Serial.printf("  = %ld\r\n", a & b);
+#endif
         currentCorrectAnswer = a & b;
         break;
     }
