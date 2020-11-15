@@ -39,13 +39,6 @@ static void handleServerClient()
     server.handleClient();
 }
 
-static void handleSecretPage()
-{
-    char flag[38];
-    cryptoGetFlag(&flag[0], sizeof(flag), 32);
-    server.send(200, "text/plain", flag);
-}
-
 static void handleStop()
 {
     deactivateWebserver();
@@ -92,7 +85,7 @@ void webserverSetup(void (*doneCallback)())
 
     if (!SPIFFS.begin())
     {
-        Serial.println("An Error has occurred while mounting SPIFFS");
+        Serial.println("An error has occurred while mounting SPIFFS");
         return;
     }
 
@@ -101,7 +94,6 @@ void webserverSetup(void (*doneCallback)())
 
     wifiOn(localIp, gateway, subnet, "StarshipAP", password);
 
-    server.on("/youwillneverguessthis", handleSecretPage);
     server.on("/stop", handleStop);
     server.onNotFound(handleNotFound);
 

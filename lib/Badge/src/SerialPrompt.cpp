@@ -12,6 +12,7 @@
 #include "Challenges/RainMan.h"
 #include "Challenges/SpaceXTerminator.h"
 #include "Challenges/SpaceMaze.h"
+#include "Challenges/Webserver.h"
 // ----------------------------
 
 #include <Arduino.h>
@@ -180,6 +181,13 @@ void parseAndExecute()
             executionDone = badgeRequestExecution(SERIAL_PROMPT);
             spaceMazeSetup(serialPromptActivate);
         }
+        else if (strcmp(strings[0], "./connectStarship.sh") == 0)
+        {
+            executed = true;
+            serialPromptDeactivate();
+            executionDone = badgeRequestExecution(SERIAL_PROMPT);
+            webserverSetup(serialPromptActivate);
+        }
     }
 
     if (!executed)
@@ -191,7 +199,7 @@ void parseAndExecute()
 
 void cmdLs(uint8_t argc, char **argv)
 {
-    Serial.println(F("flag.txt\tmorse\tspaceXTerminator\trainMan.sh\tlaserController.exe\tspaceMaze.py"));
+    Serial.println(F("flag.txt\tmorse\tspaceXTerminator\trainMan.sh\tlaserController.exe\tspaceMaze.py\tconnectStarship.sh"));
     serialPromptActivate();
 }
 
@@ -207,6 +215,10 @@ void cmdSh(uint8_t argc, char **argv)
         if (strcmp(argv[1], "./rainMan.sh") == 0 || strcmp(argv[1], "rainMan.sh") == 0)
         {
             spaceMazeSetup(serialPromptActivate);
+        }
+        else if (strcmp(argv[1], "./connectStarship.sh") == 0 || strcmp(argv[1], "connectStarship.sh") == 0)
+        {
+            webserverSetup(serialPromptActivate);
         }
         else
         {
