@@ -239,7 +239,7 @@ void cmdPy(uint8_t argc, char **argv)
     {
         if (strcmp(argv[1], "./spaceMaze.py") == 0 || strcmp(argv[1], "spaceMaze.py") == 0)
         {
-            rainManSetup(serialPromptActivate);
+            spaceMazeSetup(serialPromptActivate);
         }
         else
         {
