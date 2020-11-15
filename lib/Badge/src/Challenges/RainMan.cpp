@@ -14,11 +14,11 @@ static void generateCalculation();
 static Task tGenerateCalculation(TASK_IMMEDIATE, TASK_ONCE, &generateCalculation);
 
 static void handleAnswer();
-static Task tHandleAnswer(5000, TASK_ONCE, &handleAnswer);
+static Task tHandleAnswer(100, TASK_ONCE, &handleAnswer);
 
 static int currentCorrectAnswer;
 
-static uint8_t correctAnswersRequired = 5;
+static uint8_t correctAnswersRequired = 30;
 static uint8_t correctAnswersCounter = 0;
 
 static void deactivateRainMan()
@@ -35,7 +35,7 @@ static void countdown()
     if (tCountdown.isLastIteration())
     {
         Serial.printf("\r\n");
-        tGenerateCalculation.enableDelayed(1000);
+        tGenerateCalculation.restartDelayed(1000);
     }
 }
 
@@ -103,6 +103,13 @@ void handleAnswer()
     if (!Serial.available())
     {
         Serial.printf("Too late!\r\n");
+        deactivateRainMan();
+        if (doneCallbackF != NULL)
+        {
+            doneCallbackF();
+        }
+
+        return;
     }
     else
     {
@@ -140,6 +147,8 @@ void handleAnswer()
         {
             doneCallbackF();
         }
+
+        return;
     }
     else
     {
@@ -188,5 +197,5 @@ void rainManSetup(void (*doneCallback)())
     badgeTaskScheduler.addTask(tGenerateCalculation);
     badgeTaskScheduler.addTask(tHandleAnswer);
 
-    tCountdown.enable();
+    tCountdown.restart();
 }

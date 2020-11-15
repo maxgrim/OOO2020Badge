@@ -214,7 +214,7 @@ void cmdSh(uint8_t argc, char **argv)
     {
         if (strcmp(argv[1], "./rainMan.sh") == 0 || strcmp(argv[1], "rainMan.sh") == 0)
         {
-            spaceMazeSetup(serialPromptActivate);
+            rainManSetup(serialPromptActivate);
         }
         else if (strcmp(argv[1], "./connectStarship.sh") == 0 || strcmp(argv[1], "connectStarship.sh") == 0)
         {
