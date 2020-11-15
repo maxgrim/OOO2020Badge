@@ -29,6 +29,9 @@ static Task tVerifyButtonsLow(TASK_IMMEDIATE, TASK_FOREVER, &verifyButtonsLow);
 static void playDeadAnimation();
 static Task tPlayDeadAnimation(200, 7, &playDeadAnimation);
 
+static void playWinAnimation();
+static Task tPlayWinAnimation(200, 7, &playWinAnimation);
+
 static void playHitAnimation();
 static Task tPlayHitAnimation(400, 3, &playHitAnimation);
 
@@ -69,6 +72,43 @@ static void playDeadAnimation()
     else
     {
         rgbSetAllLeds(0xFF0000);
+        rgbShow();
+    }
+}
+
+static void playWinAnimation()
+{
+    if (tPlayWinAnimation.isFirstIteration())
+    {
+        eyesOff();
+        tUpdateSpaceXTerminator.disable();
+        rgbSetBrightness(RGB_DEFAULT_BRIGHTNESS);
+    }
+
+    if (tPlayWinAnimation.isLastIteration())
+    {
+        eyesOn();
+        tUpdateSpaceXTerminator.enable();
+        badgeTaskScheduler.deleteTask(tPlayWinAnimation);
+
+        deactivateSpaceXTerminator();
+        if (doneCallbackF != NULL)
+        {
+            doneCallbackF();
+        }
+        
+        return;
+    }
+
+    unsigned long counter = tPlayWinAnimation.getRunCounter();
+    if (counter % 2 == 1)
+    {
+        rgbClear();
+        rgbShow();
+    }
+    else
+    {
+        rgbSetAllLeds(0x00FF00);
         rgbShow();
     }
 }
@@ -190,14 +230,9 @@ static void verifyButtonChange()
 
                 cryptoGetFlagAES(aesKey, aesIV, encryptedFlag, destination);
                 Serial.printf("%s\r\n", destination);
-                
-                deactivateSpaceXTerminator();
-                if (doneCallbackF != NULL)
-                {
-                    doneCallbackF();
-                }
 
-                // TODO: add playWinAnimation
+                badgeTaskScheduler.addTask(tPlayWinAnimation);
+                tPlayWinAnimation.restart();
 
                 return;
             }
