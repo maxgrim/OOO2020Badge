@@ -4,7 +4,7 @@
 
 void setup()
 {
-    badgeSetup(EEPSIZE, 2900, true);
+    badgeSetup(EEPSIZE, 3200, true);
 }
 
 void loop()
