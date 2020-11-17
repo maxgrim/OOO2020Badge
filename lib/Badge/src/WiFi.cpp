@@ -12,7 +12,7 @@ void wifiOff()
 void wifiOn(IPAddress localIp, IPAddress gateway, IPAddress subnet, const char *ssid, const char *password)
 {
     WiFi.mode(WIFI_AP);
-    Serial.print(F("Setting up "));
+    Serial.print(F("\r\nSetting up "));
     Serial.print(ssid);
     Serial.println(F("..."));
 
