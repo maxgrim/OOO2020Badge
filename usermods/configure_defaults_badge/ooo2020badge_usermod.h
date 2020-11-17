@@ -3,6 +3,7 @@
 #include "wled.h"
 #include "FX.h"
 
+#define EEPROM_START 2800
 #define EEPROM_DEFAULTS_SET 123
 #define PIN_BUTTON_L 12
 #define PIN_BUTTON_R 16
@@ -29,17 +30,16 @@ public:
     pinMode(PIN_BUTTON_R, INPUT);
 
     Settings settings = {};
-    EEPROM.get(2800, settings);
+    EEPROM.get(EEPROM_START, settings);
 
     if (settings.defaultsSet != EEPROM_DEFAULTS_SET)
     {
       settings.defaultsSet = EEPROM_DEFAULTS_SET;
-      EEPROM.put(2800, settings);
+      EEPROM.put(EEPROM_START, settings);
+
       bootPreset = 1;
       bri = DEFAULT_BRIGHTNESS;
       saveSettingsToEEPROM();
-
-      WS2812FX::Segment &seg = strip.getSegment(0);
 
       col[0] = 0;
       col[1] = 0;
