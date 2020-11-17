@@ -5,7 +5,7 @@
 #include "Definitions.h"
 #include <EEPROM.h>
 
-int startAddress;
+size_t startAddress;
 
 void settingsSetup(size_t eepromSize, size_t eepromStartAddress)
 {
@@ -16,12 +16,12 @@ void settingsSetup(size_t eepromSize, size_t eepromStartAddress)
 Settings settingsGetSettings()
 {
     Settings settings = {};
-    EEPROM.get(2900, settings);
+    EEPROM.get(startAddress, settings);
     return settings;
 }
 
 void settingsSetSettings(Settings settings)
 {
-    EEPROM.put(2900, settings);
+    EEPROM.put(startAddress, settings);
     EEPROM.commit();
 }
