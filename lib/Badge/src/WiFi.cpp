@@ -12,16 +12,20 @@ void wifiOff()
 void wifiOn(IPAddress localIp, IPAddress gateway, IPAddress subnet, const char *ssid, const char *password)
 {
     WiFi.mode(WIFI_AP);
-    Serial.printf("Setting up %s ...\r\n", ssid);
+    Serial.print(F("Setting up "));
+    Serial.print(ssid);
+    Serial.println(F("..."));
 
     if (!WiFi.softAPConfig(localIp, gateway, subnet))
     {
-        Serial.printf("AP configuration failed!\r\n");
+        Serial.println(F("AP configuration failed !"));
     }
 
-    if(!WiFi.softAP(ssid, password)) {
-        Serial.printf("AP failed!\r\n");
+    if (!WiFi.softAP(ssid, password))
+    {
+        Serial.println(F("AP failed!"));
     }
 
-    Serial.printf("IP address: %s\r\n", WiFi.softAPIP().toString().c_str());
+    Serial.print(F("IP address: "));
+    Serial.println(WiFi.softAPIP().toString().c_str());
 }

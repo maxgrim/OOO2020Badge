@@ -85,7 +85,7 @@ void webserverSetup(void (*doneCallback)())
 
     if (!SPIFFS.begin())
     {
-        Serial.println("An error has occurred while mounting SPIFFS");
+        Serial.println(F("An error has occurred while mounting SPIFFS"));
         return;
     }
 

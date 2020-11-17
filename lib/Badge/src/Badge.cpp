@@ -30,45 +30,45 @@ static bool buttonsPressed()
 
 static void printWelcome()
 {
-    Serial.printf("\r\n");
-    Serial.printf("                           *     .--.\r\n");
-    Serial.printf("                                / /  `\r\n");
-    Serial.printf("               +               | |\r\n");
-    Serial.printf("                      '         \\ \\__,\r\n");
-    Serial.printf("                  *          +   '--'  *\r\n");
-    Serial.printf("                      +   /\\\r\n");
-    Serial.printf("         +              .'  '.   *\r\n");
-    Serial.printf("                *      /======\\      +\r\n");
-    Serial.printf("                      ;:.  _   ;\r\n");
-    Serial.printf("                      |:. (_)  |\r\n");
-    Serial.printf("                      |:.  _   |\r\n");
-    Serial.printf("            +         |:. (_)  |          *\r\n");
-    Serial.printf("                      ;:.      ;\r\n");
-    Serial.printf("                    .' \\:.    / `.\r\n");
-    Serial.printf("                   / .-'':._.'`-. \\\r\n");
-    Serial.printf("                   |/    /||\\    \\|\r\n");
-    Serial.printf("                 _..--\"\"\"````\"\"\"--.._\r\n");
-    Serial.printf("           _.-'``                    ``'-._\r\n");
-    Serial.printf("         -'                                '-\r\n");
-    Serial.printf("   ____  ________                _             \r\n");
-    Serial.printf("  / __ \\/ __/ __/__  ____  _____(_)   _____    \r\n");
-    Serial.printf(" / / / / /_/ /_/ _ \\/ __ \\/ ___/ / | / / _ \\   \r\n");
-    Serial.printf("/ /_/ / __/ __/  __/ / / (__  ) /| |/ /  __/   \r\n");
-    Serial.printf("\\____/_/ /_/__\\___/_/ /_/____/_/ |___/\\___/    \r\n");
-    Serial.printf("  / __ \\/ __/ __/____(_) /____                 \r\n");
-    Serial.printf(" / / / / /_/ /_/ ___/ / __/ _ \\                \r\n");
-    Serial.printf("/ /_/ / __/ __(__  ) / /_/  __/                \r\n");
-    Serial.printf("\\____/_/ /_/ /____/_/\\__/\\___/ __  _           \r\n");
-    Serial.printf("  / __ \\____  ___  _________ _/ /_(_)___  ____ \r\n");
-    Serial.printf(" / / / / __ \\/ _ \\/ ___/ __ `/ __/ / __ \\/ __ \\\r\n");
-    Serial.printf("/ /_/ / /_/ /  __/ /  / /_/ / /_/ / /_/ / / / /\r\n");
-    Serial.printf("\\____/ .___/\\___/_/   \\__,_/\\__/_/\\____/_/ /_/ \r\n");
-    Serial.printf("   _/_/  ____ ___   ____                       \r\n");
-    Serial.printf("  |__ \\ / __ \\__ \\ / __ \\                      \r\n");
-    Serial.printf("  __/ // / / /_/ // / / /                      \r\n");
-    Serial.printf(" / __// /_/ / __// /_/ /                       \r\n");
-    Serial.printf("/____/\\____/____/\\____/                        \r\n");
-    Serial.printf("\r\n");
+    Serial.print(F("\r\n\
+                           *     .--.\r\n\
+                                / /  `\r\n\
+               +               | |\r\n\
+                      '         \\ \\__,\r\n\
+                  *          +   '--'  *\r\n\
+                      +   /\\\r\n\
+         +              .'  '.   *\r\n\
+                *      /======\\      +\r\n\
+                      ;:.  _   ;\r\n\
+                      |:. (_)  |\r\n\
+                      |:.  _   |\r\n\
+            +         |:. (_)  |          *\r\n\
+                      ;:.      ;\r\n\
+                    .' \\:.    / `.\r\n\
+                   / .-'':._.'`-. \\\r\n\
+                   |/    /||\\    \\|\r\n\
+                 _..--\"\"\"````\"\"\"--.._\r\n\
+           _.-'``                    ``'-._\r\n\
+         -'                                '-\r\n\
+   ____  ________                _             \r\n\
+  / __ \\/ __/ __/__  ____  _____(_)   _____    \r\n\
+ / / / / /_/ /_/ _ \\/ __ \\/ ___/ / | / / _ \\   \r\n\
+/ /_/ / __/ __/  __/ / / (__  ) /| |/ /  __/   \r\n\
+\\____/_/ /_/__\\___/_/ /_/____/_/ |___/\\___/    \r\n\
+  / __ \\/ __/ __/____(_) /____                 \r\n\
+ / / / / /_/ /_/ ___/ / __/ _ \\                \r\n\
+/ /_/ / __/ __(__  ) / /_/  __/                \r\n\
+\\____/_/ /_/ /____/_/\\__/\\___/ __  _           \r\n\
+  / __ \\____  ___  _________ _/ /_(_)___  ____ \r\n\
+ / / / / __ \\/ _ \\/ ___/ __ `/ __/ / __ \\/ __ \\\r\n\
+/ /_/ / /_/ /  __/ /  / /_/ / /_/ / /_/ / / / /\r\n\
+\\____/ .___/\\___/_/   \\__,_/\\__/_/\\____/_/ /_/ \r\n\
+   _/_/  ____ ___   ____                       \r\n\
+  |__ \\ / __ \\__ \\ / __ \\                      \r\n\
+  __/ // / / /_/ // / / /                      \r\n\
+ / __// /_/ / __// /_/ /                       \r\n\
+/____/\\____/____/\\____/                        \r\n\
+\r\n"));
 }
 
 static void printEasyFlag()
@@ -80,7 +80,7 @@ static void printEasyFlag()
     Serial.printf("%s\r\n", flag);
 }
 
-void badgeFatalError(const char *message)
+void badgeFatalError(const __FlashStringHelper *message)
 {
     Serial.println(message);
     while (true)

@@ -39,11 +39,11 @@ static uint16_t commandCharsRead = 0;
 
 static char *strings[ARGUMENTS_LENGTH];
 
-static char *cmdHiddenFlagEncrypted = "\xde\xd4\x27\x30\xf5\x08\xa6\xf5\x84\x91\x1b\xf6\xc8\x66\x94\xbd\xeb\xfc\x10\x32\xec\x63\x80\xc5\x64\xfa\xc9\xe2\x50\x86\xd2\x15\x82\xa6\xad\x7c\x13";
-static char *cmdHiddenFlagKey = "\x9d\x80\x61\x4b\xc0\x6c\x94\xc1\xb6\xa6\x78\xc1\xaa\x02\xf2\x85\xd9\xce\x22\x06\xd8\x01\xe2\xf7\x01\xcc\xf9\xdb\x33\xb1\xe5\x27\xe3\xc4\x98\x1f\x6e";
-
-static char *cmdCatFlagEncrypted = "\xB\x67\x2\x6D\x1\x4F\x5D\x9E\x95\x1E\x42\x58\xC1\x55\xF5\x5B\xE0\xCA\x3B\xB3\x55\x98\x41\xC1\x33\xE2\x53\x9C\xA2\xDA\xF2\x2\x2D\x53\x79\x3A\x79\x0";
-static char *cmdCatFlagKey = "\x48\x33\x44\x16\x35\x2e\x39\xfa\xa7\x2b\x72\x3b\xa5\x6d\xc2\x62\xd5\xab\x5d\xd2\x31\xfc\x70\xf1\x52\xda\x35\xab\x90\xe8\x91\x33\x18\x30\x1d\x5c\x04";
+static char cmdHiddenFlagEncrypted[] PROGMEM = "\xde\xd4\x27\x30\xf5\x08\xa6\xf5\x84\x91\x1b\xf6\xc8\x66\x94\xbd\xeb\xfc\x10\x32\xec\x63\x80\xc5\x64\xfa\xc9\xe2\x50\x86\xd2\x15\x82\xa6\xad\x7c\x13";
+static char cmdCatFlagEncrypted[] PROGMEM = "\xB\x67\x2\x6D\x1\x4F\x5D\x9E\x95\x1E\x42\x58\xC1\x55\xF5\x5B\xE0\xCA\x3B\xB3\x55\x98\x41\xC1\x33\xE2\x53\x9C\xA2\xDA\xF2\x2\x2D\x53\x79\x3A\x79\x0";
+static const char cmdHiddenFlagKey[] PROGMEM = "\x9d\x80\x61\x4b\xc0\x6c\x94\xc1\xb6\xa6\x78\xc1\xaa\x02\xf2\x85\xd9\xce\x22\x06\xd8\x01\xe2\xf7\x01\xcc\xf9\xdb\x33\xb1\xe5\x27\xe3\xc4\x98\x1f\x6e";
+static const char cmdCatFlagKey[] PROGMEM = "\x48\x33\x44\x16\x35\x2e\x39\xfa\xa7\x2b\x72\x3b\xa5\x6d\xc2\x62\xd5\xab\x5d\xd2\x31\xfc\x70\xf1\x52\xda\x35\xab\x90\xe8\x91\x33\x18\x30\x1d\x5c\x04";
+static const char cmdGiveFlagEncrypted[] PROGMEM = "PhyfKjW9yh/Meend+rdMihzLahFenHCfrqlmWL26e77ZN8Kehb6qbiEesGgj7nWp";
 
 static void handleSerialInput();
 static Task tHandleSerialInput(TASK_IMMEDIATE, TASK_FOREVER, &handleSerialInput);
@@ -52,14 +52,14 @@ static bool active = true;
 
 void printPrompt()
 {
-    Serial.printf("\r\n$ ");
+    Serial.print(F("\r\n$ "));
 }
 
 void addCommand(char *name, char *description, bool hidden, void (*func)(uint8_t argc, char **argv))
 {
     if (commandTableIndex >= TABLE_LENGTH)
     {
-        badgeFatalError("SerialPrompt command commandTable is full");
+        badgeFatalError(F("SerialPrompt command commandTable is full"));
     }
 
     cmd_t cmd = {};
@@ -300,13 +300,12 @@ void cmdGiveFlag(uint8_t argc, char **argv)
 
     if (settings.isCaptain == 1)
     {
-        const char *encryptedFlag = "PhyfKjW9yh/Meend+rdMihzLahFenHCfrqlmWL26e77ZN8Kehb6qbiEesGgj7nWp";
         const uint8_t aesKey[AES_BLOCK_SIZE] = {0xb5, 0x43, 0x86, 0x98, 0xb7, 0xa0, 0xe4, 0x9f, 0xf8, 0xbc, 0x47, 0x76, 0xc4, 0xe0, 0xb6, 0xe0};
         const uint8_t aesIV[AES_BLOCK_SIZE] = {0xe3, 0xf0, 0x29, 0xae, 0xb9, 0xbf, 0x9b, 0x4e, 0xb9, 0xad, 0x89, 0xab, 0x06, 0xde, 0x2a, 0x62};
-        char destination[strlen(encryptedFlag)];
+        char destination[strlen(cmdGiveFlagEncrypted)];
 
-        cryptoGetFlagAES(aesKey, aesIV, encryptedFlag, destination);
-        Serial.printf("%s\r\n", destination);
+        cryptoGetFlagAES(aesKey, aesIV, cmdGiveFlagEncrypted, destination);
+        Serial.println(destination);
     }
     else
     {

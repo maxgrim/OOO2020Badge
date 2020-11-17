@@ -41,180 +41,210 @@ public:
       bri = DEFAULT_BRIGHTNESS;
       saveSettingsToEEPROM();
 
-      col[0] = 0;
-      col[1] = 0;
-      col[2] = 0;
-      colSec[0] = 0;
-      colSec[1] = 0;
-      colSec[2] = 0;
+      col[0] = 0; // Red color value
+      col[1] = 0; // Green color value
+      col[2] = 0; // Blue color value
+      col[3] = 255; // White color value
+      colSec[0] = 0; // Red color value
+      colSec[1] = 0; // Green color value
+      colSec[2] = 0; // Blue color value
+      colSec[3] = 255; // White color value
       effectCurrent = FX_MODE_MERRY_CHRISTMAS;
       effectIntensity = 64;
       effectSpeed = 48;
       bri = DEFAULT_BRIGHTNESS;
       savePreset(1, true);
 
-      col[0] = 0;
-      col[1] = 0;
-      col[2] = 0;
-      colSec[0] = 0;
-      colSec[1] = 0;
-      colSec[2] = 0;
+      col[0] = 0; // Red color value
+      col[1] = 0; // Green color value
+      col[2] = 0; // Blue color value
+      col[3] = 255; // White color value
+      colSec[0] = 0; // Red color value
+      colSec[1] = 0; // Green color value
+      colSec[2] = 0; // Blue color value
+      colSec[3] = 255; // White color value
       effectCurrent = FX_MODE_MERRY_CHRISTMAS;
       effectIntensity = 32;
       effectSpeed = 48;
       bri = DEFAULT_BRIGHTNESS;
       savePreset(2, true);
 
-      col[0] = 0;
-      col[1] = 0;
-      col[2] = 0;
-      colSec[0] = 0;
-      colSec[1] = 0;
-      colSec[2] = 0;
+      col[0] = 0; // Red color value
+      col[1] = 0; // Green color value
+      col[2] = 0; // Blue color value
+      col[3] = 255; // White color value
+      colSec[0] = 0; // Red color value
+      colSec[1] = 0; // Green color value
+      colSec[2] = 0; // Blue color value
+      colSec[3] = 255; // White color value
       effectCurrent = FX_MODE_MERRY_CHRISTMAS;
       effectIntensity = 16;
       effectSpeed = 48;
       bri = DEFAULT_BRIGHTNESS;
       savePreset(3, true);
 
-      col[0] = 0;
-      col[1] = 0;
-      col[2] = 0;
-      colSec[0] = 0;
-      colSec[1] = 0;
-      colSec[2] = 0;
+      col[0] = 0; // Red color value
+      col[1] = 0; // Green color value
+      col[2] = 0; // Blue color value
+      col[3] = 255; // White color value
+      colSec[0] = 0; // Red color value
+      colSec[1] = 0; // Green color value
+      colSec[2] = 0; // Blue color value
+      colSec[3] = 255; // White color value
       effectCurrent = FX_MODE_MERRY_CHRISTMAS;
       effectIntensity = 0;
       effectSpeed = 0;
       bri = DEFAULT_BRIGHTNESS;
       savePreset(4, true);
 
-      col[0] = 255;
-      col[1] = 0;
-      col[2] = 0;
-      colSec[0] = 0;
-      colSec[1] = 0;
-      colSec[2] = 0;
+      col[0] = 255; // Red color value
+      col[1] = 0; // Green color value
+      col[2] = 0; // Blue color value
+      col[3] = 255; // White color value
+      colSec[0] = 0; // Red color value
+      colSec[1] = 0; // Green color value
+      colSec[2] = 0; // Blue color value
+      colSec[3] = 255; // White color value
       effectCurrent = FX_MODE_STATIC;
       effectIntensity = 0;
       effectSpeed = 0;
       bri = DEFAULT_BRIGHTNESS;
       savePreset(5, true);
 
-      col[0] = 0;
-      col[1] = 255;
-      col[2] = 0;
-      colSec[0] = 0;
-      colSec[1] = 0;
-      colSec[2] = 0;
+      col[0] = 0; // Red color value
+      col[1] = 255; // Green color value
+      col[2] = 0; // Blue color value
+      col[3] = 255; // White color value
+      colSec[0] = 0; // Red color value
+      colSec[1] = 0; // Green color value
+      colSec[2] = 0; // Blue color value
+      colSec[3] = 255; // White color value
       effectCurrent = FX_MODE_STATIC;
       effectIntensity = 0;
       effectSpeed = 0;
       bri = DEFAULT_BRIGHTNESS;
       savePreset(6, true);
 
-      col[0] = 0;
-      col[1] = 0;
-      col[2] = 255;
-      colSec[0] = 0;
-      colSec[1] = 0;
-      colSec[2] = 0;
+      col[0] = 0; // Red color value
+      col[1] = 0; // Green color value
+      col[2] = 255; // Blue color value
+      col[3] = 255; // White color value
+      colSec[0] = 0; // Red color value
+      colSec[1] = 0; // Green color value
+      colSec[2] = 0; // Blue color value
+      colSec[3] = 255; // White color value
       effectCurrent = FX_MODE_STATIC;
       effectIntensity = 0;
       effectSpeed = 0;
       bri = DEFAULT_BRIGHTNESS;
       savePreset(7, true);
 
-      col[0] = 255;
-      col[1] = 255;
-      col[2] = 255;
-      colSec[0] = 0;
-      colSec[1] = 0;
-      colSec[2] = 0;
+      col[0] = 255; // Red color value
+      col[1] = 255; // Green color value
+      col[2] = 255; // Blue color value
+      col[3] = 255; // White color value
+      colSec[0] = 0; // Red color value
+      colSec[1] = 0; // Green color value
+      colSec[2] = 0; // Blue color value
+      colSec[3] = 255; // White color value
       effectCurrent = FX_MODE_STATIC;
       effectIntensity = 0;
       effectSpeed = 0;
       bri = DEFAULT_BRIGHTNESS;
       savePreset(8, true);
 
-      col[0] = 255;
-      col[1] = 0;
-      col[2] = 0;
-      colSec[0] = 0;
-      colSec[1] = 0;
-      colSec[2] = 0;
+      col[0] = 255; // Red color value
+      col[1] = 0; // Green color value
+      col[2] = 0; // Blue color value
+      col[3] = 255; // White color value
+      colSec[0] = 0; // Red color value
+      colSec[1] = 0; // Green color value
+      colSec[2] = 0; // Blue color value
+      colSec[3] = 255; // White color value
       effectCurrent = FX_MODE_SINELON_DUAL;
       effectIntensity = 128;
       effectSpeed = 128;
       bri = DEFAULT_BRIGHTNESS;
       savePreset(9, true);
 
-      col[0] = 255;
-      col[1] = 200;
-      col[2] = 0;
-      colSec[0] = 0;
-      colSec[1] = 0;
-      colSec[2] = 0;
+      col[0] = 255; // Red color value
+      col[1] = 200; // Green color value
+      col[2] = 0; // Blue color value
+      col[3] = 255; // White color value
+      colSec[0] = 0; // Red color value
+      colSec[1] = 0; // Green color value
+      colSec[2] = 0; // Blue color value
+      colSec[3] = 255; // White color value
       effectCurrent = FX_MODE_CANDLE;
       effectIntensity = 192;
       effectSpeed = 8;
       bri = DEFAULT_BRIGHTNESS * 3;
       savePreset(10, true);
 
-      col[0] = 0;
-      col[1] = 0;
-      col[2] = 0;
-      colSec[0] = 0;
-      colSec[1] = 0;
-      colSec[2] = 0;
+      col[0] = 0; // Red color value
+      col[1] = 0; // Green color value
+      col[2] = 0; // Blue color value
+      col[3] = 255; // White color value
+      colSec[0] = 0; // Red color value
+      colSec[1] = 0; // Green color value
+      colSec[2] = 0; // Blue color value
+      colSec[3] = 255; // White color value
       effectCurrent = FX_MODE_SOLID_GLITTER;
       effectIntensity = 12;
       effectSpeed = 0;
       bri = DEFAULT_BRIGHTNESS;
       savePreset(11, true);
 
-      col[0] = 0;
-      col[1] = 0;
-      col[2] = 0;
-      colSec[0] = 0;
-      colSec[1] = 0;
-      colSec[2] = 0;
+      col[0] = 0; // Red color value
+      col[1] = 0; // Green color value
+      col[2] = 0; // Blue color value
+      col[3] = 255; // White color value
+      colSec[0] = 0; // Red color value
+      colSec[1] = 0; // Green color value
+      colSec[2] = 0; // Blue color value
+      colSec[3] = 255; // White color value
       effectCurrent = FX_MODE_DISSOLVE_RANDOM;
       effectIntensity = 64;
       effectSpeed = 192;
       bri = DEFAULT_BRIGHTNESS;
       savePreset(12, true);
 
-      col[0] = 0;
-      col[1] = 0;
-      col[2] = 0;
-      colSec[0] = 0;
-      colSec[1] = 0;
-      colSec[2] = 0;
+      col[0] = 0; // Red color value
+      col[1] = 0; // Green color value
+      col[2] = 0; // Blue color value
+      col[3] = 255; // White color value
+      colSec[0] = 0; // Red color value
+      colSec[1] = 0; // Green color value
+      colSec[2] = 0; // Blue color value
+      colSec[3] = 255; // White color value
       effectCurrent = FX_MODE_PALETTE;
       effectIntensity = 0;
       effectSpeed = 32;
       bri = DEFAULT_BRIGHTNESS;
       savePreset(13, true);
 
-      col[0] = 0;
-      col[1] = 0;
-      col[2] = 0;
-      colSec[0] = 0;
-      colSec[1] = 0;
-      colSec[2] = 0;
+      col[0] = 0; // Red color value
+      col[1] = 0; // Green color value
+      col[2] = 0; // Blue color value
+      col[3] = 255; // White color value
+      colSec[0] = 0; // Red color value
+      colSec[1] = 0; // Green color value
+      colSec[2] = 0; // Blue color value
+      colSec[3] = 255; // White color value
       effectCurrent = FX_MODE_RAINBOW_CYCLE;
       effectIntensity = 8;
       effectSpeed = 12;
       bri = DEFAULT_BRIGHTNESS;
       savePreset(14, true);
 
-      col[0] = 0;
-      col[1] = 0;
-      col[2] = 0;
-      colSec[0] = 0;
-      colSec[1] = 0;
-      colSec[2] = 0;
+      col[0] = 0; // Red color value
+      col[1] = 0; // Green color value
+      col[2] = 0; // Blue color value
+      col[3] = 255; // White color value
+      colSec[0] = 0; // Red color value
+      colSec[1] = 0; // Green color value
+      colSec[2] = 0; // Blue color value
+      colSec[3] = 255; // White color value
       effectCurrent = FX_MODE_RAINBOW_CYCLE;
       effectIntensity = 0;
       effectSpeed = 192;

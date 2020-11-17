@@ -94,11 +94,11 @@ static void verifyButtonChange()
 
             if (correct)
             {
-                Serial.printf("\r\n\r\n  >> ACCESS GRANTED <<\r\n\r\nLaser does pew pew pew! ");
+                Serial.print(F("\r\n\r\n  >> ACCESS GRANTED <<\r\n\r\nLaser does pew pew pew! "));
 
                 char flag[38];
                 cryptoGetFlag(&flag[0], sizeof(flag), 16);
-                Serial.printf("%s\r\n", flag);
+                Serial.println(flag);
 
                 deactivateLaserController();
                 badgeTaskScheduler.addTask(tPlayWinAnimation);
@@ -106,8 +106,8 @@ static void verifyButtonChange()
             }
             else
             {
-                Serial.printf("\r\n\r\n  >> ACCESS DENIED <<\r\n\r\n");
-                Serial.printf("Code: ");
+                Serial.print(F("\r\n\r\n  >> ACCESS DENIED <<\r\n\r\n"));
+                Serial.print(F("Code: "));
 
                 badgeTaskScheduler.addTask(tPlayFailAnimation);
                 tPlayFailAnimation.restart();
@@ -173,7 +173,7 @@ static void playWinAnimation()
         {
             doneCallbackF();
         }
-        
+
         return;
     }
 
@@ -263,16 +263,16 @@ void laserControllerSetup(void (*doneCallback)())
     badgeTaskScheduler.addTask(tVerifyButtonsLow);
     badgeTaskScheduler.addTask(tUpdateRGB);
 
-    Serial.printf("\r\n\r\n");
-    Serial.printf("    __                            ______            __             ____         \r\n");
-    Serial.printf("   / /   ____ _________  _____   / ____/___  ____  / /__________  / / /__  _____\r\n");
-    Serial.printf("  / /   / __ `/ ___/ _ \\/ ___/  / /   / __ \\/ __ \\/ __/ ___/ __ \\/ / / _ \\/ ___/\r\n");
-    Serial.printf(" / /___/ /_/ (__  )  __/ /     / /___/ /_/ / / / / /_/ /  / /_/ / / /  __/ /    \r\n");
-    Serial.printf("/_____/\\__,_/____/\\___/_/      \\____/\\____/_/ /_/\\__/_/   \\____/_/_/\\___/_/     \r\n");
-    Serial.printf("                                                                                \r\n");
-    Serial.printf("\r\n\r\nShoot! The laser is locked. Can you crack the code? Use the buttons\r\n\r\n");
+    Serial.print(F("\r\n\r\n\
+    __                            ______            __             ____         \r\n\
+   / /   ____ _________  _____   / ____/___  ____  / /__________  / / /__  _____\r\n\
+  / /   / __ `/ ___/ _ \\/ ___/  / /   / __ \\/ __ \\/ __/ ___/ __ \\/ / / _ \\/ ___/\r\n\
+ / /___/ /_/ (__  )  __/ /     / /___/ /_/ / / / / /_/ /  / /_/ / / /  __/ /    \r\n\
+/_____/\\__,_/____/\\___/_/      \\____/\\____/_/ /_/\\__/_/   \\____/_/_/\\___/_/     \r\n\
+                                                                                \r\n\
+\r\n\r\nShoot! The laser is locked. Can you crack the code? Use the buttons\r\n\r\n"));
 
-    Serial.printf("Code: ");
+    Serial.print(F("Code: "));
 
     tDetectButtonChange.enable();
     tUpdateRGB.enable();

@@ -37,6 +37,8 @@ static Task tPlayHitAnimation(400, 3, &playHitAnimation);
 
 static bool readingL, readingR, lastStateL, lastStateR;
 
+static const char encryptedFlag[] PROGMEM = "qiF+XICLazJqo48fojtb6GALju7VHdF6muaMw6OUSi4sp9LjE1GWEhXQvSTsPhmghZncJkwnsOrq789P9JP9ad4Y3yDQmCnkKoM=";
+
 static void deactivateSpaceXTerminator()
 {
     badgeTaskScheduler.deleteTask(tDetectButtonChange);
@@ -96,7 +98,7 @@ static void playWinAnimation()
         {
             doneCallbackF();
         }
-        
+
         return;
     }
 
@@ -170,7 +172,7 @@ static void updateSpaceXTerminator()
 
     if (currentPixel == hitPixel)
     {
-        Serial.printf("Shoot now!\r\n");
+        Serial.println(F("Shoot now!"));
     }
 }
 
@@ -196,7 +198,7 @@ static void verifyButtonChange()
     {
         if (currentPixel == hitPixel)
         {
-            Serial.printf("Hit\r\n");
+            Serial.println(F("Hit"));
 
             long modifier;
 
@@ -221,15 +223,14 @@ static void verifyButtonChange()
 
             if (tUpdateSpaceXTerminator.getInterval() <= 0)
             {
-                Serial.printf("You won, here is your flag: ");
-                const char *encryptedFlag = "qiF+XICLazJqo48fojtb6GALju7VHdF6muaMw6OUSi4sp9LjE1GWEhXQvSTsPhmghZncJkwnsOrq789P9JP9ad4Y3yDQmCnkKoM=";
+                Serial.print(F("You won, here is your flag: "));
 
                 const uint8_t aesKey[AES_BLOCK_SIZE] = {0xc2, 0xce, 0x75, 0x9a, 0x23, 0x2e, 0x44, 0xff, 0xd0, 0x53, 0x53, 0x35, 0x94, 0x5f, 0xa7, 0x16};
                 const uint8_t aesIV[AES_BLOCK_SIZE] = {0x14, 0x3e, 0xc0, 0x07, 0x4c, 0x73, 0x57, 0x58, 0x84, 0xf8, 0xcb, 0x6a, 0xe2, 0x30, 0x6b, 0x7c};
                 char destination[strlen(encryptedFlag)];
 
                 cryptoGetFlagAES(aesKey, aesIV, encryptedFlag, destination);
-                Serial.printf("%s\r\n", destination);
+                Serial.println(destination);
 
                 badgeTaskScheduler.addTask(tPlayWinAnimation);
                 tPlayWinAnimation.restart();
@@ -275,22 +276,22 @@ void spaceXTerminatorSetup(void (*doneCallback)())
     rgbSetBrightness(RGB_DEFAULT_BRIGHTNESS);
     rgbShow();
 
-    Serial.printf("\r\n");
-    Serial.printf("     _______..______      ___       ______  _______                                                                          \r\n");
-    Serial.printf("    /       ||   _  \\    /   \\     /      ||   ____|                                                                         \r\n");
-    Serial.printf("   |   (----`|  |_)  |  /  ^  \\   |  ,----'|  |__                                                                            \r\n");
-    Serial.printf("    \\   \\    |   ___/  /  /_\\  \\  |  |     |   __|                                                                           \r\n");
-    Serial.printf(".----)   |   |  |     /  _____  \\ |  `----.|  |____                                                                          \r\n");
-    Serial.printf("|_______/    | _|    /__/     \\__\\ \\______||_______|                                                                         \r\n");
-    Serial.printf("                                                                                                                             \r\n");
-    Serial.printf("      ___   ___ .___________. _______ .______      .___  ___.  __  .__   __.      ___   .___________.  ______   .______      \r\n");
-    Serial.printf("      \\  \\ /  / |           ||   ____||   _  \\     |   \\/   | |  | |  \\ |  |     /   \\  |           | /  __  \\  |   _  \\     \r\n");
-    Serial.printf("       \\  V  /  `---|  |----`|  |__   |  |_)  |    |  \\  /  | |  | |   \\|  |    /  ^  \\ `---|  |----`|  |  |  | |  |_)  |    \r\n");
-    Serial.printf("        >   <       |  |     |   __|  |      /     |  |\\/|  | |  | |  . `  |   /  /_\\  \\    |  |     |  |  |  | |      /     \r\n");
-    Serial.printf("       /  .  \\      |  |     |  |____ |  |\\  \\----.|  |  |  | |  | |  |\\   |  /  _____  \\   |  |     |  `--'  | |  |\\  \\----.\r\n");
-    Serial.printf("      /__/ \\__\\     |__|     |_______|| _| `._____||__|  |__| |__| |__| \\__| /__/     \\__\\  |__|      \\______/  | _| `._____|\r\n");
-    Serial.printf("                                                                                                                             \r\n");
-    Serial.printf("\r\n");
+    Serial.print(F("\r\n\
+     _______..______      ___       ______  _______                                                                          \r\n\
+    /       ||   _  \\    /   \\     /      ||   ____|                                                                         \r\n\
+   |   (----`|  |_)  |  /  ^  \\   |  ,----'|  |__                                                                            \r\n\
+    \\   \\    |   ___/  /  /_\\  \\  |  |     |   __|                                                                           \r\n\
+.----)   |   |  |     /  _____  \\ |  `----.|  |____                                                                          \r\n\
+|_______/    | _|    /__/     \\__\\ \\______||_______|                                                                         \r\n\
+                                                                                                                             \r\n\
+      ___   ___ .___________. _______ .______      .___  ___.  __  .__   __.      ___   .___________.  ______   .______      \r\n\
+      \\  \\ /  / |           ||   ____||   _  \\     |   \\/   | |  | |  \\ |  |     /   \\  |           | /  __  \\  |   _  \\     \r\n\
+       \\  V  /  `---|  |----`|  |__   |  |_)  |    |  \\  /  | |  | |   \\|  |    /  ^  \\ `---|  |----`|  |  |  | |  |_)  |    \r\n\
+        >   <       |  |     |   __|  |      /     |  |\\/|  | |  | |  . `  |   /  /_\\  \\    |  |     |  |  |  | |      /     \r\n\
+       /  .  \\      |  |     |  |____ |  |\\  \\----.|  |  |  | |  | |  |\\   |  /  _____  \\   |  |     |  `--'  | |  |\\  \\----.\r\n\
+      /__/ \\__\\     |__|     |_______|| _| `._____||__|  |__| |__| |__| \\__| /__/     \\__\\  |__|      \\______/  | _| `._____|\r\n\
+                                                                                                                             \r\n\
+\r\n"));
 
     badgeTaskScheduler.addTask(tDetectButtonChange);
     badgeTaskScheduler.addTask(tVerifyButtonChange);
