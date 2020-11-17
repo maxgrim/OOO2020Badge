@@ -6,6 +6,7 @@
 #include "../FlagCrypto.h"
 #include "../WiFi.h"
 
+#include <DNSServer.h>
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 
@@ -23,6 +24,8 @@ IPAddress localIp(1, 3, 3, 7);
 IPAddress gateway(1, 3, 3, 7);
 IPAddress subnet(255, 255, 255, 0);
 
+static DNSServer dnsServer;
+
 static void deactivateWebserver()
 {
     badgeTaskScheduler.deleteTask(tHandleServerClient);
@@ -36,6 +39,7 @@ static void deactivateWebserver()
 
 static void handleServerClient()
 {
+    dnsServer.processNextRequest();
     server.handleClient();
 }
 
@@ -94,11 +98,16 @@ void webserverSetup(void (*doneCallback)())
 
     wifiOn(localIp, gateway, subnet, "StarshipAP", password);
 
-    server.on("/stop", handleStop);
-    server.onNotFound(handleNotFound);
+    /* Setup the DNS server redirecting all the domains to the localIp */
+    dnsServer.setErrorReplyCode(DNSReplyCode::NoError);
+    dnsServer.start(53, "*", localIp);
 
+    server.on("/stop", handleStop);
     server.serveStatic("/", SPIFFS, "/index.html", "max-age=31536000,public");
     server.serveStatic("/s", SPIFFS, "/s", "max-age=31536000,public");
+
+    server.onNotFound(handleNotFound);
+
     server.begin();
 
     badgeTaskScheduler.addTask(tHandleServerClient);
