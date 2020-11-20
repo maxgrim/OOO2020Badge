@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <export version="D">
   <design>
-    <source>/Users/mgrim/Projects/Ardennes 2020/Badge hand solder/Badge.sch</source>
-    <date>2020 November 07, Saturday 11:51:44</date>
+    <source>/Users/mgrim/Projects/Ardennes 2020/OOO2020Badge/hardware/Badge/Badge.sch</source>
+    <date>2020 November 18, Wednesday 09:27:53</date>
     <tool>Eeschema (5.1.7-0-10_14)</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
@@ -915,7 +915,7 @@
   </libparts>
   <libraries>
     <library logical="Badge-rescue">
-      <uri>/Users/mgrim/Projects/Ardennes 2020/Badge hand solder/Badge-rescue.lib</uri>
+      <uri>/Users/mgrim/Projects/Ardennes 2020/OOO2020Badge/hardware/Badge/Badge-rescue.lib</uri>
     </library>
     <library logical="Connector">
       <uri>/Users/mgrim/Library/Application Support/kicad/library/Connector.lib</uri>
@@ -936,7 +936,7 @@
       <uri>/Users/mgrim/Library/Application Support/kicad/library/Transistor_FET.lib</uri>
     </library>
     <library logical="badgelife_shitty_connector">
-      <uri>/Users/mgrim/Projects/Ardennes 2020/Badge hand solder/Libraries/badgelife_shitty_connector.lib</uri>
+      <uri>/Users/mgrim/Projects/Ardennes 2020/OOO2020Badge/hardware/Badge/Libraries/badgelife_shitty_connector.lib</uri>
     </library>
   </libraries>
   <nets>
