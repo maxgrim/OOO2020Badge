@@ -202,13 +202,9 @@ static void verifyButtonChange()
 
             long modifier;
 
-            if (tUpdateSpaceXTerminator.getInterval() <= 100)
+            if (tUpdateSpaceXTerminator.getInterval() <= 200)
             {
                 modifier = 20;
-            }
-            else if (tUpdateSpaceXTerminator.getInterval() <= 200)
-            {
-                modifier = 25;
             }
             else if (tUpdateSpaceXTerminator.getInterval() <= 400)
             {
