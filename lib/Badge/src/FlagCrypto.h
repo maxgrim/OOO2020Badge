@@ -8,7 +8,7 @@
 
 void cryptoAESBufferSize(const char *text, int &length);
 void cryptoGetFlag(char *destination, size_t destination_length, int input);
-void cryptoGetFlagXOR(char *buffer, uint8_t buffer_size, const char *key, uint8_t key_size);
+void cryptoGetFlagXOR(char *buffer, uint8_t buffer_size, char *key, uint8_t key_size);
 void cryptoGetFlagAES(const uint8_t *aesKey, const uint8_t *aesIV, const char *encryptedFlag, char *destination);
 
 #endif

@@ -37,7 +37,7 @@ static Task tPlayHitAnimation(400, 3, &playHitAnimation);
 
 static bool readingL, readingR, lastStateL, lastStateR;
 
-static const char encryptedFlag[] PROGMEM = "qiF+XICLazJqo48fojtb6GALju7VHdF6muaMw6OUSi4sp9LjE1GWEhXQvSTsPhmghZncJkwnsOrq789P9JP9ad4Y3yDQmCnkKoM=";
+static const char *encryptedFlag = "qiF+XICLazJqo48fojtb6GALju7VHdF6muaMw6OUSi4sp9LjE1GWEhXQvSTsPhmghZncJkwnsOrq789P9JP9ad4Y3yDQmCnkKoM=";
 
 static void deactivateSpaceXTerminator()
 {
