@@ -260,6 +260,9 @@ void cmdCat(uint8_t argc, char **argv)
     {
         cryptoGetFlagXOR(cmdCatFlagEncrypted, 37, cmdCatFlagKey, 37);
         Serial.println(cmdCatFlagEncrypted);
+
+        // Reset the flag
+        cryptoGetFlagXOR(cmdCatFlagEncrypted, 37, cmdCatFlagKey, 37);
     }
     else
     {
@@ -275,6 +278,9 @@ void cmdHidden(uint8_t argc, char **argv)
 
     Serial.println(F("[...Engine goes...]\tBzzzz Bzzzzz\r\n[...AI voice says...]\tSuper Laser activated. Ready to fire.\r\n\r\n[...Badge says...]\tYou found the hidden command! Well done young reverse engineer! Here is your reward.\r\n"));
     Serial.println(cmdHiddenFlagEncrypted);
+
+    // Reset the flag
+    cryptoGetFlagXOR(cmdHiddenFlagEncrypted, 37, cmdHiddenFlagKey, 37);
 
     serialPromptActivate();
 }
