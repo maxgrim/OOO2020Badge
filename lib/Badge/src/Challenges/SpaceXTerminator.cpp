@@ -244,6 +244,7 @@ static void verifyButtonChange()
         else
         {
             Serial.printf("Miss\r\n");
+            tUpdateSpaceXTerminator.setInterval(startInterval);
             badgeTaskScheduler.addTask(tPlayDeadAnimation);
             tPlayDeadAnimation.restart();
         }
