@@ -301,7 +301,7 @@ static void handleMove()
         tPlayDeadAnimation.restart();
         return;
     case 3:
-        const char *encryptedFlag = "ElDz3zZlWVmLHJwwIY92a37WOZqP8/gneZYW+16C+8zR8hTAesWvV96GSmxGrwaH";
+        const char *encryptedFlag = "\x12\x50\xf3\xdf\x36\x65\x59\x59\x8b\x1c\x9c\x30\x21\x8f\x76\x6b\x7e\xd6\x39\x9a\x8f\xf3\xf8\x27\x79\x96\x16\xfb\x5e\x82\xfb\xcc\xd1\xf2\x14\xc0\x7a\xc5\xaf\x57\xde\x86\x4a\x6c\x46\xaf\x06\x87";
         const uint8_t aesKey[AES_BLOCK_SIZE] = {0xa3, 0x18, 0xe9, 0x26, 0x9a, 0x14, 0xdd, 0x91, 0x63, 0xe8, 0x25, 0x51, 0x75, 0x1b, 0x8f, 0x0b};
         const uint8_t aesIV[AES_BLOCK_SIZE] = {0x58, 0x12, 0xa9, 0x24, 0x46, 0xdc, 0x64, 0x76, 0x51, 0x42, 0x46, 0x1c, 0xf8, 0x1d, 0x54, 0x41};
         char destination[strlen(encryptedFlag)];
