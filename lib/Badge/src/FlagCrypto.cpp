@@ -13,6 +13,7 @@
         S[b] = t;     \
     } while (0)
 
+#if BADGE_DEBUG
 static void aesEncrypt(const uint8_t *aesKey, const uint8_t *aesIV, const char *plain_text, char *output, int length)
 {
     byte enciphered[length];
@@ -23,16 +24,17 @@ static void aesEncrypt(const uint8_t *aesKey, const uint8_t *aesIV, const char *
     encode_base64(enciphered, encrypted_size, (unsigned char *)encoded);
     strcpy(output, encoded);
 }
+#endif
 
 static void aesDecrypt(const uint8_t *aesKey, const uint8_t *aesIV, const char *enciphered, char *output, int length)
 {
     length = length + 1;
-    char decoded[length];
-    decode_base64((unsigned char *)enciphered, (unsigned char *)decoded);
+    // char decoded[length];
+    // decode_base64((unsigned char *)enciphered, (unsigned char *)decoded);
     cryptoAESBufferSize(enciphered, length);
     byte deciphered[length];
     AES aesDecryptor(aesKey, aesIV, AES::AES_MODE_128, AES::CIPHER_DECRYPT);
-    aesDecryptor.process((uint8_t *)decoded, deciphered, length);
+    aesDecryptor.process((uint8_t *)enciphered, deciphered, length);
     strcpy(output, (char *)deciphered);
 }
 
