@@ -267,8 +267,6 @@ void spaceXTerminatorSetup(void (*doneCallback)())
     pinMode(PIN_BUTTON_L, INPUT);
     pinMode(PIN_BUTTON_R, INPUT);
 
-    eyesOff();
-
     rgbClear();
     rgbSetBrightness(RGB_DEFAULT_BRIGHTNESS);
     rgbShow();
