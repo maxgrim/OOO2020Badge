@@ -266,7 +266,7 @@ void cmdCat(uint8_t argc, char **argv)
     }
     else
     {
-        Serial.println(F("File not found\r\n"));
+        Serial.println(F("File not found"));
     }
 
     serialPromptActivate();
