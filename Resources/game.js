@@ -16,7 +16,9 @@ canvas.width = 512;
 canvas.height = 480;
 
 $(document).ready(function () {
-  document.body.appendChild(canvas);
+  $("#startButton").click(function () {
+    $(this).hide(), document.body.appendChild(canvas);
+  });
 });
 
 bgReady = true;
@@ -261,7 +263,7 @@ var update = function (modifier) {
   for (var i = 0; i < NUM_MONSTERS1; i++) {
     if (!monsters[i].isAlive) continue;
 
-    if (i * i * i * Math.ceil(Math.random() * 100) == count)
+    if (i * i * i * Math.ceil(Math.random() * 25) == count)
       monsters[i].isShooting = true;
 
     if (monsters[i].isShooting) monsters[i].shootY += monsters[i].shootDir;
@@ -286,7 +288,7 @@ var update = function (modifier) {
   for (var i = 0; i < NUM_MONSTERS2; i++) {
     if (!monsters2[i].isAlive) continue;
 
-    if (i * i * i * Math.ceil(Math.random() * 100) == count)
+    if (i * i * i * Math.ceil(Math.random() * 25) == count)
       monsters2[i].isShooting = true;
 
     if (monsters2[i].isShooting) monsters2[i].shootY += monsters2[i].shootDir;
