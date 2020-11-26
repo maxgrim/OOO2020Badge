@@ -1,0 +1,15 @@
+title: Serial Jedi
+description: Connect the badge via UART and get the first flag for free.
+flags:
+- tags: [misc]
+  title: Serial Jedi
+  unique_id: misc-ooo2020badge-serial-1
+  description: Those wires are finally coming in handy. Let's see if I can hot wire this board.
+  points: 25
+  value: CTF{af54a4b77436dc46d4aa2a1b31f40b5a}
+- tags: [misc]
+  title: Terminator
+  unique_id: misc-ooo2020badge-serial-2
+  description: Use the force of the commands to get the flag.
+  points: 25
+  value: CTF{4add250cd8795afadd10a8f722c15cdf}

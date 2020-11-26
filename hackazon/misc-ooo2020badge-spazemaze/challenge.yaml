@@ -1,0 +1,9 @@
+title: SpazeMaze
+description: Solve the maze by reversing or trying hard (grid is hidden on the filesystem of the badge).
+flags:
+- tags: [misc]
+  title: SpaceMaze
+  unique_id: misc-ooo2020badge-spacemaze-1
+  description: Captain is giving me the control of the ship. He is now testing my memory and ask me to fly us back home. Will I find the way home?
+  points: 200
+  value: CTF{5facba2bf93aa7043fd25a5ac156f6d1}

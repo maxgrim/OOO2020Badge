@@ -1,0 +1,9 @@
+title: Captain picture
+description: Stegano challenge.
+flags:
+- tags: [misc/stegano]
+  title: Captain picture
+  unique_id: misc-ooo2020bage-captainpicture-1
+  description: "One of the crew member said that the captain hid a picture of his best friend, Rick. A few crew members found them, but no one could figure out how to find the least significant one."
+  points: 100
+  value: CTF{657a8216b3fc21cb6352af35bb051143}

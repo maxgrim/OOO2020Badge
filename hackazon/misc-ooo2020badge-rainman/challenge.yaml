@@ -1,0 +1,9 @@
+title: Make it Ra1n Man
+description: Fast calculations have to be performed over serial, you'd have to write an automation script.
+flags:
+- tags: [misc/coding]
+  title: Make it Ra1n Man
+  unique_id: misc-ooo2020bage-rainman-1
+  description: The ship is in danger and almost crashing. Steer it to it's right course with precise math.
+  points: 200
+  value: CTF{4340c64b3a6b3c61f8eab4e1254ce613}

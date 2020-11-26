@@ -1,0 +1,9 @@
+title: LaserController
+description: Connect the badge via UART and get the first flag for free.
+flags:
+- tags: [misc]
+  title: LaserController
+  unique_id: rev-ooo2020badge-laser-1
+  description: Captain is too busy to give me the code to access the laser, but aliens are attacking, so I gotta figure it out myself.
+  points: 200
+  value: CTF{0190f961f87d8fe56acebca79fdc94b0}

@@ -1,0 +1,9 @@
+title: CaptainOverride
+description: Either patch the code or update an EEPROM value that checks whether you are the captain.
+flags:
+- tags: [misc]
+  title: CaptainOverride
+  unique_id: rev-ooo2020badge-captainoverride-1
+  description: Some commands of the spaceship are restricted to captains. But he's... occupied.
+  points: 300
+  value: CTF{966690e8f5edfba3cf5a92aa66369985}

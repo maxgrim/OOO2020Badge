@@ -1,0 +1,9 @@
+title: SpaceXTerminator
+description: Hit the button at precise times, as a game. Can only be solved by hardware trigger or inhuman reflexes.
+flags:
+- tags: [misc]
+  title: SpaceXTerminator
+  unique_id: misc-ooo2020bage-spacexterminator-1
+  description: To test my precision the Captain asked me to shoot a few stars. However it is not that easy when we are travelling at light speed. Maybe I can think of a way to automate this to be a bit more precise?
+  points: 400
+  value: CTF{ad433f7c3d818215fd46dc107ee070be}

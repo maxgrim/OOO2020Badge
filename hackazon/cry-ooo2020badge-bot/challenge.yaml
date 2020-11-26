@@ -1,0 +1,9 @@
+title: Badge Bot
+description: Vigenère cipher that has to be solved in order to get the first flag and invite code.
+flags:
+- tags: [crypto]
+  title: Welcome on board
+  unique_id: cry-ooo2020badge-bot-1
+  description: If you read this it means you decoded the message coming from Vigenère vessel. Welcome on board.
+  points: 25
+  value: CTF{cc55fb2cc6baa8361c427b3df319cb12}

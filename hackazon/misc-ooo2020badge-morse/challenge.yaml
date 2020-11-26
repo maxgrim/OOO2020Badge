@@ -1,0 +1,9 @@
+title: Satelite communication
+description: Decode morse from blinking LEDs.
+flags:
+- tags: [misc]
+  title: Satelite communication
+  unique_id: misc-ooo2020badge-morse-1
+  description: I am still arguing with Captain that the blinking light is not a satellite but a distress signal. Which one is it?
+  points: 75
+  value: CTF{notasattelite}

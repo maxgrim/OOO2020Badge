@@ -1,0 +1,9 @@
+title: CorruptedSpaceshipIO
+description: SPIFFS challenge where you have to read and write to flash.
+flags:
+- tags: [misc]
+  title: "CorruptedSpaceshipIO"
+  unique_id: misc-ooo2020bage-corrupted-1
+  description: The internal filesystem of the ship got corrupted, so the flight coordinates can't be written to the SpaceshipPortableInterForceFortifiedSystem. Can you fix it?
+  points: 300
+  value: CTF{966690e8f5edfba3cf5a92aa66369985}

@@ -1,0 +1,9 @@
+title: StarShips Are Meant To ...
+description: Connect to the StarShip AP with a unknown password (strings over the binary), then you can play a simple SpaceInvaders game. 
+flags:
+- tags: [web]
+  title: StarShips Are Meant To ...
+  unique_id: web-ooo2020badge-starships-1
+  description: Nothing better than a good old 8-bit game and... Uh, let's go to the beach, each. Let's go get a wave.
+  points: 50
+  value: CTF{L33T-GAMER}

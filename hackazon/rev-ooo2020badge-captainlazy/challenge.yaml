@@ -1,0 +1,9 @@
+title: CaptainLazy
+description: Run strings over the binary to find the hidden command.
+flags:
+- tags: [rev]
+  title: CaptainLazy
+  unique_id: rev-ooo2020badge-captainlazy-1
+  description: The captain created a shortcut activate the laser without a code, luckily no one else knows it, right?
+  points: 100
+  value: CTF{5d2427c7bdf822244bb2e609c772ab5c}
